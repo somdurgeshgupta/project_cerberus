@@ -1,0 +1,31 @@
+<!-- src/app/register/register.component.html -->
+<div class="login-container">
+    <h2>Register</h2>
+    <form (ngSubmit)="onSubmit()">
+      <div class="form-group">
+        <label for="username">Username:</label>
+        <input type="text" id="username" [(ngModel)]="username" name="username" required>
+      </div>
+      <div class="form-group">
+        <label for="email">Email:</label>
+        <input type="email" id="email" [(ngModel)]="email" name="email" required>
+      </div>
+      <div class="form-group">
+        <label for="password">Password:</label>
+        <input type="password" id="password" [(ngModel)]="password" name="password" required>
+      </div>
+      <button type="submit" class="btn">Register</button>
+    </form>
+    <div class="social-login">
+      <h3>Or register with</h3>
+      <button class="btn social-btn" (click)="registerWithGoogle()">
+        <img src="/google-logo.svg" alt="Google Logo" class="social-icon"> Google
+      </button>
+      <button class="btn social-btn" (click)="registerWithFacebook()">
+        <img src="/facebook-logo.svg" alt="Facebook Logo" class="social-icon"> Facebook
+      </button>
+    </div>
+    <div class="redirect">
+      <p>Already have an account? <a routerLink="/login" class="link">Login</a></p>
+    </div>
+  </div>
