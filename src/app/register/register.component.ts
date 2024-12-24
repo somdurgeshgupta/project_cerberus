@@ -1,5 +1,7 @@
 // src/app/register/register.component.ts
 import { Component } from '@angular/core';
+import { AuthService } from '../services/auth.service';
+import { Router } from '@angular/router';
 
 @Component({
   standalone: false,
@@ -11,6 +13,12 @@ export class RegisterComponent {
   username: string = '';
   email: string = '';
   password: string = '';
+
+  constructor(private authService : AuthService, private router: Router){
+    if(authService.isLoggedIn()){
+      this.router.navigate(['/dashboard']);
+    }
+  }
 
   onSubmit() {
     // Handle registration with username, email, and password
