@@ -1,0 +1,17 @@
+/* src/app/components/header/header.component.css */
+.header {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: 5px;
+    background-color: hsl(211, 80%, 61%);
+    color: white;
+  }
+  
+  .toggle-button {
+    background: none;
+    border: none;
+    color: white;
+    font-size: 16px;
+    cursor: pointer;
+  }

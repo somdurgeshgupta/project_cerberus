@@ -28,7 +28,7 @@ const routes: Routes = [
   {
     path: '**',
     component: PageNotFoundComponent,
-    canMatch: [authGuard]
+    canActivate: [authGuard]
   }
 ];
 
