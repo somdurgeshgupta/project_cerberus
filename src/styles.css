@@ -92,3 +92,5 @@ body {
   .social-btn:hover {
     background-color: #e0e0e0; /* Darker background on hover */
   }
+html, body { height: 100%; }
+body { margin: 0; font-family: Roboto, "Helvetica Neue", sans-serif; }
