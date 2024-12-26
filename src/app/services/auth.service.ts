@@ -31,7 +31,9 @@ export class AuthService {
     return !!this.getToken();
   }
 
-  
+  getUserIdfromToken(){
+    return this.http.post(environment.API_URL + 'users/getuseridfromtoken', localStorage.getItem(this.tokenKey));
+  }
 
   logout() {
     localStorage.removeItem(this.tokenKey);
