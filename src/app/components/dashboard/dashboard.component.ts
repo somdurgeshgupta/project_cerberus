@@ -10,12 +10,11 @@ export class DashboardComponent {
   
 
   
-  sidebarOpen = true;
+  isSidebarOpen: boolean = true;
 
   toggleSidebar() {
-    this.sidebarOpen = !this.sidebarOpen;
+    this.isSidebarOpen = !this.isSidebarOpen;
   }
-
   
 
 

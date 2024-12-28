@@ -6,6 +6,7 @@ import { Router } from '@angular/router';
 
 import { catchError, tap } from 'rxjs/operators';
 import { of } from 'rxjs';
+import { UserService } from '../services/user.service';
 
 @Component({
   standalone: false,
@@ -16,7 +17,7 @@ import { of } from 'rxjs';
 export class LoginComponent {
   loginForm: FormGroup;
 
-  constructor(private fb: FormBuilder, private authService: AuthService, private router: Router) {
+  constructor(private fb: FormBuilder, private authService: AuthService, private router: Router, private userService: UserService) {
     this.loginForm = this.fb.group({
       email: ['', [Validators.required, Validators.email]],
       password: ['', [Validators.required, Validators.minLength(6)]]

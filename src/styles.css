@@ -53,24 +53,8 @@ body {
     outline: none; /* Remove default outline */
   }
   
-  .btn {
-    width: 100%; /* Full width buttons */
-    padding: 10px; /* Padding inside buttons */
-    background-color: #007bff; /* Primary button color */
-    color: white; /* White text color */
-    border: none; /* No border */
-    border-radius: 4px; /* Rounded corners */
-    font-size: 16px; /* Font size */
-    cursor: pointer; /* Pointer cursor on hover */
-    transition: background-color 0.3s; /* Smooth transition */
-    display: flex; /* Flexbox for alignment */
-    align-items: center; /* Center items vertically */
-  }
-  
-  .btn:hover {
-    background-color: #0056b3; /* Darker blue on hover */
-  }
-  
+
+
   .social-login {
     text-align: center;
     margin-top: 20px; /* Space above social login section */

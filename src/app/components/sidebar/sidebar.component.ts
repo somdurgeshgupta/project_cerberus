@@ -11,7 +11,7 @@ import { Router } from '@angular/router';
   styleUrl: './sidebar.component.css'
 })
 export class SidebarComponent {
-  @Input() isOpen: boolean = true;
+  @Input() isOpen: boolean = false;
   authService = inject(AuthService);
   router = inject(Router);
 
