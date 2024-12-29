@@ -1,0 +1,39 @@
+/* src/app/components/page-not-found/page-not-found.component.css */
+
+:host {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 100vh; /* Full viewport height */
+    background-image: url('/assets/404-background.jpg'); /* Path to your background image */
+    background-size: cover; /* Cover the entire area */
+    background-position: center; /* Center the image */
+    color: rgb(138, 134, 134); /* Text color */
+    text-align: center; /* Center text */
+    font-family: Arial, sans-serif; /* Font style */
+}
+
+h1 {
+    font-size: 3rem; /* Heading size */
+    margin-bottom: 20px; /* Space below heading */
+}
+
+p {
+    font-size: 1.5rem; /* Paragraph size */
+}
+
+/* Optional: Add a button to redirect to the homepage */
+.redirect-button {
+    margin-top: 20px; /* Space above button */
+    padding: 10px 20px; /* Button padding */
+    background-color: #007bff; /* Button color */
+    color: white; /* Button text color */
+    border: none; /* No border */
+    border-radius: 5px; /* Rounded corners */
+    cursor: pointer; /* Pointer cursor on hover */
+    transition: background-color 0.3s; /* Smooth transition */
+}
+
+.redirect-button:hover {
+    background-color: #0056b3; /* Darker blue on hover */
+}

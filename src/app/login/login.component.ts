@@ -30,10 +30,11 @@ export class LoginComponent {
   
   onSubmit() {
     if (this.loginForm.valid) {
-      this.authService.loginUser (this.loginForm.value).pipe(
+      this.authService.loginUser(this.loginForm.value).pipe(
         tap((res: any) => {
           if (res.token) {
-            localStorage.setItem('authToken', res.token);
+            this.authService.login(res.token);
+            // localStorage.setItem('authToken', res.token);
             this.router.navigateByUrl('/dashboard'); // Redirect to dashboard on successful login
           }
         }),

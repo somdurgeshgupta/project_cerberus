@@ -1,4 +1,3 @@
-// src/app/components/page-not-found/page-not-found.component.ts
 import { Component, inject } from '@angular/core';
 import { Router } from '@angular/router';
 

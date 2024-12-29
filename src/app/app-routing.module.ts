@@ -4,7 +4,7 @@ import { LoginComponent } from './login/login.component';
 import { RegisterComponent } from './register/register.component';
 import { PageNotFoundComponent } from './components/page-not-found/page-not-found.component';
 import { authGuard } from '../app/guards/auth.guard';
-import { DashboardComponent } from './components/dashboard/dashboard.component';
+import { ExpiredPageComponent } from './expired-page/expired-page.component';
 
 const routes: Routes = [
   {
@@ -23,6 +23,10 @@ const routes: Routes = [
   {
     path: 'dashboard',
     loadChildren: () => import('./components/dashboard/dashboard.module').then(m => m.DashboardModule) // Lazy loading the Dashboard module
+  },
+  {
+    path: 'expired-page',
+    component: ExpiredPageComponent
   },
   {
     path: '**',

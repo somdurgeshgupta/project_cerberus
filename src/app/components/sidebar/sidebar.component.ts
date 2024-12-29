@@ -22,7 +22,6 @@ export class SidebarComponent {
   }
 
   logout(){
-    this.authService.logout();
-    this.router.navigateByUrl('');
+    this.authService.logout(true);
   }
 }

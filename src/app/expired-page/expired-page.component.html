@@ -1,0 +1,10 @@
+<div *ngIf="!logout">
+    <h1>Your Token Has Been Expired</h1>
+    <p>You will be redirected to the Login Page in {{ countdown }} seconds...</p>
+    <button class="redirect-button" (click)="router.navigate(['/'])">Go to Homepage</button>
+</div>
+<div *ngIf="logout">
+    <h1>Your are getting Logged Out</h1>
+    <p>You will be redirected to the Login Page in {{ countdown }} seconds...</p>
+    <button class="redirect-button" (click)="router.navigate(['/'])">Go to Homepage</button>
+</div>

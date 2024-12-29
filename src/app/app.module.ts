@@ -15,6 +15,7 @@ import { provideAnimationsAsync } from '@angular/platform-browser/animations/asy
 
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { authInterceptor } from './guards/auth.interceptor';
+import { ExpiredPageComponent } from './expired-page/expired-page.component';
 
 @NgModule({
   declarations: [
@@ -25,6 +26,7 @@ import { authInterceptor } from './guards/auth.interceptor';
     PageNotFoundComponent,
     HeaderComponent,
     SidebarComponent,
+    ExpiredPageComponent,
   ],
   imports: [
     BrowserModule,
