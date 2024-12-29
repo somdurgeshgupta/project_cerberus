@@ -4,7 +4,9 @@ import { LoginComponent } from './login/login.component';
 import { RegisterComponent } from './register/register.component';
 import { PageNotFoundComponent } from './components/page-not-found/page-not-found.component';
 import { authGuard } from '../app/guards/auth.guard';
-import { ExpiredPageComponent } from './expired-page/expired-page.component';
+import { ExpiredPageComponent } from './components/expired-page/expired-page.component';
+import { AboutComponent } from './components/about/about.component';
+import { ContactComponent } from './components/contact/contact.component';
 
 const routes: Routes = [
   {
@@ -21,8 +23,19 @@ const routes: Routes = [
     component: RegisterComponent,
   },
   {
+    path: 'about',
+    component: AboutComponent,
+    // canActivate: [authGuard]
+  },
+  {
+    path: 'contact',
+    component: ContactComponent,
+    // canActivate: [authGuard]
+  },
+  {
     path: 'dashboard',
-    loadChildren: () => import('./components/dashboard/dashboard.module').then(m => m.DashboardModule) // Lazy loading the Dashboard module
+    loadChildren: () => import('./components/dashboard/dashboard.module').then(m => m.DashboardModule), // Lazy loading the Dashboard module
+    canActivate: [authGuard]
   },
   {
     path: 'expired-page',

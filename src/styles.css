@@ -12,7 +12,7 @@ body {
   
   .login-container {
     max-width: 400px;
-    margin: 100px auto; /* Center the container */
+    margin: 40px auto; /* Center the container */
     padding: 20px;
     background-color: #ffffff; /* White background for the form */
     border-radius: 8px; /* Rounded corners */

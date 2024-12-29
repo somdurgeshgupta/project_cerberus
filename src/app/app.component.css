@@ -1,0 +1,10 @@
+.main-content {
+    margin-left: 250px;
+    padding: 2rem;
+    transition: margin-left 0.3s;
+  }
+  
+  .main-content-collapsed {
+    margin-left: 0;
+  }
+  

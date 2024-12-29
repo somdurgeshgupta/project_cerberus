@@ -15,7 +15,10 @@ import { provideAnimationsAsync } from '@angular/platform-browser/animations/asy
 
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { authInterceptor } from './guards/auth.interceptor';
-import { ExpiredPageComponent } from './expired-page/expired-page.component';
+import { ExpiredPageComponent } from './components/expired-page/expired-page.component';
+import { AboutComponent } from './components/about/about.component';
+import { ContactComponent } from './components/contact/contact.component';
+import { HeaderCommonComponent } from './components/header-common/header-common.component';
 
 @NgModule({
   declarations: [
@@ -27,6 +30,9 @@ import { ExpiredPageComponent } from './expired-page/expired-page.component';
     HeaderComponent,
     SidebarComponent,
     ExpiredPageComponent,
+    AboutComponent,
+    ContactComponent,
+    HeaderCommonComponent,
   ],
   imports: [
     BrowserModule,

@@ -50,3 +50,9 @@
 .nav-container ul li a:hover {
   color: #007bff; /* Change color on hover */
 }
+
+/* Style for active navigation links */
+.active {
+  font-weight: bold;
+  color: #007bff;  /* Highlight color */
+}

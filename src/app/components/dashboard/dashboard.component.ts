@@ -8,14 +8,9 @@ import { Component, inject } from '@angular/core';
 })
 export class DashboardComponent {
   
-
-  
   isSidebarOpen: boolean = true;
 
   toggleSidebar() {
     this.isSidebarOpen = !this.isSidebarOpen;
   }
-  
-
-
 }

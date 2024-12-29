@@ -10,9 +10,10 @@ import { AuthService } from './services/auth.service';
 export class AppComponent {
   title = 'angular-latest-application';
 
-  constructor(private authService: AuthService) {}
+  constructor(public authService: AuthService) {}
 
   ngOnInit(): void {
     this.authService.autoLogin(); // Reinitialize logout timer or log out the user
   }
+  
 }

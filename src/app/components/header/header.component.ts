@@ -32,7 +32,9 @@ export class HeaderComponent {
       this.countdown = timeLeft;
       this.formattedCountdown = this.formatCountdown(this.countdown);
     });
-    this.checkuserID();
+    if(this.authService.isLoggedIn()){
+      this.checkuserID();
+    }
   }
 
   checkuserID() {
@@ -55,12 +57,18 @@ export class HeaderComponent {
   }
 
   formatCountdown(seconds: number): string {
+    // Convert seconds into minutes and seconds
     const minutes = Math.floor(seconds / 60);
     const secs = seconds % 60;
-    return `${this.pad(minutes)}:${this.pad(secs)}`;
+    const hours = Math.floor(minutes / 60); // Calculate hours
+    const remainingMinutes = minutes % 60; // Remaining minutes after hours
+
+    // Return formatted string as HH:MM:SS or similar
+    return `${this.pad(hours)}:${this.pad(remainingMinutes)}:${this.pad(secs)}`;
   }
 
   pad(value: number): string {
+    // Pad single-digit values with leading zeros
     return value < 10 ? `0${value}` : value.toString();
   }
 }
