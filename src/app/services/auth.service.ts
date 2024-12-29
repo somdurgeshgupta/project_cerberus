@@ -31,9 +31,6 @@ export class AuthService {
     return !!this.getToken();
   }
 
-
-  
-
   logout() {
     localStorage.removeItem(this.tokenKey);
   }

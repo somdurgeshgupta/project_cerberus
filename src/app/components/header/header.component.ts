@@ -14,7 +14,7 @@ export class HeaderComponent {
   authService = inject(AuthService);
   userService = inject(UserService);
   router = inject(Router);
-  userId: string | null = null;
+  profileData: any = {};
 
   @Output() toggleSidebar = new EventEmitter<void>();
 
@@ -27,8 +27,9 @@ export class HeaderComponent {
   }
 
   checkuserID() {
-    this.userId = this.userService.getUserIdfromToken();
-    console.log('User ID:', this.userId);
+    this.userService.getUserProfile(this.userService.getUserIdfromToken()).subscribe((res)=>{
+      this.profileData = res;
+    })
   }
 
 

@@ -1,11 +1,13 @@
-import { Injectable } from '@angular/core';
+import { inject, Injectable } from '@angular/core';
 import {jwtDecode} from 'jwt-decode';
-
+import { HttpClient } from '@angular/common/http';
+import { environment } from '../../environments/environment';
 @Injectable({
   providedIn: 'root',
 })
 export class UserService {
 
+  http = inject(HttpClient);
   private tokenKey = 'authToken'; // Key to store token in localStorage
 
   getUserIdfromToken(): string | null {
@@ -20,6 +22,10 @@ export class UserService {
       console.error('Invalid token:', error);
       return null;
     }
+  }
+
+  getUserProfile(userId:any){
+    return this.http.get(environment.API_URL + `users/${userId}`);
   }
   
 }

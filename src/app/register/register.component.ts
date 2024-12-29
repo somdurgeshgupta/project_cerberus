@@ -1,5 +1,6 @@
 // src/app/register/register.component.ts
 import { Component } from '@angular/core';
+import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { AuthService } from '../services/auth.service';
 import { Router } from '@angular/router';
 
@@ -10,25 +11,42 @@ import { Router } from '@angular/router';
   styleUrls: ['./register.component.css']
 })
 export class RegisterComponent {
-  username: string = '';
-  email: string = '';
-  password: string = '';
+  registerForm: FormGroup;
 
-  constructor(private authService : AuthService, private router: Router){
-    if(authService.isLoggedIn()){
+  constructor(
+    private fb: FormBuilder,
+    private authService: AuthService,
+    private router: Router
+  ) {
+    if (this.authService.isLoggedIn()) {
       this.router.navigate(['/dashboard']);
     }
+    this.registerForm = this.fb.group({
+      name: ['', Validators.required],
+      email: ['', [Validators.required, Validators.email]],
+      password: ['', [Validators.required, Validators.minLength(6)]]
+    });
   }
 
   onSubmit() {
-    // Handle registration with username, email, and password
-    console.log('Username:', this.username);
-    console.log('Email:', this.email);
-    console.log('Password:', this.password);
-    // Add your registration logic here
+    if (this.registerForm.valid) {
+      this.authService.registration(this.registerForm.value).subscribe(
+        (res:any) => {
+          localStorage.setItem('authToken', res.token);
+          this.router.navigateByUrl('/dashboard');
+        },
+        (error) => {
+          alert('Registration failed. Please try again.'); // Show error message
+        }
+      );
+    } else {
+      alert('Please fill in all required fields correctly.'); // Show validation error message
+    }
   }
 
   registerWithGoogle() {
+    // Handle Google registration
+   
     // Handle Google registration
     console.log('Register with Google');
     // Add your Google registration logic here

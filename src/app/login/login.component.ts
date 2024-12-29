@@ -17,14 +17,15 @@ import { UserService } from '../services/user.service';
 export class LoginComponent {
   loginForm: FormGroup;
 
-  constructor(private fb: FormBuilder, private authService: AuthService, private router: Router, private userService: UserService) {
+  constructor(private fb: FormBuilder, private authService: AuthService, private router: Router) {
+    if(authService.isLoggedIn()){
+      this.router.navigate(['/dashboard']);
+    }
     this.loginForm = this.fb.group({
       email: ['', [Validators.required, Validators.email]],
       password: ['', [Validators.required, Validators.minLength(6)]]
     });
-    if(authService.isLoggedIn()){
-      this.router.navigate(['/dashboard']);
-    }
+    
   }
   
   onSubmit() {
@@ -37,13 +38,11 @@ export class LoginComponent {
           }
         }),
         catchError((error: any) => {
-          console.error('Login failed:', error);
           alert('Login failed. Please check your credentials and try again.'); // Show error message
           return of(null); // Return a null observable to complete the stream
         })
       ).subscribe(); // Subscribe to execute the observable
     } else {
-      console.log('Form is invalid');
       alert('Please fill in all required fields correctly.'); // Show validation error message
     }
   }
