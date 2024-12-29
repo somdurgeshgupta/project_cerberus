@@ -1,39 +1,104 @@
 <div class="sidebar" [class.open]="isOpen">
   <div class="w-full rounded-lg border shadow-sm overflow-hidden bg-white border-stone-200 shadow-stone-950/5">
     <div class="w-full h-max rounded p-3">
-      <ul class="flex flex-col gap-0.5 min-w-60">
-        <li
-          class="sidebar-item"
-          routerLink="/dashboard/categories"
-          routerLinkActive="active"
-          [routerLinkActiveOptions]="{ exact: true }"
-        >
-          Categories
+      <ul class="flex flex-col gap-1 min-w-60">
+        <!-- Dashboard Links -->
+        <li>
+          <a
+            class="sidebar-item flex items-center gap-2 px-3 py-2 rounded hover:bg-stone-100 focus:bg-stone-100"
+            routerLink="/dashboard/categories"
+            routerLinkActive="active"
+            [routerLinkActiveOptions]="{ exact: true }"
+          >
+            <i class="icon-category"></i>
+            <span>Categories</span>
+          </a>
         </li>
-        <li
-          class="sidebar-item"
-          routerLink="/dashboard/products"
-          routerLinkActive="active"
-          [routerLinkActiveOptions]="{ exact: true }"
-        >
-          Products
+        <li>
+          <a
+            class="sidebar-item flex items-center gap-2 px-3 py-2 rounded hover:bg-stone-100 focus:bg-stone-100"
+            routerLink="/dashboard/products"
+            routerLinkActive="active"
+            [routerLinkActiveOptions]="{ exact: true }"
+          >
+            <i class="icon-product"></i>
+            <span>Products</span>
+          </a>
         </li>
-        <li
-          class="sidebar-item"
-          routerLink="/dashboard/orders"
-          routerLinkActive="active"
-          [routerLinkActiveOptions]="{ exact: true }"
-        >
-          Orders
+        <li>
+          <a
+            class="sidebar-item flex items-center gap-2 px-3 py-2 rounded hover:bg-stone-100 focus:bg-stone-100"
+            routerLink="/dashboard/orders"
+            routerLinkActive="active"
+            [routerLinkActiveOptions]="{ exact: true }"
+          >
+            <i class="icon-order"></i>
+            <span>Orders</span>
+          </a>
         </li>
-        <hr class="-mx-3 my-3 border-stone-200" />
-        <li class="sidebar-item">More</li>
-        <hr class="-mx-3 my-3 border-stone-200" />
-        <li
-          class="sidebar-item text-red-500 hover:bg-red-500/10 hover:text-error focus:bg-error/10 focus:text-error"
-          (click)="logout()"
-        >
-          Logout
+
+
+
+        <div [class.more-options]="true" [class.visible]="showMore">
+          <li>
+            <a
+              class="sidebar-item flex items-center gap-2 px-3 py-2 rounded hover:bg-stone-100 focus:bg-stone-100"
+              routerLink="/dashboard/categories"
+              routerLinkActive="active"
+              [routerLinkActiveOptions]="{ exact: true }"
+            >
+              <i class="icon-category"></i>
+              <span>Categories</span>
+            </a>
+          </li>
+          <li>
+            <a
+              class="sidebar-item flex items-center gap-2 px-3 py-2 rounded hover:bg-stone-100 focus:bg-stone-100"
+              routerLink="/dashboard/products"
+              routerLinkActive="active"
+              [routerLinkActiveOptions]="{ exact: true }"
+            >
+              <i class="icon-product"></i>
+              <span>Products</span>
+            </a>
+          </li>
+          <li>
+            <a
+              class="sidebar-item flex items-center gap-2 px-3 py-2 rounded hover:bg-stone-100 focus:bg-stone-100"
+              routerLink="/dashboard/orders"
+              routerLinkActive="active"
+              [routerLinkActiveOptions]="{ exact: true }"
+            >
+              <i class="icon-order"></i>
+              <span>Orders</span>
+            </a>
+          </li>
+        </div>
+        
+        <hr class="my-3 border-stone-200" />
+
+        <!-- More Section -->
+        <li>
+          <button
+            class="sidebar-item flex items-center gap-2 px-3 py-2 rounded hover:bg-stone-100 focus:bg-stone-100 w-full text-left"
+            (click)="showMoreOptions()"
+          >
+            <i class="icon-more"></i>
+            <span *ngIf="!showMore">More...</span>
+            <span *ngIf="showMore">Less...</span>
+          </button>
+        </li>
+        <hr class="my-3 border-stone-200" />
+
+        <!-- Logout -->
+        <li>
+          <button
+            class="sidebar-item flex items-center gap-2 px-3 py-2 rounded text-red-500 hover:bg-red-500/10 focus:bg-red-500/10 focus:text-red-500 w-full text-left"
+            (click)="logout()"
+          >
+            <i class="icon-logout"></i>
+            <span>Logout</span>
+          </button>
         </li>
       </ul>
     </div>

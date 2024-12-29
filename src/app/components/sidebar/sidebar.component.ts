@@ -15,6 +15,11 @@ export class SidebarComponent {
   authService = inject(AuthService);
   router = inject(Router);
 
+  showMore: boolean = false;
+
+  showMoreOptions(): void {
+    this.showMore = !this.showMore;
+  }
 
   logout(){
     this.authService.logout();

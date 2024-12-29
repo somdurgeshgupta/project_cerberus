@@ -11,3 +11,15 @@
 .sidebar.open {
   left: 0;
 }
+
+.more-options {
+  height: 0;
+  opacity: 0;
+  overflow: hidden;
+  transition: height 0.3s ease-in-out, opacity 0.3s ease-in-out;
+}
+
+.more-options.visible {
+  height: auto;
+  opacity: 1;
+}

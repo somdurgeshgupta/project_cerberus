@@ -1,6 +1,6 @@
 <!-- src/app/login/login.component.html -->
 <div class="login-container">
-  <h2>Login</h2>
+  <h1>Login</h1>
   <form [formGroup]="loginForm" (ngSubmit)="onSubmit()">
     <div class="form-group">
       <label for="email">Email:</label>
@@ -18,18 +18,21 @@
         <small *ngIf="loginForm.get('password')?.errors?.['minlength']">Password must be at least 6 characters long.</small>
       </div>
     </div>
-    <button type="submit" class="btn" [disabled]="loginForm.invalid">Login</button>
+    <div class="text-end">
+      <button type="submit" class="btn px-4" [disabled]="loginForm.invalid">Login</button>
+    </div>
+    
   </form>
   <div class="social-login">
     <h3>Or login with</h3>
-    <button class="btn social-btn" (click)="loginWithGoogle()">
+    <button class="btn social-btn mr-2" (click)="loginWithGoogle()">
       <img src="/google-logo.svg" alt="Google Logo" class="social-icon"> Google
     </button>
     <button class="btn social-btn" (click)="loginWithFacebook()">
       <img src="/facebook-logo.svg" alt="Facebook Logo" class="social-icon"> Facebook
     </button>
   </div>
-  <div class="redirect">
+  <div class="redirect text-center">
     <p>Don't have an account? <a routerLink="/register" class="link">Sign Up</a></p>
   </div>
 </div>
