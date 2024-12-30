@@ -4,6 +4,9 @@ import { DashboardComponent } from './dashboard.component';
 import { ProductsComponent } from './products/products.component';
 import { CategoriesComponent } from './categories/categories.component';
 import { OrdersComponent } from './orders/orders.component';
+import { AboutComponent } from '../about/about.component';
+import { ContactComponent } from '../contact/contact.component';
+import { PageNotFoundComponent } from '../page-not-found/page-not-found.component';
 
 const routes: Routes = [
   {
@@ -23,6 +26,14 @@ const routes: Routes = [
         component: OrdersComponent, // Nested route
       },
       {
+        path: 'contact',
+        component: ContactComponent, // Nested route
+      },
+      {
+        path: 'about',
+        component: AboutComponent, // Nested route
+      },
+      {
         path: '',
         redirectTo: 'categories', // Default child route
         pathMatch: 'full',
@@ -30,14 +41,13 @@ const routes: Routes = [
     ],
   },
   {
-    path: '**',
-    redirectTo: '', // Fallback route
+    path: '**', // Catch-all route
+    component: PageNotFoundComponent, // Display PageNotFoundComponent outside of Dashboard layout
   },
 ];
 
-
 @NgModule({
   imports: [RouterModule.forChild(routes)],
-  exports: [RouterModule]
+  exports: [RouterModule],
 })
-export class DashboardRoutingModule { }
+export class DashboardRoutingModule {}

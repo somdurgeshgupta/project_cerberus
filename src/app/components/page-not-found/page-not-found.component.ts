@@ -9,7 +9,7 @@ import { Router } from '@angular/router';
 })
 export class PageNotFoundComponent {
   router = inject(Router);
-  countdown: number = 3; // Countdown starting from 3 seconds
+  countdown: number = 1; // Countdown starting from 3 seconds
   intervalId: any; // To hold the interval ID
 
   constructor() {

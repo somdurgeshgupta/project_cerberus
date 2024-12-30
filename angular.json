@@ -23,6 +23,12 @@
         "build": {
           "builder": "@angular-devkit/build-angular:application",
           "options": {
+            "optimization": {
+              "styles": {
+                "minify": true,
+                "inlineCritical": true
+              }
+            },
             "outputPath": "dist/angular-latest-application",
             "index": "src/index.html",
             "browser": "src/main.ts",
@@ -40,7 +46,11 @@
               "@angular/material/prebuilt-themes/magenta-violet.css",
               "node_modules/bootstrap/dist/css/bootstrap.min.css",
               "node_modules/@fortawesome/fontawesome-free/css/all.css",
-              "src/styles.css"
+              "src/styles.css",
+              {
+                "input": "src/styles.css",
+                "inject": false
+              }
             ],
             "scripts": [
               "node_modules/bootstrap/dist/js/bootstrap.min.js"
