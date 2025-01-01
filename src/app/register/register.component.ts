@@ -32,7 +32,7 @@ export class RegisterComponent {
     if (this.registerForm.valid) {
       this.authService.registration(this.registerForm.value).subscribe(
         (res:any) => {
-          localStorage.setItem('authToken', res.token);
+          this.authService.login(res.token);
           this.router.navigateByUrl('/dashboard');
         },
         (error) => {

@@ -92,3 +92,9 @@ body {
   margin: 0; /* Remove default margins */
   padding-top: 80px; /* Add padding equal to header height */
 }
+
+a {
+  all: unset; /* Remove any overrides */
+  color: blue; /* Reset to default link color */
+  text-decoration: underline; /* Add underline back */
+}
