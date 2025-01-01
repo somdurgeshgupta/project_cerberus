@@ -1,59 +1,72 @@
 /* Style for the header */
 .header {
-    background-color: #c7cbce; /* Light background for header */
-    padding: 18px 20px; /* Padding around the header */
-    box-shadow: 0px 4px 8px rgba(0, 0, 0, 0.1);
-    display: flex; /* Enable Flexbox on the header */
-    justify-content: space-between; /* Space out the children (button on the left and nav on the right) */
-    align-items: center; /* Vertically center the content */
-  }
-  
-  /* Dashboard button style */
-  .header>a {
-    background-color: #536a83; /* Button color */
-    color: white; /* Button text color */
-    border: none; /* Remove border */
-    padding: 10px 20px; /* Padding inside the button */
-    font-size: 16px; /* Font size */
-    cursor: pointer; /* Pointer cursor on hover */
-    border-radius: 4px; /* Rounded corners for the button */
-  }
-  
-  /* Flex container for navigation */
-  .nav-container {
-    display: flex; /* Enable Flexbox for navigation */
-    justify-content: flex-end; /* Align navigation links to the right */
-    align-items: center; /* Vertically center the content */
-  }
-  
-  /* Navigation links */
-  .nav-container ul {
-    list-style-type: none; /* Remove list bullets */
-    margin: 0; /* Remove margin */
-    padding: 0; /* Remove padding */
-    display: flex; /* Display links in a row */
-  }
-  
-  /* Navigation link item style */
-  .nav-container ul li {
-    margin-left: 20px; /* Space between list items */
-  }
-  
-  /* Link style */
-  .nav-container ul li a {
-    text-decoration: none; /* Remove underline */
-    color: #333; /* Link color */
-    font-size: 16px; /* Font size for links */
-  }
-  
-  /* Active link style */
-  .nav-container ul li a:hover {
-    color: #007bff; /* Change color on hover */
-  }
-  
-  /* Style for active navigation links */
-  .active {
-    font-weight: bold;
-    color: #007bff;  /* Highlight color */
-  }
-  
+  background-color: #c7cbce; /* Light background for header */
+  padding: 18px 20px; /* Padding around the header */
+  box-shadow: 0px 4px 8px rgba(0, 0, 0, 0.1); /* Subtle shadow */
+  display: flex; /* Enable Flexbox on the header */
+  justify-content: space-between; /* Space out the children */
+  align-items: center; /* Vertically center the content */
+  position: sticky; /* Sticky position for the header */
+  top: 0; /* Stick to the top of the viewport */
+  z-index: 1000; /* Ensure the header stays above other content */
+}
+
+/* Dashboard button style */
+.header>a {
+  background-color: #536a83; /* Button color */
+  color: white; /* Button text color */
+  border: none; /* Remove border */
+  padding: 10px 20px; /* Padding inside the button */
+  font-size: 16px; /* Font size */
+  cursor: pointer; /* Pointer cursor on hover */
+  border-radius: 4px; /* Rounded corners */
+}
+
+/* Navigation links */
+/* Flex container for navigation */
+.nav-container {
+  display: flex; /* Enable Flexbox for navigation */
+  justify-content: flex-end; /* Align all navigation links to the right */
+  align-items: center; /* Vertically center the content */
+  flex-grow: 1; /* Allow the navigation container to take up available space */
+  margin-right: 50px;
+}
+
+/* Navigation links */
+.nav-container ul {
+  list-style-type: none; /* Remove list bullets */
+  margin: 0; /* Remove margin */
+  padding: 0; /* Remove padding */
+  display: flex; /* Display links in a row */
+  justify-content: flex-end; /* Ensure links stay aligned to the right */
+}
+
+/* Navigation link item style */
+.nav-container ul li {
+  margin-left: 20px; /* Space between list items */
+}
+
+
+/* Link style */
+.nav-container ul li a {
+  text-decoration: none; /* Remove underline */
+  color: #333; /* Link color */
+  font-size: 16px; /* Font size for links */
+}
+
+/* Active link style */
+.nav-container ul li a:hover {
+  color: #007bff; /* Change color on hover */
+}
+
+/* Style for active navigation links */
+.active {
+  font-weight: bold;
+  color: #007bff;  /* Highlight color */
+}
+
+/* Adjust the body to avoid overlap with the fixed header */
+body {
+  margin: 0; /* Remove default margins */
+  padding-top: 80px; /* Add padding equal to header height */
+}

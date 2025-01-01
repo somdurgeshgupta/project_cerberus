@@ -1,6 +1,6 @@
 import { Component, EventEmitter, inject, Output } from '@angular/core';
 import { AuthService } from '../../services/auth.service';
-import { Router } from '@angular/router';
+import { NavigationEnd, Router } from '@angular/router';
 import { UserService } from '../../services/user.service';
 import { Subscription } from 'rxjs';
 
@@ -23,8 +23,8 @@ export class HeaderComponent {
 
   @Output() toggleSidebar = new EventEmitter<void>();
 
-  onToggleSidebar() {
-    this.toggleSidebar.emit();
+  onToggleSidebar(req?:any) {
+    req ? this.toggleSidebar.emit(req) : this.toggleSidebar.emit();
   }
 
   ngOnInit(): void {
@@ -34,7 +34,15 @@ export class HeaderComponent {
     });
     if(this.authService.isLoggedIn()){
       this.checkuserID();
-    }
+    } 
+    this.router.events.subscribe((event) => {
+      if (event instanceof NavigationEnd) {
+        // Check if the current route matches About or Contact
+        if (['/dashboard/about', '/dashboard/contact'].includes(event.urlAfterRedirects)) {
+          this.onToggleSidebar(true); // Close the sidebar
+        }
+      }
+    });
   }
 
   checkuserID() {

@@ -1,4 +1,4 @@
-<app-header (toggleSidebar)="toggleSidebar()"></app-header>
+<app-header (toggleSidebar)="toggleSidebar($event)"></app-header>
 <app-sidebar [isOpen]="isSidebarOpen"></app-sidebar>
 <div class="main-content" [ngClass]="{'main-content-collapsed': !isSidebarOpen}">
   <router-outlet></router-outlet>
