@@ -12,6 +12,12 @@
       <li routerLinkActive="active" [routerLinkActiveOptions]="{ exact: true }">
         <a routerLink="/contact">Contact</a>
       </li>
+      <li *ngIf="!registerRoute"  routerLinkActive="active" [routerLinkActiveOptions]="{ exact: true }">
+        <a class="login-button" routerLink="/login">Login</a>
+      </li>
+      <li *ngIf="registerRoute" routerLinkActive="active" [routerLinkActiveOptions]="{ exact: true }">
+        <a class="login-button" routerLink="/register">Register</a>
+      </li>
     </ul>
   </nav>
 </header>

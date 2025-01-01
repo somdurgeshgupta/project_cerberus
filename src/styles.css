@@ -81,3 +81,9 @@ body {
   }
 html, body { height: 100%; }
 body { margin: 0; font-family: Roboto, "Helvetica Neue", sans-serif; }
+
+a {
+  all: unset; /* Remove any overrides */
+  color: blue; /* Reset to default link color */
+  text-decoration: underline; /* Add underline back */
+}

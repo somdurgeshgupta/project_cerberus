@@ -11,6 +11,10 @@
   z-index: 1000; /* Ensure the header stays above other content */
 }
 
+/* Style for the login button in the header */
+
+
+
 /* Dashboard button style */
 .header>a {
   background-color: #536a83; /* Button color */
@@ -63,6 +67,24 @@
 .active {
   font-weight: bold;
   color: #007bff;  /* Highlight color */
+}
+
+.login-button {
+  background-color: #c7cbce; /* Button background */
+  color: #333; /* Text color */
+  border: 2px solid rgba(0, 0, 0, 0.1); /* Subtle border */
+  /* border-color: black; */
+  border-radius: 10px; /* Rounded corners */
+  padding: 5px 10px; /* Padding inside the button */
+  font-size: 16px; /* Font size for text */
+  cursor: pointer; /* Pointer cursor on hover */
+  /* transition: all 0.3s ease; Smooth hover effect */
+}
+
+.login-button:hover {
+  background-color: #c7cbce; /* Change background on hover */
+  color: white; /* Change text color on hover */
+  border-color: black; /* Darker border on hover */
 }
 
 /* Adjust the body to avoid overlap with the fixed header */

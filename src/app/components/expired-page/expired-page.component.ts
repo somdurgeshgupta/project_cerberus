@@ -1,6 +1,7 @@
 import { Component, inject, Input, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
 import { ActivatedRoute } from '@angular/router';
+import { AuthService } from '../../services/auth.service';
 
 @Component({
   selector: 'app-expired-page',
@@ -11,39 +12,28 @@ import { ActivatedRoute } from '@angular/router';
 })
 export class ExpiredPageComponent implements OnInit {
   router = inject(Router);
+  authService = inject(AuthService);
   countdown: number = 3; // Countdown starting from 3 seconds
   intervalId: any; // To hold the interval ID
   logout:boolean = false;
 
   constructor(private route: ActivatedRoute) {
     // Start the countdown
-    this.expiredValueCheck();
     this.loadCountdownState();
   }
 
   ngOnInit(): void {
+    this.route.queryParams.subscribe(params => {
+      if (params['reason'] === 'sessionexpired') {
+        this.logout = false;
+      } else {
+        this.logout = true;
+      }
+    });
     this.startCountdown();
   }
 
-  expiredValueCheck(): void {
-    this.route.queryParams.subscribe(params => {
-      const reason = params['reason'];
-      switch (reason) {
-        case 'sessionexpired':
-          this.logout = false;
-          break;
-        case 'logoutexpired':
-          this.logout = true;
-          break;
-        default:
-          this.router.navigateByUrl('/');
-      }
-    });
-  }
-  
-
   loadCountdownState() {
-    console.log("hellosdfoaid")
     const savedCountdown = sessionStorage.getItem('countdown');
     if (savedCountdown) {
       this.countdown = parseInt(savedCountdown, 10);
