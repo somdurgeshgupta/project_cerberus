@@ -24,8 +24,8 @@ export const authInterceptor: HttpInterceptorFn = (req, next) => {
       if (error.status === 401) {
         // Handle JWT expiration
         console.warn('JWT expired. Logging out the user...');
-        localStorage.removeItem('authToken'); // Clear token from storage
-        router.navigate(['/login']); // Redirect to login page
+        // localStorage.removeItem('authToken'); // Clear token from storage
+        // router.navigate(['/login']); // Redirect to login page
       }
 
       // Rethrow the error so other handlers can process it
