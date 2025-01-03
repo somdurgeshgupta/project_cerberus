@@ -1,3 +1,4 @@
+declare var google:any;
 import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { environment } from '../../environments/environment';
@@ -56,6 +57,13 @@ export class AuthService {
 
   logout(btnCLicked?: boolean): void {
     console.warn('Session expired or user logged out. Logging out the user...');
+    if (typeof google !== 'undefined') {
+      google.accounts.id.revoke(localStorage.getItem('googleAuthToken') || '', (done: any) => {
+        console.log('Google token revoked.');
+      });
+    } else {
+      console.error('Google object is not available.');
+    }
     this.clearSession(); // Clear all session-related data and timers
     if(btnCLicked){
       this.router.navigate(['/expired-page']);
