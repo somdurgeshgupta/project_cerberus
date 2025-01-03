@@ -28,10 +28,13 @@ export class HeaderComponent {
   }
 
   ngOnInit(): void {
-    this.timerSubscription = this.authService.logoutTimer$.subscribe((timeLeft) => {
-      this.countdown = timeLeft;
-      this.formattedCountdown = this.formatCountdown(this.countdown);
-    });
+    // setInterval(()=>{
+    this.authService.autoLogin();
+      this.timerSubscription = this.authService.logoutTimer$.subscribe((timeLeft) => {
+        this.countdown = timeLeft;
+        this.formattedCountdown = this.formatCountdown(this.countdown);
+      });
+    // },100)
     if(this.authService.isLoggedIn()){
       this.checkuserID();
     } 
@@ -53,8 +56,7 @@ export class HeaderComponent {
 
 
   logout() {
-    this.authService.logout();
-    this.router.navigateByUrl('');
+    this.authService.logout(true);
   }
 
   ngOnDestroy(): void {

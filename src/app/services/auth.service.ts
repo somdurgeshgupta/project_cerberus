@@ -31,6 +31,11 @@ export class AuthService {
     return localStorage.getItem(this.tokenKey);
   }
 
+  googlelogin(token: string){
+    let data = { "tokendata": token }
+    return this.http.post(environment.API_URL + 'googlelogin', data);
+  }
+
   login(token: string): void {
     // Clear any existing state before starting a new session
     this.clearSession();
@@ -119,8 +124,7 @@ export class AuthService {
     // Clear timers and localStorage
     this.clearTimer();
     this.logoutTimerSubject.next(0);
-    localStorage.removeItem('authToken');
-    localStorage.removeItem('tokenExpiration');
+    localStorage.clear();
   }
 
   isLoggedIn(): boolean {

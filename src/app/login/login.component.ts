@@ -1,4 +1,6 @@
 declare var google:any;
+declare var FB:any;
+
 // src/app/login/login.component.ts
 import { Component, OnInit } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
@@ -7,7 +9,6 @@ import { Router } from '@angular/router';
 
 import { catchError, tap } from 'rxjs/operators';
 import { of } from 'rxjs';
-import { UserService } from '../services/user.service';
 
 @Component({
   standalone: false,
@@ -30,8 +31,14 @@ export class LoginComponent implements OnInit{
   }
 
   ngOnInit(): void {
-    this.loginWithGoogle();
+    const interval = setInterval(() => {
+      if (typeof google !== 'undefined') {
+        this.loginWithGoogle();
+        clearInterval(interval);
+      }
+    }, 100);
   }
+  
   
   onSubmit() {
     if (this.loginForm.valid) {
@@ -53,30 +60,83 @@ export class LoginComponent implements OnInit{
     }
   }
 
-  loginWithGoogle() {
-    google.accounts.id.initialize({
-      client_id: '855831171805-hbharbt1j31v67i2ruve5trh2pa50blb.apps.googleusercontent.com',
-      callback: (res:any)=>{
-        this.authService.login(res.credential);
-            this.router.navigateByUrl('/dashboard'); // Redirect to dashboard on successful login
-      }
-    })
-
-    google.accounts.id.renderButton(document.getElementById("google-btn"),{
-      theme: 'filled_blue',
-      size: 'large',
-      shape: 'rectangle',
-      width: 350,
-
-    })
-    // Handle Google login
-    console.log('Login with Google');
-    // Add your Google login logic here
+  loginWithGoogle(): void {
+    // Check if the DOM element exists
+    const googleButton = document.getElementById('google-btn');
+    if (!googleButton) {
+      console.error('Google button element not found.');
+      return;
+    }
+  
+    try {
+      // Initialize Google Identity Services
+      google.accounts.id.initialize({
+        client_id: '855831171805-hbharbt1j31v67i2ruve5trh2pa50blb.apps.googleusercontent.com', // Replace with your actual client ID
+        callback: (response: any) => {
+          console.log('Google Login Response:', response);
+          if (!response || !response.credential) {
+            console.error('No credential received from Google.');
+            return;
+          }
+  
+          // Attempt to store the token in localStorage
+          try {
+            
+            console.log('Google token saved to localStorage.');
+          } catch (storageError) {
+            console.error('Failed to save token to localStorage:', storageError);
+          }
+  
+          // Send the Google credential to the backend for verification
+          this.authService.googlelogin(response.credential).subscribe(
+            (res: any) => {
+              if (res.token) {
+                this.authService.login(res.token);
+                localStorage.setItem('googleAuthToken', response.credential);
+                this.router.navigateByUrl('/dashboard');
+              } else {
+                console.error('Token not received from backend.');
+              }
+            },
+            (error) => {
+              console.error('Error during backend login:', error);
+            }
+          );
+        },
+      });
+  
+      // Render Google Sign-In Button
+      google.accounts.id.renderButton(googleButton, {
+        theme: 'filled_blue',
+        size: 'large',
+        shape: 'rectangle',
+        width: 200, // Adjust width for better appearance
+      });
+  
+      console.log('Google login initialized.');
+    } catch (error) {
+      console.error('Error during Google login initialization:', error);
+    }
   }
-
+  
+  
   loginWithFacebook() {
-    // Handle Facebook login
-    console.log('Login with Facebook');
-    // Add your Facebook login logic here
+    FB.init({
+      appId: 'YOUR_FACEBOOK_APP_ID', // Replace with your Facebook App ID
+      cookie: true,
+      xfbml: true,
+      version: 'v15.0',
+    });
+
+    FB.login((response: any) => {
+      if (response.authResponse) {
+        const accessToken = response.authResponse.accessToken;
+        this.authService.login(accessToken); // Send the token to your backend
+        this.router.navigateByUrl('/dashboard'); // Redirect to dashboard
+        console.log('Facebook login successful!', response);
+      } else {
+        console.log('Facebook login failed!', response);
+      }
+    }, { scope: 'email' }); // Request email permissions
   }
 }
