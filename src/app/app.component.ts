@@ -13,7 +13,6 @@ export class AppComponent {
   constructor(public authService: AuthService) {}
 
   ngOnInit(): void {
-    this.authService.autoLogin(); // Reinitialize logout timer or log out the user
   }
   
 }
