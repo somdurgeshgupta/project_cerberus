@@ -28,13 +28,11 @@ export class HeaderComponent {
   }
 
   ngOnInit(): void {
-    // setInterval(()=>{
     this.authService.autoLogin();
       this.timerSubscription = this.authService.logoutTimer$.subscribe((timeLeft) => {
         this.countdown = timeLeft;
         this.formattedCountdown = this.formatCountdown(this.countdown);
       });
-    // },100)
     if(this.authService.isLoggedIn()){
       this.checkuserID();
     } 

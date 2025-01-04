@@ -7,6 +7,7 @@ import { authGuard } from '../app/guards/auth.guard';
 import { ExpiredPageComponent } from './components/expired-page/expired-page.component';
 import { AboutComponent } from './components/about/about.component';
 import { ContactComponent } from './components/contact/contact.component';
+import { ForgotPasswordComponent } from './forgot-password/forgot-password.component';
 
 const routes: Routes = [
   {
@@ -23,6 +24,10 @@ const routes: Routes = [
     component: RegisterComponent
   },
   {
+    path: 'forgotpassword',
+    component: ForgotPasswordComponent
+  },
+  {
     path: 'about',
     component: AboutComponent
   },
@@ -30,6 +35,7 @@ const routes: Routes = [
     path: 'contact',
     component: ContactComponent
   },
+  
   {
     path: 'dashboard',
     loadChildren: () => import('./components/dashboard/dashboard.module').then(m => m.DashboardModule), // Lazy loading the Dashboard module

@@ -27,5 +27,7 @@ export class UserService {
   getUserProfile(userId:any){
     return this.http.get(environment.API_URL + `users/${userId}`);
   }
+
+  
   
 }

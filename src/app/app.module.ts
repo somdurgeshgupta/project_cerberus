@@ -19,6 +19,7 @@ import { ExpiredPageComponent } from './components/expired-page/expired-page.com
 import { AboutComponent } from './components/about/about.component';
 import { ContactComponent } from './components/contact/contact.component';
 import { HeaderCommonComponent } from './components/header-common/header-common.component';
+import { ForgotPasswordComponent } from './forgot-password/forgot-password.component';
 
 @NgModule({
   declarations: [
@@ -33,6 +34,7 @@ import { HeaderCommonComponent } from './components/header-common/header-common.
     AboutComponent,
     ContactComponent,
     HeaderCommonComponent,
+    ForgotPasswordComponent,
   ],
   imports: [
     BrowserModule,

@@ -18,6 +18,9 @@
         <small *ngIf="loginForm.get('password')?.errors?.['minlength']">Password must be at least 6 characters long.</small>
       </div>
     </div>
+    <div class="text-right mb-2">
+      <a href="/forgotpassword">Forgot Password?</a>
+    </div>
     <div class="text-end">
       <button type="submit" class="btn login-btn px-4" [disabled]="loginForm.invalid">Login</button>
     </div>
@@ -26,23 +29,9 @@
   </form>
   <div class="social-login mb-4">
     <h3 class="mb-2">Or login with</h3>
-    <div class="social-buttons">
+    <div class="social-buttons justify-content-center">
       <div id="google-btn">
-
       </div>
-      <!-- <button class="btn social-btn mr-2" (click)="loginWithGoogle()">
-        <img src="/google-logo.svg" alt="Google Logo" class="social-icon"> Google
-      </button> -->
-      <!-- <button class="btn social-btn" (click)="loginWithFacebook()">
-        <img src="/facebook-logo.svg" alt="Facebook Logo" class="social-icon"> Facebook
-      </button> -->
-      <div>
-        <button (click)="loginWithFacebook()" style="background-color: #3b5998; color: white; padding: 10px 20px; border: none; border-radius: 5px; cursor: pointer;">
-          Login with Facebook
-        </button>
-      </div>
-
-      
     </div>
   </div>
   <div class="redirect text-center">

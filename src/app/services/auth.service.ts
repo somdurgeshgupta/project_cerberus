@@ -143,4 +143,68 @@ export class AuthService {
     }
     return false;
   }
+
+
+  loginWithGoogle(): void {
+    // Check if the DOM element exists
+    const googleButton = document.getElementById('google-btn');
+    if (!googleButton) {
+      console.error('Google button element not found.');
+      return;
+    }
+  
+    try {
+      // Initialize Google Identity Services
+      google.accounts.id.initialize({
+        client_id: '855831171805-hbharbt1j31v67i2ruve5trh2pa50blb.apps.googleusercontent.com', // Replace with your actual client ID
+        callback: (response: any) => {
+          console.log('Google Login Response:', response);
+          if (!response || !response.credential) {
+            console.error('No credential received from Google.');
+            return;
+          }
+  
+          // Attempt to store the token in localStorage
+          try {
+            
+            console.log('Google token saved to localStorage.');
+          } catch (storageError) {
+            console.error('Failed to save token to localStorage:', storageError);
+          }
+  
+          // Send the Google credential to the backend for verification
+          this.googlelogin(response.credential).subscribe(
+            (res: any) => {
+              if (res.token) {
+                this.login(res.token);
+                localStorage.setItem('googleAuthToken', response.credential);
+                this.router.navigateByUrl('/dashboard');
+              } else {
+                console.error('Token not received from backend.');
+              }
+            },
+            (error) => {
+              console.error('Error during backend login:', error);
+            }
+          );
+        },
+      });
+  
+      // Render Google Sign-In Button
+      google.accounts.id.renderButton(googleButton, {
+        theme: 'filled_blue',
+        size: 'pill',
+        shape: 'rectangle',
+        width: 200, // Adjust width for better appearance
+      });
+  
+      console.log('Google login initialized.');
+    } catch (error) {
+      console.error('Error during Google login initialization:', error);
+    }
+  }
+
+  forgotpassword(val:object){
+    return this.http.post(environment.API_URL + 'users/forgetpassword', val);
+  }
 }

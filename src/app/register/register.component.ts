@@ -1,5 +1,5 @@
 // src/app/register/register.component.ts
-import { Component } from '@angular/core';
+import { Component, OnInit } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { AuthService } from '../services/auth.service';
 import { Router } from '@angular/router';
@@ -10,7 +10,7 @@ import { Router } from '@angular/router';
   templateUrl: './register.component.html',
   styleUrls: ['./register.component.css']
 })
-export class RegisterComponent {
+export class RegisterComponent implements OnInit{
   registerForm: FormGroup;
 
   constructor(
@@ -28,6 +28,9 @@ export class RegisterComponent {
     });
   }
 
+  ngOnInit(): void {
+    this.registerWithGoogle();
+  }
   onSubmit() {
     if (this.registerForm.valid) {
       this.authService.registration(this.registerForm.value).subscribe(
@@ -44,14 +47,9 @@ export class RegisterComponent {
     }
   }
 
-  registerWithGoogle() {
-    // Handle Google registration
-   
-    // Handle Google registration
-    console.log('Register with Google');
-    // Add your Google registration logic here
+  registerWithGoogle(): void {
+    this.authService.loginWithGoogle();
   }
-
   registerWithFacebook() {
     // Handle Facebook registration
     console.log('Register with Facebook');

@@ -30,18 +30,14 @@
       <button type="submit" class="btn login-btn px-4" [disabled]="registerForm.invalid">Register</button>
     </div>
   </form>
-  <div class="social-login mb-4">
+  <div class="social-login mb-4 text-center">
     <h3 class="mb-2">Or login with</h3>
-    <div class="social-buttons">
-      <button class="btn social-btn mr-2" (click)="registerWithGoogle()">
-        <img src="/google-logo.svg" alt="Google Logo" class="social-icon"> Google
-      </button>
-      <button class="btn social-btn" (click)="registerWithFacebook()">
-        <img src="/facebook-logo.svg" alt="Facebook Logo" class="social-icon"> Facebook
-      </button>
+    <div class="social-buttons justify-content-center">
+      <div id="google-btn">
+      </div>
     </div>
   </div>
-  <div class="redirect">
+  <div class="redirect text-center">
     <p>Already have an account? <a routerLink="/login" class="link">Login</a></p>
   </div>
 </div>
