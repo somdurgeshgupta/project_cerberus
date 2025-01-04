@@ -74,3 +74,12 @@
   color: white; /* Change text color on hover */
   border-color: black; /* Darker border on hover */
 }
+
+.profile-picture {
+  width: 40px; /* Adjust the size as needed */
+  height: 40px; /* Match the width for a perfect circle */
+  border-radius: 50%; /* Makes the image circular */
+  object-fit: cover; /* Ensures the image is properly scaled within the circle */
+  border: 2px solid #ddd; /* Optional: Adds a border around the image */
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1); /* Optional: Adds a slight shadow */
+}

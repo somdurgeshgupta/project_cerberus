@@ -6,10 +6,10 @@
     </button>
     
     <strong>{{profileData.name}} ({{profileData.email}})</strong>
+    <img class="img-fluid w-10 profile-picture" [src]="profileData.picture" alt="profile picture" />
 
-    <div class="header">
-      <span>Session expires in: {{ formattedCountdown }}</span>
-    </div>
+
+    
     
     <!-- Navigation links -->
 
@@ -23,10 +23,12 @@
       <li routerLinkActive="active" [routerLinkActiveOptions]="{ exact: true }">
         <a routerLink="/dashboard/contact">Contact</a>
       </li>
-      <li>
-        <a class="login-button" (click)="logout()">Logout</a>
-      </li>
     </ul>
+    <div class="header">
+      <span>Session expires in: {{ formattedCountdown }}</span>
+    </div>
+
+    <a class="login-button" (click)="logout()">Logout</a>
   </nav>
 </header>
 
