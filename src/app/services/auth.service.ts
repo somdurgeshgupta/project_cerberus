@@ -204,7 +204,7 @@ export class AuthService {
     }
   }
 
-  forgotpassword(val:object){
+  forgotpassword(val:any){
     return this.http.post(environment.API_URL + 'users/forgetpassword', val);
   }
 }

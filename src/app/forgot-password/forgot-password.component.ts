@@ -2,6 +2,8 @@ import { Component } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { AuthService } from '../services/auth.service';
 import { Router } from '@angular/router';
+import { catchError } from 'rxjs/operators';
+import { of } from 'rxjs';
 
 @Component({
   selector: 'app-forgot-password',
@@ -27,14 +29,37 @@ export class ForgotPasswordComponent {
     });
   }
 
-  onSubmit() {
-    this.authService
-      .forgotpassword(this.forgotpasswordForm.value)
-      .subscribe((res: any) => {
-        if (res.success) {
-          alert(res.message);
-          this.router.navigate(['']);
+  
+
+onSubmit() {
+  if (this.forgotpasswordForm.valid) {
+    this.authService.forgotpassword(this.forgotpasswordForm.value)
+      .pipe(
+        catchError((err: any) => {
+          // Convert the error response to a custom object for `next` to handle
+          console.error('Error occurred:', err);
+          return of({ success: false, message: err.error?.message || 'Request failed with status ' + err.status });
+        })
+      )
+      .subscribe({
+        next: (res: any) => {
+          if (res?.success) {
+            alert(res.message); // Replace with notification service if available
+            this.router.navigate(['']);
+          } else {
+            alert(res.message || 'Something went wrong.'); // Replace with notification service if available
+          }
+        },
+        complete: () => {
+          console.log('Password reset request completed.');
         }
       });
+  } else {
+    alert('Please fill in all required fields correctly.');
   }
+}
+
+  
+  
+  
 }
