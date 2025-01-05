@@ -63,15 +63,7 @@ body {
     gap: 10px; /* Space between buttons */
   }
   
-  .social-btn {
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    gap: 8px; /* Space between image and text */
-    padding: 8px 16px;
-    white-space: nowrap; /* Prevent line breaks */
-    background-color: #f8f5f5;
-  }
+
   
   .social-icon {
     width: 20px;
@@ -113,11 +105,6 @@ body {
     box-shadow: none; /* Remove shadow */
   }
   
-  
-  
-  .social-btn:hover {
-    background-color: #e0e0e0; /* Darker background on hover */
-  }
 html, body { height: 100%; }
 body { margin: 0; font-family: Roboto, "Helvetica Neue", sans-serif; }
 
