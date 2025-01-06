@@ -2,109 +2,109 @@
 @tailwind components;
 @tailwind utilities;
 
-
 /* You can add global styles to this file, and also import other style files */
 /* src/app/login/login.component.css and src/app/register/register.component.css */
 body {
-    background-color: #f0f2f5; /* Light background color */
-    font-family: 'Arial', sans-serif; /* Font style */
-  }
-  
-  .login-container {
-    max-width: 400px;
-    margin: 40px auto; /* Center the container */
-    padding: 20px;
-    background-color: #ffffff; /* White background for the form */
-    border-radius: 8px; /* Rounded corners */
-    box-shadow: 0 4px 20px rgba(0, 0, 0, 0.1); /* Subtle shadow */
-  }
-  
-  h1 {
-    text-align: center;
-    color: #333; /* Darker text color */
-    margin-bottom: 20px; /* Space below the heading */
-    font-weight:600;
-    font-size: 30px;
-    color: rgb(61, 91, 120);
-  }
-  
-  .form-group {
-    margin-bottom: 15px; /* Space between form groups */
-  }
-  
-  label {
-    display: block; /* Block display for labels */
-    margin-bottom: 5px; /* Space below labels */
-    color: #555; /* Slightly lighter text color */
-  }
-  
-  input[type="text"],
-  input[type="email"],
-  input[type="password"] {
-    width: calc(100%); /* Full width minus padding */
-    padding: 10px; /* Padding inside inputs */
-    border: 1px solid #ccc; /* Light border */
-    border-radius: 4px; /* Rounded corners */
-    font-size: 16px; /* Font size */
-    box-sizing: border-box; /* Include padding and border in element's total width and height */
-  }
-  
-  input[type="text"]:focus,
-  input[type="email"]:focus,
-  input[type="password"]:focus {
-    border-color: #007bff; /* Blue border on focus */
-    outline: none; /* Remove default outline */
-  }
-  
+  background-color: #f0f2f5; /* Light background color */
+  font-family: "Arial", sans-serif; /* Font style */
+}
 
+.login-container {
+  max-width: 400px;
+  margin: 40px auto; /* Center the container */
+  padding: 20px;
+  background-color: #ffffff; /* White background for the form */
+  border-radius: 8px; /* Rounded corners */
+  box-shadow: 0 4px 20px rgba(0, 0, 0, 0.1); /* Subtle shadow */
+}
 
-  .social-buttons {
-    display: flex;
-    gap: 10px; /* Space between buttons */
-  }
-  
+h1 {
+  text-align: center;
+  color: #333; /* Darker text color */
+  margin-bottom: 20px; /* Space below the heading */
+  font-weight: 600;
+  font-size: 30px;
+  color: rgb(61, 91, 120);
+}
 
-  
-  .social-icon {
-    width: 20px;
-    height: 20px;
-  }
+.form-group {
+  margin-bottom: 15px; /* Space between form groups */
+}
 
-  .login-btn {
-    background-color: #007bff; /* Primary color */
-    color: #fff; /* Text color */
-    border: none; /* Remove border */
-    border-radius: 4px; /* Rounded corners */
-    /* padding: 8px 50px; Button padding */
-    font-size: 16px; /* Font size */
-    font-weight: 600; /* Slightly bold text */
-    cursor: pointer; /* Pointer cursor for interactivity */
-    transition: all 0.3s ease; /* Smooth transition for hover effects */
-    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1); /* Subtle shadow */
-    width: 100%;
-    margin-bottom: 20px;
-  }
-  
-  .login-btn:hover {
-    background-color: #0056b3; /* Darker shade on hover */
-    box-shadow: 0 6px 10px rgba(0, 0, 0, 0.15); /* More prominent shadow */
-    transform: translateY(-2px); /* Slight lift on hover */
-    color: #ffffff;
-  }
-  
-  .login-btn:active {
-    /* background-color: #00408f; Even darker shade for active state */
-    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.2); /* Compress shadow on click */
-    transform: translateY(1px); /* Slight depression on click */
-  }
-  
-  .login-btn:disabled {
-    background-color: #d6d6d6; /* Light grey for disabled state */
-    color: #888; /* Muted text color */
-    cursor: not-allowed; /* Show not-allowed cursor */
-    box-shadow: none; /* Remove shadow */
-  }
-  
-html, body { height: 100%; }
-body { margin: 0; font-family: Roboto, "Helvetica Neue", sans-serif; }
+label {
+  display: block; /* Block display for labels */
+  margin-bottom: 5px; /* Space below labels */
+  color: #555; /* Slightly lighter text color */
+}
 
+input[type="text"],
+input[type="email"],
+input[type="password"] {
+  width: calc(100%); /* Full width minus padding */
+  padding: 10px; /* Padding inside inputs */
+  border: 1px solid #ccc; /* Light border */
+  border-radius: 4px; /* Rounded corners */
+  font-size: 16px; /* Font size */
+  box-sizing: border-box; /* Include padding and border in element's total width and height */
+}
+
+input[type="text"]:focus,
+input[type="email"]:focus,
+input[type="password"]:focus {
+  border-color: #007bff; /* Blue border on focus */
+  outline: none; /* Remove default outline */
+}
+
+.social-buttons {
+  display: flex;
+  gap: 10px; /* Space between buttons */
+}
+
+.social-icon {
+  width: 20px;
+  height: 20px;
+}
+
+.login-btn {
+  background-color: #007bff; /* Primary color */
+  color: #fff; /* Text color */
+  border: none; /* Remove border */
+  border-radius: 4px; /* Rounded corners */
+  /* padding: 8px 50px; Button padding */
+  font-size: 16px; /* Font size */
+  font-weight: 600; /* Slightly bold text */
+  cursor: pointer; /* Pointer cursor for interactivity */
+  transition: all 0.3s ease; /* Smooth transition for hover effects */
+  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1); /* Subtle shadow */
+  width: 100%;
+  margin-bottom: 20px;
+}
+
+.login-btn:hover {
+  background-color: #0056b3; /* Darker shade on hover */
+  box-shadow: 0 6px 10px rgba(0, 0, 0, 0.15); /* More prominent shadow */
+  transform: translateY(-2px); /* Slight lift on hover */
+  color: #ffffff;
+}
+
+.login-btn:active {
+  /* background-color: #00408f; Even darker shade for active state */
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.2); /* Compress shadow on click */
+  transform: translateY(1px); /* Slight depression on click */
+}
+
+.login-btn:disabled {
+  background-color: #d6d6d6; /* Light grey for disabled state */
+  color: #888; /* Muted text color */
+  cursor: not-allowed; /* Show not-allowed cursor */
+  box-shadow: none; /* Remove shadow */
+}
+
+html,
+body {
+  height: 100%;
+}
+body {
+  margin: 0;
+  font-family: Roboto, "Helvetica Neue", sans-serif;
+}

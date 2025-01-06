@@ -6,9 +6,7 @@
     </button>
     
     <strong>{{profileData.name}} ({{profileData.email}})</strong>
-    <img class="img-fluid w-10 profile-picture" [src]="profileData.picture || '/google-logo.svg'" alt="User profile picture" />
-    
-    <!-- Navigation links -->
+    <img class="img-fluid w-10 profile-picture" [src]="profileData.picture || '/basic_user.jpg'" alt="User profile picture" />
 
     <ul>
       <li routerLinkActive="active" [routerLinkActiveOptions]="{ exact: true }">
