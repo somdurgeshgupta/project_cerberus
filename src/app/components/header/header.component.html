@@ -6,10 +6,7 @@
     </button>
     
     <strong>{{profileData.name}} ({{profileData.email}})</strong>
-    <img class="img-fluid w-10 profile-picture" [src]="profileData.picture" alt="profile picture" />
-
-
-    
+    <img class="img-fluid w-10 profile-picture" [src]="profileData.picture || '/google-logo.svg'" alt="User profile picture" />
     
     <!-- Navigation links -->
 
