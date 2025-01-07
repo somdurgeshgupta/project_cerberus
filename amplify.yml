@@ -10,7 +10,7 @@ frontend:
       commands:
         - npm run build:prod
   artifacts:
-    baseDirectory: dist/angular-latest-application
+    baseDirectory: dist/angular-latest-application/browser
     files:
       - '**/*'
   cache:
