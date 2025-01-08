@@ -22,6 +22,10 @@ import { HeaderCommonComponent } from './components/header-common/header-common.
 import { ForgotPasswordComponent } from './forgot-password/forgot-password.component';
 import { LoaderComponent } from './loader/loader.component';
 import { loaderInterceptor } from './guards/loader.interceptor';
+import { MatToolbarModule } from '@angular/material/toolbar';
+import { MatMenuModule } from '@angular/material/menu';
+import { MatIconModule } from '@angular/material/icon';
+import { MatTooltipModule } from '@angular/material/tooltip';
 
 @NgModule({
   declarations: [
@@ -45,7 +49,11 @@ import { loaderInterceptor } from './guards/loader.interceptor';
     FormsModule,
     ReactiveFormsModule,
     BrowserModule,
-    BrowserAnimationsModule
+    BrowserAnimationsModule,
+    MatToolbarModule,
+    MatMenuModule,
+    MatIconModule,
+    MatTooltipModule,
 ],
   providers: [
     provideAnimationsAsync(), provideHttpClient(withInterceptors([authInterceptor, loaderInterceptor]))

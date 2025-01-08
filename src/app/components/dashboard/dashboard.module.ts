@@ -6,7 +6,7 @@ import { CategoriesComponent } from './categories/categories.component';
 import { ProductsComponent } from './products/products.component';
 import { OrdersComponent } from './orders/orders.component';
 import { MatButtonModule } from '@angular/material/button';
-import { MatToolbarModule } from '@angular/material/toolbar';
+
 
 @NgModule({
   declarations: [CategoriesComponent, ProductsComponent, OrdersComponent],
@@ -14,7 +14,8 @@ import { MatToolbarModule } from '@angular/material/toolbar';
     CommonModule,
     DashboardRoutingModule,
     MatButtonModule,
-    MatToolbarModule,
+
+
   ],
 })
 export class DashboardModule {}

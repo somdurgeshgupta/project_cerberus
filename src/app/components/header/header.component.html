@@ -1,14 +1,12 @@
 <header class="header">
   <nav class="nav-container">
-    <!-- Button with Font Awesome icon -->
-    <button (click)="onToggleSidebar()">
+    <!-- Sidebar Toggle Button -->
+    <button (click)="onToggleSidebar()" class="sidebar-button">
       <i class="fas fa-bars"></i>
     </button>
-    
-    <strong>{{profileData.name}} ({{profileData.email}})</strong>
-    <img class="img-fluid w-10 profile-picture" [src]="profileData.picture || '/basic_user.jpg'" alt="User profile picture" />
 
-    <ul>
+    <!-- Navigation Links -->
+    <ul class="nav-links">
       <li routerLinkActive="active" [routerLinkActiveOptions]="{ exact: true }">
         <a routerLink="/dashboard/about">About</a>
       </li>
@@ -19,11 +17,44 @@
         <a routerLink="/dashboard/contact">Contact</a>
       </li>
     </ul>
-    <div class="header">
-      <span>Session expires in: {{ formattedCountdown }}</span>
+
+    <!-- Session Countdown -->
+    <div class="session-timer">
+      <span><strong>Session expires in: </strong>{{ formattedCountdown }}</span>
     </div>
 
-    <a class="login-button" (click)="logout()">Logout</a>
+    <!-- Profile Info -->
+    <strong class="profile-info">{{ profileData.name }} ({{ profileData.email }})</strong>
+
+    <!-- Profile Menu -->
+    <ul class="profile-menu">
+      <li>
+        <img
+          class="profile-picture"
+          [src]="profileData.picture || '/basic_user.jpg'"
+          alt="User Profile"
+          [matMenuTriggerFor]="profileMenu"
+        />
+      </li>
+      <li>
+        <a class="login-button" (click)="logout()">Logout</a>
+      </li>
+    </ul>
+
+    <!-- Dropdown Menu -->
+    <mat-menu #profileMenu="matMenu">
+      <button mat-menu-item routerLink="/dashboard/profile">
+        <mat-icon>person</mat-icon>
+        <span>View Profile</span>
+      </button>
+      <button mat-menu-item routerLink="/dashboard/settings">
+        <mat-icon>settings</mat-icon>
+        <span>Settings</span>
+      </button>
+      <button mat-menu-item (click)="logout()">
+        <mat-icon>logout</mat-icon>
+        <span>Logout</span>
+      </button>
+    </mat-menu>
   </nav>
 </header>
-
