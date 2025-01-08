@@ -33,11 +33,9 @@
       <li>
         <img
           class="profile-picture"
-          [src]="profileData.picture || '/basic_user.jpg'"
-          alt="User Profile"
-          [matMenuTriggerFor]="profileMenu"
-          (error)="onImageError($event)"
-        />
+          [src]="profileData.profileImage || profileData.picture || './basic_user.jpg'"
+          alt="User Profile"  
+          [matMenuTriggerFor]="profileMenu" />
       </li>
       <li>
         <a class="login-button" (click)="logout()">Logout</a>

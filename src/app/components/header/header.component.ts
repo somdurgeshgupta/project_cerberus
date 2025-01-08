@@ -3,6 +3,7 @@ import { AuthService } from '../../services/auth.service';
 import { NavigationEnd, Router } from '@angular/router';
 import { UserService } from '../../services/user.service';
 import { Subscription } from 'rxjs';
+import { environment } from '../../../environments/environment';
 
 @Component({
   selector: 'app-header',
@@ -49,6 +50,10 @@ export class HeaderComponent {
   checkuserID() {
     this.userService.getUserProfile(this.userService.getUserIdfromToken()).subscribe((res)=>{
       this.profileData = res;
+      if(this.profileData.profileImage){
+        this.profileData.profileImage = `${environment.API_URL + this.profileData.profileImage}`;
+      }
+      console.log(this.profileData,"Sdfasdfgfg");
     })
   }
 
