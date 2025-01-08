@@ -7,6 +7,7 @@ import { ProductsComponent } from './products/products.component';
 import { OrdersComponent } from './orders/orders.component';
 import { MatButtonModule } from '@angular/material/button';
 import { ProfileComponent } from './profile/profile.component';
+import { ReactiveFormsModule } from '@angular/forms';
 
 
 @NgModule({
@@ -15,7 +16,7 @@ import { ProfileComponent } from './profile/profile.component';
     CommonModule,
     DashboardRoutingModule,
     MatButtonModule,
-
+    ReactiveFormsModule
 
   ],
 })

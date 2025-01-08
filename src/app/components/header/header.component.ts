@@ -48,12 +48,11 @@ export class HeaderComponent {
   }
 
   checkuserID() {
-    this.userService.getUserProfile(this.userService.getUserIdfromToken()).subscribe((res)=>{
+    this.userService.getUserProfile().subscribe((res)=>{
       this.profileData = res;
       if(this.profileData.profileImage){
-        this.profileData.profileImage = `${environment.API_URL + this.profileData.profileImage}`;
+        this.profileData.profileImage = environment.API_URL + this.profileData.profileImage;
       }
-      console.log(this.profileData,"Sdfasdfgfg");
     })
   }
 

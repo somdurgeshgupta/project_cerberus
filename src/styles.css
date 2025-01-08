@@ -104,32 +104,3 @@ input[type="password"]:focus {
 
 
 
-/* General link styles */
-a {
-  text-decoration: none; /* Removes underline */
-  color: #007BFF; /* Link color */
-  font-weight: 500; /* Makes the link slightly bold */
-  transition: color 0.3s ease, text-decoration 0.3s ease; /* Smooth transition for hover effects */
-}
-
-/* Hover state */
-a:hover {
-  color: #0056b3; /* Darker blue on hover */
-  text-decoration: underline; /* Adds underline on hover */
-}
-
-/* Visited links */
-a:visited {
-  color: #3b87ca; /* Slightly different color for visited links */
-}
-
-/* Active links */
-a:active {
-  color: #004085; /* Even darker blue for active state */
-}
-
-/* Focused links for accessibility */
-a:focus {
-  outline: 2px dashed #007BFF; /* Outline for focused links */
-  outline-offset: 2px; /* Adds space between the outline and text */
-}

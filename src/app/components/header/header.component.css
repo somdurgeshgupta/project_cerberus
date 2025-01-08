@@ -39,10 +39,10 @@
 /* Navigation Links */
 .nav-links {
   list-style-type: none;
-  margin: 0;
+  margin: 0px 40px;
   padding: 0;
   display: flex;
-  gap: 20px;
+  gap: 50px;
 }
 
 .nav-links li a {
@@ -52,12 +52,12 @@
 }
 
 .nav-links li a:hover {
-  color: #007bff;
+  color: #648db9;
 }
 
 .active {
   font-weight: bold;
-  color: #007bff;
+  color: #648db9;
 }
 
 /* Session Timer */
@@ -93,7 +93,7 @@
   align-items: center;
   gap: 10px;
   list-style: none;
-  margin: 0;
+  margin: 0px 40px;
   padding: 0;
 }
 
@@ -110,22 +110,24 @@
 
 .profile-picture:hover {
   transform: scale(1.1);
-  border-color: #007bff;
+  border-color: #648db9;
 }
 
 /* Login Button */
 .login-button {
-  background-color: #c7cbce;
-  color: #333;
-  border: 2px solid rgba(0, 0, 0, 0.1);
-  border-radius: 10px;
-  padding: 5px 10px;
-  font-size: 16px;
-  cursor: pointer;
+  background-color: #c7cbce; /* Button background */
+  color: #333; /* Text color */
+  border: 2px solid rgba(0, 0, 0, 0.1); /* Subtle border */
+  /* border-color: black; */
+  border-radius: 10px; /* Rounded corners */
+  padding: 5px 10px; /* Padding inside the button */
+  font-size: 16px; /* Font size for text */
+  cursor: pointer; /* Pointer cursor on hover */
+  /* transition: all 0.3s ease; Smooth hover effect */
 }
 
 .login-button:hover {
-  background-color: #007bff;
-  color: white;
-  border-color: black;
+  background-color: #c7cbce; /* Change background on hover */
+  color: rgb(76, 76, 76); /* Change text color on hover */
+  border-color: #648db9; /* Darker border on hover */
 }
