@@ -7,6 +7,7 @@ import { OrdersComponent } from './orders/orders.component';
 import { AboutComponent } from '../about/about.component';
 import { ContactComponent } from '../contact/contact.component';
 import { PageNotFoundComponent } from '../page-not-found/page-not-found.component';
+import { ProfileComponent } from './profile/profile.component';
 
 const routes: Routes = [
   {
@@ -32,6 +33,10 @@ const routes: Routes = [
       {
         path: 'about',
         component: AboutComponent, // Nested route
+      },
+      {
+        path: 'profile',
+        component: ProfileComponent, // Nested route
       },
       {
         path: '',

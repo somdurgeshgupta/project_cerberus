@@ -24,7 +24,9 @@
     </div>
 
     <!-- Profile Info -->
-    <strong class="profile-info">{{ profileData.name }} ({{ profileData.email }})</strong>
+    <strong class="profile-info"
+      >{{ profileData.name }} ({{ profileData.email }})</strong
+    >
 
     <!-- Profile Menu -->
     <ul class="profile-menu">
@@ -34,6 +36,7 @@
           [src]="profileData.picture || '/basic_user.jpg'"
           alt="User Profile"
           [matMenuTriggerFor]="profileMenu"
+          (error)="onImageError($event)"
         />
       </li>
       <li>

@@ -79,4 +79,10 @@ export class HeaderComponent {
     // Pad single-digit values with leading zeros
     return value < 10 ? `0${value}` : value.toString();
   }
+
+  onImageError(event: Event): void {
+    const imgElement = event.target as HTMLImageElement;
+    imgElement.src = '/basic_user.jpg'; // Set fallback image if an error occurs
+  }
+  
 }
