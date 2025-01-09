@@ -26,6 +26,7 @@ import { MatToolbarModule } from '@angular/material/toolbar';
 import { MatMenuModule } from '@angular/material/menu';
 import { MatIconModule } from '@angular/material/icon';
 import { MatTooltipModule } from '@angular/material/tooltip';
+import { BrokenImageDirective } from './broken-image.directive';
 
 @NgModule({
   declarations: [
@@ -42,6 +43,7 @@ import { MatTooltipModule } from '@angular/material/tooltip';
     HeaderCommonComponent,
     ForgotPasswordComponent,
     LoaderComponent,
+    BrokenImageDirective
   ],
   imports: [
     BrowserModule,

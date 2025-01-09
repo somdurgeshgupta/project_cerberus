@@ -14,7 +14,7 @@ export class ProfileComponent {
   profileForm: FormGroup;
   profileData:any = {};
   selectedFile: File | null = null;
-  profileImage: string | ArrayBuffer | null = 'assets/default-profile.png'; // Default image
+  profileImage: string | ArrayBuffer | null = '/basic_user.jpg'; // Default image
 
   constructor(private fb: FormBuilder, private userService : UserService) {
     this.profileForm = this.fb.group({

@@ -33,8 +33,9 @@
       <li>
         <img
           class="profile-picture"
-          [src]="profileData.profileImage || profileData.picture || './basic_user.jpg'"
+          [src]="profileData.profileImage || profileData.picture"
           alt="User Profile"  
+          [appBrokenImage]="'/basic_user.jpg'"
           [matMenuTriggerFor]="profileMenu" />
       </li>
       <li>
