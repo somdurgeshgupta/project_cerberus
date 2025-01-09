@@ -104,3 +104,20 @@ input[type="password"]:focus {
 
 
 
+.link {
+
+  color: #728599; /* Primary color */
+  text-decoration: none; /* Remove underline */
+  font-weight: 500; /* Slightly bold for visibility */
+  transition: color 0.3s ease, text-decoration 0.3s ease; /* Smooth transitions */
+}
+
+.link:hover {
+  color: #405b79; /* Darker shade on hover */
+  text-decoration: underline; /* Add underline for hover effect */
+  cursor: pointer; /* Change cursor to pointer */
+}
+
+.link:active {
+  color: #003d80; /* Even darker shade when clicked */
+}
