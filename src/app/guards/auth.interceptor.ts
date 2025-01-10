@@ -21,7 +21,7 @@ export const authInterceptor: HttpInterceptorFn = (req, next) => {
   return next(authReq).pipe(
     // Catch errors in the response
     catchError((error) => {
-      if (error.status === 401) {
+      if (error.status === 401 || (error.status === 500 && error.message == 'The user with the given ID was not found.')) {
         // Handle JWT expiration
         console.warn('JWT expired. Logging out the user...');
         localStorage.removeItem('authToken'); // Clear token from storage
