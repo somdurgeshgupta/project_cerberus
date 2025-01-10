@@ -10,10 +10,11 @@
             <div class="d-flex flex-column align-items-center mb-4">
               <label for="profileImageInput" class="d-block text-center">
                 <img
-                  [src]="profileImage || './basic_user.jpg'"
+                [src]="profileImage || profileData.picture"
                   alt="Profile"
                   class="rounded-circle img-thumbnail"
                   style="width: 100px; height: 100px; object-fit: cover; cursor: pointer;"
+                  [appBrokenImage]="'/basic_user.jpg'"
                 />
                 <span class="text-muted d-block mt-2">Click to upload</span>
               </label>

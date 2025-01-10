@@ -4,6 +4,7 @@ import { NavigationEnd, Router } from '@angular/router';
 import { UserService } from '../../services/user.service';
 import { Subscription } from 'rxjs';
 import { environment } from '../../../environments/environment';
+import { ProfileService } from '../../profile.service';
 
 @Component({
   selector: 'app-header',
@@ -16,6 +17,7 @@ export class HeaderComponent {
   
   authService = inject(AuthService);
   userService = inject(UserService);
+  profileService = inject(ProfileService)
   router = inject(Router);
   profileData: any = {};
   countdown: number = 0; // Time left in seconds
@@ -24,11 +26,16 @@ export class HeaderComponent {
 
   @Output() toggleSidebar = new EventEmitter<void>();
 
+  
   onToggleSidebar(req?:any) {
     req ? this.toggleSidebar.emit(req) : this.toggleSidebar.emit();
   }
 
   ngOnInit(): void {
+    this.profileService.currentProfileImage.subscribe(imageUrl => {
+      this.profileData.profileImage = environment.API_URL + imageUrl;
+      // this.checkuserID();
+    });
     this.authService.autoLogin();
       this.timerSubscription = this.authService.logoutTimer$.subscribe((timeLeft) => {
         this.countdown = timeLeft;
