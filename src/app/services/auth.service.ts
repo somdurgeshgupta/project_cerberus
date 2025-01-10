@@ -156,7 +156,7 @@ export class AuthService {
     try {
       // Initialize Google Identity Services
       google.accounts.id.initialize({
-        client_id: '855831171805-hbharbt1j31v67i2ruve5trh2pa50blb.apps.googleusercontent.com', // Replace with your actual client ID
+        client_id: environment.GOOGLE_AUTH_KEY, // Replace with your actual client ID
         callback: (response: any) => {
           console.log('Google Login Response:', response);
           if (!response || !response.credential) {
