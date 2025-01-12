@@ -36,9 +36,7 @@ export class ProfileComponent {
           this.profileForm.patchValue(res);
   
           // Determine profile image source
-          this.profileImage = res.profileImage
-            ? `${environment.API_URL}${res.profileImage}`
-            : res.picture; // Fallback to an empty string if res.picture is undefined or null
+          this.profileImage = res.profileImage ? `${environment.API_URL}${res.profileImage}` : res.picture || '/basic_user.jpg';
         }
       },
       error: (error: any) => {

@@ -8,11 +8,9 @@ import { OrdersComponent } from './orders/orders.component';
 import { MatButtonModule } from '@angular/material/button';
 import { ProfileComponent } from './profile/profile.component';
 import { ReactiveFormsModule } from '@angular/forms';
-import { BrokenImageDirective } from '../../broken-image.directive';
-
 
 @NgModule({
-  declarations: [CategoriesComponent, ProductsComponent, OrdersComponent, ProfileComponent, BrokenImageDirective],
+  declarations: [CategoriesComponent, ProductsComponent, OrdersComponent, ProfileComponent],
   imports: [
     CommonModule,
     DashboardRoutingModule,

@@ -55,11 +55,9 @@ export class HeaderComponent {
   }
 
   checkuserID() {
-    this.userService.getUserProfile().subscribe((res)=>{
+    this.userService.getUserProfile().subscribe((res:any)=>{
       this.profileData = res;
-      if(this.profileData.profileImage){
-        this.profileData.profileImage = environment.API_URL + this.profileData.profileImage;
-      }
+      this.profileData.profileImage = this.profileData.profileImage ? `${environment.API_URL}${this.profileData.profileImage}` : res.picture || '/basic_user.jpg';
     })
   }
 
