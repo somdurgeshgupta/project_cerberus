@@ -28,15 +28,26 @@ export class ProfileComponent {
     this.checkuserID();
   }
 
-  checkuserID() {
-      this.userService.getUserProfile().subscribe((res:any)=>{
-        this.profileData = res;
-        this.profileForm.patchValue(res);
-        if(res.profileImage){
-          this.profileImage = `${environment.API_URL + res.profileImage}`;
+  checkuserID(): void {
+    this.userService.getUserProfile().subscribe({
+      next: (res: any) => {
+        if (res) {
+          // Update the form with the response data
+          this.profileForm.patchValue(res);
+  
+          // Determine profile image source
+          this.profileImage = res.profileImage
+            ? `${environment.API_URL}${res.profileImage}`
+            : res.picture; // Fallback to an empty string if res.picture is undefined or null
         }
-      })
-    }
+      },
+      error: (error: any) => {
+        console.error('Error fetching user profile:', error);
+        // Optional: Handle errors here, e.g., show an error message to the user
+      }
+    });
+  }
+  
 
   // Handle image selection and preview
   onImageSelected(event: Event): void {
