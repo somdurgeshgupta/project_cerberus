@@ -1,4 +1,130 @@
-<div class="dashboard">
-    <h1>Welcome to the Dashboard of categories</h1>
-    <!-- <router-outlet></router-outlet> -->
+<div class="container-fluid content mb-4">
+  <div class="row search-bar mb-2">
+    <div class="col-12">
+      <div class="input-group">
+          <input
+          class="form-control with-icon"
+          type="text"
+          [(ngModel)]="searchTerm"
+          (input)="onSearchTermChange($event)"
+          placeholder="Search by name..."
+        />
+        
+      </div>
+    </div>
   </div>
+
+  <div>
+    <p class="mb-2 ml-2">
+      <strong>Applied Filters:</strong>
+      <span *ngFor="let category of selectedCategories | keyvalue">
+        <span>
+          <button *ngIf="category.value" class="btn btn-sm btn-light ms-2">
+            {{ category.key }}
+            <span
+              (click)="removeCategoryFilter(category.key)"
+              style="cursor: pointer; color: rgb(140, 136, 136); margin-left: 5px;"
+              title="Remove Filter"
+            >
+              <i class="fas fa-times"></i>
+            </span>
+          </button>
+        </span>
+      </span>
+    </p>
+  </div>
+
+  <div class="row main">
+    <div  class="col-3 categories d-none d-md-block" >
+      <div class="card h-100">
+        <div class="card-header">
+          <h5>Categories</h5>
+        </div>
+        <div class="card-body">
+          <mat-accordion>
+            <mat-expansion-panel *ngFor="let category of categoryList">
+              <mat-expansion-panel-header>
+                <div class="d-flex justify-content-between w-100">
+                  <mat-panel-title class="d-flex align-items-center">
+                    {{ category.name }}
+                  </mat-panel-title>
+                  <mat-checkbox
+                    [id]="category.key"
+                    [(ngModel)]="selectedCategories[category.key]"
+                    (change)="applyCategoryFilter()"
+                  ></mat-checkbox>
+                </div>
+              </mat-expansion-panel-header>
+            </mat-expansion-panel>
+          </mat-accordion>
+        </div>
+      </div>
+    </div>
+
+
+    <div class="col-12 col-md-9 items">
+      <div class="d-flex justify-content-between align-items-center mb-3">
+        <h5>{{ filteredItems.length }} Results Found</h5>
+        <button class="btn btn-danger" (click)="toggleSort()">Sort</button>
+      </div>
+
+      <div *ngIf="showSortMenu" class="mb-3">
+        <button class="btn btn-secondary me-2" (click)="sortItems('asc')">
+          Sort A to Z
+        </button>
+        <button class="btn btn-secondary" (click)="sortItems('desc')">
+          Sort Z to A
+        </button>
+      </div>
+
+      <div class="row gy-4">
+        <div
+          class="col-sm-6 col-md-4 col-lg-3"
+          *ngFor="let item of paginatedItems"
+        >
+          <div class="card h-100 text-center">
+            <img
+              class="card-img-top"
+              [src]="item.display_img_url || 'placeholder.jpg'"
+              [alt]="item.name"
+              style="height: 150px; object-fit: cover;"
+            />
+            <div class="card-body">
+              <h6 class="card-title">{{ item.name }}</h6>
+              <button class="card-text btn btn-light w-100">{{ item.points }} Points</button>
+              <hr />
+              <p class="text-danger" *ngIf="item.quantity === 0">Out of Stock</p>
+              <p
+                class="text-warning"
+                *ngIf="item.quantity && item.quantity <= item.low_quantity"
+              >
+                ON High Demand (Only {{ item.quantity }} left)
+              </p>
+              <p class="text-muted">
+                Valid Until: {{ item.valid_until | date }}
+              </p>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <div class="pagination-controls text-center mt-4">
+        <button
+          class="btn btn-primary"
+          (click)="changePage(page - 1)"
+          [disabled]="page === 1"
+        >
+          Previous
+        </button>
+        <span class="mx-2">Page {{ page }} of {{ totalPages }}</span>
+        <button
+          class="btn btn-primary"
+          (click)="changePage(page + 1)"
+          [disabled]="page === totalPages"
+        >
+          Next
+        </button>
+      </div>
+    </div>
+  </div>
+</div>

@@ -1,4 +1,5 @@
 /* Header Styles */
+/* Header Styles */
 .header {
   background-color: #c7cbce;
   padding: 10px 20px;
@@ -7,6 +8,11 @@
   justify-content: space-between;
   align-items: center;
   flex-wrap: wrap;
+  
+  /* Make the header sticky */
+  position: sticky;
+  top: 0; /* Ensure it sticks to the top */
+  z-index: 1000; /* Ensure the header stays above other content */
 }
 
 /* Navigation Container */
