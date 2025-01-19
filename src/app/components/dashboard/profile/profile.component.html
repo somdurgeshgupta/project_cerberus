@@ -1,91 +1,61 @@
 <div class="container mt-5">
-    <div class="row justify-content-center">
-      <div class="col-md-6">
-        <div class="card">
-          <div class="card-header text-center">
-            <h2>Update Profile</h2>
+  <div class="row justify-content-center">
+    <div class="col-md-6">
+      <div class="card">
+        <div class="card-header text-center">
+          <h2>Update Profile</h2>
+        </div>
+        <div class="card-body">
+          <!-- Profile Image Section -->
+          <div class="d-flex flex-column align-items-center mb-4">
+            <label for="profileImageInput" class="d-block text-center">
+              <img [src]="profileImage" alt="Profile" class="rounded-circle img-thumbnail"
+                style="width: 100px; height: 100px; object-fit: cover; cursor: pointer;" />
+              <span class="text-muted d-block mt-2">Click to upload</span>
+            </label>
+            <input id="profileImageInput" type="file" accept="image/*" (change)="onImageSelected($event)" hidden />
           </div>
-          <div class="card-body">
-            <!-- Profile Image Section -->
-            <div class="d-flex flex-column align-items-center mb-4">
-              <label for="profileImageInput" class="d-block text-center">
-                <img
-                [src]="profileImage"
-                  alt="Profile"
-                  class="rounded-circle img-thumbnail"
-                  style="width: 100px; height: 100px; object-fit: cover; cursor: pointer;"
-                 
-                />
-                <span class="text-muted d-block mt-2">Click to upload</span>
-              </label>
-              <input
-                id="profileImageInput"
-                type="file"
-                accept="image/*"
-                (change)="onImageSelected($event)"
-                hidden
-              />
+
+          <!-- Form Section -->
+          <form [formGroup]="profileForm" (ngSubmit)="onSubmit()">
+            <!-- Name Field -->
+            <div class="mb-3">
+              <label for="name" class="form-label">Name</label>
+              <input type="text" id="name" class="form-control" formControlName="name" readonly />
+              <div *ngIf="profileForm.get('name')?.invalid && profileForm.get('name')?.touched"
+                class="text-danger mt-1">
+                <small *ngIf="profileForm.get('name')?.errors?.['required']">
+                  Name is required.
+                </small>
+                <small *ngIf="profileForm.get('name')?.errors?.['minlength']">
+                  Name must be at least 2 characters long.
+                </small>
+              </div>
             </div>
-  
-            <!-- Form Section -->
-            <form [formGroup]="profileForm" (ngSubmit)="onSubmit()">
-              <!-- Name Field -->
-              <div class="mb-3">
-                <label for="name" class="form-label">Name</label>
-                <input
-                  type="text"
-                  id="name"
-                  class="form-control"
-                  formControlName="name" readonly
-                />
-                <div
-                  *ngIf="profileForm.get('name')?.invalid && profileForm.get('name')?.touched"
-                  class="text-danger mt-1"
-                >
-                  <small *ngIf="profileForm.get('name')?.errors?.['required']">
-                    Name is required.
-                  </small>
-                  <small *ngIf="profileForm.get('name')?.errors?.['minlength']">
-                    Name must be at least 2 characters long.
-                  </small>
-                </div>
+
+            <!-- Email Field -->
+            <div class="mb-3">
+              <label for="email" class="form-label">Email</label>
+              <input type="email" id="email" class="form-control" formControlName="email" readonly />
+              <div *ngIf="profileForm.get('email')?.invalid && profileForm.get('email')?.touched"
+                class="text-danger mt-1">
+                <small *ngIf="profileForm.get('email')?.errors?.['required']">
+                  Email is required.
+                </small>
+                <small *ngIf="profileForm.get('email')?.errors?.['email']">
+                  Enter a valid email address.
+                </small>
               </div>
-  
-              <!-- Email Field -->
-              <div class="mb-3">
-                <label for="email" class="form-label">Email</label>
-                <input
-                  type="email"
-                  id="email"
-                  class="form-control"
-                  formControlName="email"
-                  readonly
-                />
-                <div
-                  *ngIf="profileForm.get('email')?.invalid && profileForm.get('email')?.touched"
-                  class="text-danger mt-1"
-                >
-                  <small *ngIf="profileForm.get('email')?.errors?.['required']">
-                    Email is required.
-                  </small>
-                  <small *ngIf="profileForm.get('email')?.errors?.['email']">
-                    Enter a valid email address.
-                  </small>
-                </div>
-              </div>
-  
-              <!-- Submit Button -->
-              <button
-                type="submit"
-                class="btn btn-primary w-100"
-                [disabled]="profileForm.invalid"
-              >
-                Update Profile
-              </button>
-            </form>
-          </div>
+            </div>
+
+            <!-- Submit Button -->
+            <button type="submit" class="btn btn-primary w-100" [disabled]="profileForm.invalid || !selectedFile">
+              Update Profile
+            </button>
+
+          </form>
         </div>
       </div>
     </div>
   </div>
-  
+</div>

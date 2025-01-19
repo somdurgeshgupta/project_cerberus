@@ -3,7 +3,6 @@ import { AuthService } from '../../services/auth.service';
 import { NavigationEnd, Router } from '@angular/router';
 import { UserService } from '../../services/user.service';
 import { Subscription } from 'rxjs';
-import { environment } from '../../../environments/environment';
 import { ProfileService } from '../../profile.service';
 
 @Component({
@@ -33,7 +32,7 @@ export class HeaderComponent {
 
   ngOnInit(): void {
     this.profileService.currentProfileImage.subscribe(imageUrl => {
-      this.profileData.profileImage = environment.API_URL + imageUrl;
+      this.profileData.profileImage = imageUrl;
       // this.checkuserID();
     });
     this.authService.autoLogin();
@@ -57,7 +56,7 @@ export class HeaderComponent {
   checkuserID() {
     this.userService.getUserProfile().subscribe((res:any)=>{
       this.profileData = res;
-      this.profileData.profileImage = this.profileData.profileImage ? `${environment.API_URL}${this.profileData.profileImage}` : res.picture || '/basic_user.jpg';
+      this.profileData.profileImage = this.profileData.profileImage ? this.profileData.profileImage : this.profileData.picture || '/basic_user.jpg';
     })
   }
 
