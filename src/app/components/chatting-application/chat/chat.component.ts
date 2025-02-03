@@ -18,8 +18,8 @@ export class ChatComponent implements OnInit, OnDestroy {
   private routeSub!: Subscription;
   user: any = {};
   socket: any;
-  
-  @ViewChild('chatWindow') chatWindow!: ElementRef; // Reference to chat window
+
+  @ViewChild('chatWindow') chatWindow!: ElementRef; // Chat window reference
 
   constructor(private route: ActivatedRoute, private userService: UserService, private chatService: ChatServiceService) {}
 
@@ -38,11 +38,10 @@ export class ChatComponent implements OnInit, OnDestroy {
         (messageData.senderId === this.userService.getUserIdfromToken() && messageData.receiverId === this.user.id) ||
         (messageData.senderId === this.user.id && messageData.receiverId === this.userService.getUserIdfromToken())
       ) {
-        this.messages.unshift(messageData); // Add to top
-        this.scrollToTop();
+        this.messages.push(messageData); // Add new message at the bottom
+        this.scrollToBottom();
       }
     });
-    this.scrollToTop()
   }
 
   async loadMessagesofUser() {
@@ -60,8 +59,8 @@ export class ChatComponent implements OnInit, OnDestroy {
       receiverId: this.user.id
     };
     this.chatService.getMessages(messagesdata).subscribe((res: any) => {
-      this.messages = res.reverse(); // Reverse to display newest at the top
-      this.scrollToTop();
+      this.messages = res; // No need to reverse, as we want messages in order
+      this.scrollToBottom();
     });
   }
 
@@ -79,9 +78,9 @@ export class ChatComponent implements OnInit, OnDestroy {
 
       this.socket.emit('sendMessage', data);
 
-      this.messages.unshift(data); // Add to top
+      this.messages.push(data); // Add message at the bottom
       this.newMessage = '';
-      this.scrollToTop();
+      this.scrollToBottom();
     }
   }
 
@@ -89,10 +88,10 @@ export class ChatComponent implements OnInit, OnDestroy {
     return this.userService.getUserIdfromToken() === id;
   }
 
-  scrollToTop() {
+  scrollToBottom() {
     setTimeout(() => {
       if (this.chatWindow) {
-        this.chatWindow.nativeElement.scrollTop = 0;
+        this.chatWindow.nativeElement.scrollTop = this.chatWindow.nativeElement.scrollHeight;
       }
     }, 100); // Timeout ensures UI updates before scrolling
   }
