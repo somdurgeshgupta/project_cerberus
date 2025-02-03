@@ -11,6 +11,7 @@
   border: 1px solid #ccc;
   display: flex;
   flex-direction: column;
+  word-break: break-word;
 }
 
 /* Sender Message (Align Right) */
@@ -25,6 +26,9 @@
   margin-bottom: 10px;
   text-align: right;
   float: right;
+  word-break: break-word; /* Force word wrapping */
+  overflow-wrap: break-word; /* Additional wrapping support */
+  white-space: pre-wrap; /* Preserve formatting while wrapping */
 }
 
 /* User Message (Align Left) */
@@ -39,6 +43,9 @@
   margin-bottom: 10px;
   text-align: left;
   float: left;
+  word-break: break-word; /* Force word wrapping */
+  overflow-wrap: break-word; /* Additional wrapping support */
+  white-space: pre-wrap; /* Preserve formatting while wrapping */
 }
 
 /* Message Input */
@@ -47,6 +54,7 @@
   padding: 10px;
   background-color: #fff;
   border-top: 1px solid #ccc;
+  word-break: break-word;
 }
 
 .message-input input {

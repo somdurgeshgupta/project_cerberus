@@ -1,4 +1,4 @@
-import { Component, OnInit, OnDestroy } from '@angular/core';
+import { Component, OnInit, OnDestroy, ElementRef, ViewChild } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
 import { Subscription } from 'rxjs';
 import { UserService } from '../../../services/user.service';
@@ -18,12 +18,13 @@ export class ChatComponent implements OnInit, OnDestroy {
   private routeSub!: Subscription;
   user: any = {};
   socket: any;
+  
+  @ViewChild('chatWindow') chatWindow!: ElementRef; // Reference to chat window
 
   constructor(private route: ActivatedRoute, private userService: UserService, private chatService: ChatServiceService) {}
 
   async ngOnInit(): Promise<void> {
     this.socket = io('http://192.168.29.119:3000/');
-    console.log()
 
     this.routeSub = this.route.params.subscribe(async (params) => {
       this.userId = params['id'];
@@ -31,14 +32,17 @@ export class ChatComponent implements OnInit, OnDestroy {
       this.loadMessage();
     });
 
+    // Listen for incoming messages
     this.socket.on('receiveMessage', (messageData: any) => {
       if (
         (messageData.senderId === this.userService.getUserIdfromToken() && messageData.receiverId === this.user.id) ||
         (messageData.senderId === this.user.id && messageData.receiverId === this.userService.getUserIdfromToken())
       ) {
-        this.messages.push(messageData); 
+        this.messages.unshift(messageData); // Add to top
+        this.scrollToTop();
       }
     });
+    this.scrollToTop()
   }
 
   async loadMessagesofUser() {
@@ -56,7 +60,8 @@ export class ChatComponent implements OnInit, OnDestroy {
       receiverId: this.user.id
     };
     this.chatService.getMessages(messagesdata).subscribe((res: any) => {
-      this.messages = res;
+      this.messages = res.reverse(); // Reverse to display newest at the top
+      this.scrollToTop();
     });
   }
 
@@ -74,14 +79,22 @@ export class ChatComponent implements OnInit, OnDestroy {
 
       this.socket.emit('sendMessage', data);
 
-      this.messages.push(data);
-
+      this.messages.unshift(data); // Add to top
       this.newMessage = '';
+      this.scrollToTop();
     }
   }
 
   senderdata(id: string): boolean {
     return this.userService.getUserIdfromToken() === id;
+  }
+
+  scrollToTop() {
+    setTimeout(() => {
+      if (this.chatWindow) {
+        this.chatWindow.nativeElement.scrollTop = 0;
+      }
+    }, 100); // Timeout ensures UI updates before scrolling
   }
 
   ngOnDestroy(): void {
