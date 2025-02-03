@@ -20,10 +20,11 @@
   color: white;
   border-radius: 15px;
   padding: 10px 15px;
-  max-width: 100%;
+  max-width: 60%;
   word-wrap: break-word;
   margin-bottom: 10px;
   text-align: right;
+  float: right;
 }
 
 /* User Message (Align Left) */
@@ -33,10 +34,11 @@
   color: black;
   border-radius: 15px;
   padding: 10px 15px;
-  max-width: 100%;
+  max-width: 60%;
   word-wrap: break-word;
   margin-bottom: 10px;
   text-align: left;
+  float: left;
 }
 
 /* Message Input */
