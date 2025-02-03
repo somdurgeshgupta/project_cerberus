@@ -1,0 +1,16 @@
+<div class="chat-container">
+    <h2 class="m-4">Chat with User {{ user.name }}</h2>
+
+    <div class="chat-window">
+        <div *ngFor="let message of messages" >
+            <p class="messagesender" *ngIf="senderdata(message.senderId)">{{ message.message }}</p>
+            <p class="messageuser" *ngIf="!senderdata(message.senderId)">{{ message.message }}</p>
+        </div>
+    </div>
+
+    <div class="message-input">
+        <input type="text" [(ngModel)]="newMessage" (keydown.enter)="sendMessage()"
+            placeholder="Type your message..." />
+        <button (click)="sendMessage()">Send</button>
+    </div>
+</div>

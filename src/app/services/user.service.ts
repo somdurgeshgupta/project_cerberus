@@ -28,6 +28,10 @@ export class UserService {
     return this.http.get(environment.API_URL + 'users/'+this.getUserIdfromToken());
   }
 
+  getUserData(userId: any){
+    return this.http.get(environment.API_URL + 'users/'+ userId);
+  }
+
   updateProfile(image:any){
     console.log(image);
     return this.http.post(environment.API_URL + 'profile/upload-profile-image/'+this.getUserIdfromToken(), image);

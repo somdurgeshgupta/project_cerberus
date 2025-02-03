@@ -26,6 +26,9 @@ import { MatToolbarModule } from '@angular/material/toolbar';
 import { MatMenuModule } from '@angular/material/menu';
 import { MatIconModule } from '@angular/material/icon';
 import { MatTooltipModule } from '@angular/material/tooltip';
+import { ChattingApplicationComponent } from './components/chatting-application/chatting-application.component';
+import { ChatComponent } from './components/chatting-application/chat/chat.component';
+import { UserListComponent } from './components/chatting-application/user-list/user-list.component';
 
 @NgModule({
   declarations: [
@@ -41,7 +44,10 @@ import { MatTooltipModule } from '@angular/material/tooltip';
     ContactComponent,
     HeaderCommonComponent,
     ForgotPasswordComponent,
-    LoaderComponent
+    LoaderComponent,
+    ChattingApplicationComponent,
+    ChatComponent,
+    UserListComponent
   ],
   imports: [
     BrowserModule,

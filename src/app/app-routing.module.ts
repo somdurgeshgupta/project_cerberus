@@ -35,10 +35,14 @@ const routes: Routes = [
     path: 'contact',
     component: ContactComponent
   },
-  
   {
     path: 'dashboard',
     loadChildren: () => import('./components/dashboard/dashboard.module').then(m => m.DashboardModule), // Lazy loading the Dashboard module
+    canActivate: [authGuard]
+  },
+  {
+    path: 'chatting',
+    loadChildren: () => import('./components/chatting-application/chatting-application.module').then(m => m.ChattingApplicationModule),
     canActivate: [authGuard]
   },
   {
