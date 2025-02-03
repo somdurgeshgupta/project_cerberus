@@ -71,18 +71,17 @@ export class ChatComponent implements OnInit, OnDestroy {
         receiverId: this.user.id,
         message: this.newMessage
       };
-
+  
       this.chatService.sendMessage(data).subscribe((req: any) => {
         console.log(req.message);
       });
-
-      this.socket.emit('sendMessage', data);
-
-      this.messages.push(data); // Add message at the bottom
-      this.newMessage = '';
-      this.scrollToBottom();
+  
+      this.socket.emit('sendMessage', data); // Emit to socket, don't push locally
+  
+      this.newMessage = ''; // Clear input after sending
     }
   }
+  
 
   senderdata(id: string): boolean {
     return this.userService.getUserIdfromToken() === id;

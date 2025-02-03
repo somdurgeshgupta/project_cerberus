@@ -1,5 +1,5 @@
 <div class="user-list">
-    <h2 class="m-2 text-center">Active Users</h2>
+    <h2 class="m-2 text-center">Active Online Users</h2>
     <ul>
       <li *ngFor="let user of users" (click)="goToChat(user.id)">
         {{ user.name }}
