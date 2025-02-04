@@ -24,7 +24,7 @@ export class ChatComponent implements OnInit, OnDestroy {
   constructor(private route: ActivatedRoute, private userService: UserService, private chatService: ChatServiceService) {}
 
   async ngOnInit(): Promise<void> {
-    this.socket = io('http://192.168.29.119:3000/');
+    this.socket = io('https://cerberus-backend.onrender.com/');
 
     this.routeSub = this.route.params.subscribe(async (params) => {
       this.userId = params['id'];
