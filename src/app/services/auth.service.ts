@@ -4,7 +4,7 @@ import { Injectable } from '@angular/core';
 import { environment } from '../../environments/environment';
 import { jwtDecode } from 'jwt-decode';
 import { Router } from '@angular/router';
-import { BehaviorSubject, interval, Subscription } from 'rxjs';
+import { BehaviorSubject, interval, Observable, Subscription } from 'rxjs';
 import { map, takeWhile } from 'rxjs/operators';
 
 @Injectable({
@@ -25,6 +25,7 @@ export class AuthService {
   }
 
   loginUser(val: any) {
+    console.log("submit api")
     return this.http.post(environment.API_URL + 'users/login', val);
   }
 
@@ -211,4 +212,13 @@ export class AuthService {
   forgotpassword(val:any){
     return this.http.post(environment.API_URL + 'users/forgetpassword', val);
   }
+
+downloadcsv(val?: any): any {
+  return this.http.get(
+    `${environment.API_URL}ideploy/export-csv`
+  );
+}
+
+
+
 }

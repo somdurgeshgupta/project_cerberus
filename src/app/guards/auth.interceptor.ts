@@ -3,6 +3,7 @@ import { HttpInterceptorFn } from '@angular/common/http';
 import { Router } from '@angular/router';
 import { catchError } from 'rxjs/operators';
 import { throwError } from 'rxjs';
+import { LoadingBarService } from '@ngx-loading-bar/core';
 
 export const authInterceptor: HttpInterceptorFn = (req, next) => {
   const token = localStorage.getItem('authToken');

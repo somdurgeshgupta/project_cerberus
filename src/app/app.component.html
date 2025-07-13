@@ -1,4 +1,6 @@
 <app-header-common *ngIf="!authService.isLoggedIn()"></app-header-common>
 
 <router-outlet></router-outlet>
-<app-loader></app-loader>
+<!-- <app-loader></app-loader> -->
+<ngx-loading-bar></ngx-loading-bar>
+

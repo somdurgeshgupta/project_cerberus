@@ -1,4 +1,58 @@
-<div class="dashboard">
-    <h1>Welcome to the Dashboard of Products</h1>
-    <!-- <router-outlet></router-outlet> -->
+<div class="container mt-4">
+  <h3>📦 Export History</h3>
+
+  <button class="btn btn-primary mb-3" (click)="startExport()">Start New Export</button>
+
+  <table class="table table-bordered" *ngIf="exportJobs.length">
+    <thead>
+      <tr>
+        <th>Job ID</th>
+        <th>Status</th>
+        <th>Progress</th>
+        <th>Actions</th>
+        <th>Cancel</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr *ngFor="let job of exportJobs; trackBy: trackByJobId">
+        <td>{{ job._id }}</td>
+        <td>
+          <span [ngClass]="getStatusBadgeClass(job.status)">
+            {{ job.status | titlecase }}
+          </span>
+        </td>
+        <td>
+          <ng-container [ngSwitch]="job.status">
+            <div *ngSwitchCase="'completed'">100%</div>
+            <div *ngSwitchCase="'failed'">Failed</div>
+            <div *ngSwitchCase="'processing'">
+              {{ getProgress(job) }}%
+              <div class="progress mt-1">
+                <div class="progress-bar progress-bar-striped progress-bar-animated" 
+                     [style.width.%]="getProgress(job)">
+                </div>
+              </div>
+            </div>
+            <div *ngSwitchDefault>--</div>
+          </ng-container>
+        </td>
+        <td>
+          <button class="btn btn-sm btn-success"
+                  [disabled]="job.status !== 'completed'"
+                  (click)="download(job._id)">
+            Download
+          </button>
+        </td>
+        <td>
+          <button *ngIf="job.status === 'processing' || job.status === 'pending'" 
+        (click)="cancelExport(job._id)">Cancel</button>
+
+        </td>
+      </tr>
+    </tbody>
+  </table>
+
+  <div *ngIf="!exportJobs.length && !loading" class="text-muted">
+    No export jobs found.
   </div>
+</div>

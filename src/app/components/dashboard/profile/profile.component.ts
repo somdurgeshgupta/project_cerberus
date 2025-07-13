@@ -31,16 +31,12 @@ export class ProfileComponent {
     this.userService.getUserProfile().subscribe({
       next: (res: any) => {
         if (res) {
-          // Update the form with the response data
           this.profileForm.patchValue(res);
-  
-          // Determine profile image source
           this.profileImage = res.profileImage ? res.profileImage : res.picture || '/basic_user.jpg';
         }
       },
       error: (error: any) => {
         console.error('Error fetching user profile:', error);
-        // Optional: Handle errors here, e.g., show an error message to the user
       }
     });
   }

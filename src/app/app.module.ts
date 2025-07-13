@@ -29,6 +29,10 @@ import { MatTooltipModule } from '@angular/material/tooltip';
 import { ChattingApplicationComponent } from './components/chatting-application/chatting-application.component';
 import { ChatComponent } from './components/chatting-application/chat/chat.component';
 import { UserListComponent } from './components/chatting-application/user-list/user-list.component';
+// app.module.ts
+import { LoadingBarModule } from '@ngx-loading-bar/core';
+import { LoadingBarHttpClientModule } from '@ngx-loading-bar/http-client';
+
 
 @NgModule({
   declarations: [
@@ -60,6 +64,8 @@ import { UserListComponent } from './components/chatting-application/user-list/u
     MatMenuModule,
     MatIconModule,
     MatTooltipModule,
+    LoadingBarModule,
+    LoadingBarHttpClientModule
 ],
   providers: [
     provideAnimationsAsync(), provideHttpClient(withInterceptors([authInterceptor, loaderInterceptor]))
