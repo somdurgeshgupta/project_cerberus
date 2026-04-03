@@ -1,0 +1,48 @@
+<section class="member-page">
+  <div class="member-shell" *ngIf="storeState as state">
+    <section class="member-hero">
+      <div>
+        <p class="eyebrow">Cart</p>
+        <h1>Your selected pieces are ready for checkout.</h1>
+      </div>
+      <div class="summary-pill">
+        <strong>{{ state.cart.length }}</strong>
+        <span>items in cart</span>
+      </div>
+    </section>
+
+    <section class="item-grid" *ngIf="state.cart.length; else emptyCart">
+      <article class="item-card" *ngFor="let item of state.cart">
+        <div class="item-main">
+          <div class="item-visual" [ngClass]="item.product.imageTone"></div>
+          <div>
+            <p class="eyebrow">{{ item.product.category }}</p>
+            <h2>{{ item.product.name }}</h2>
+            <p>{{ item.product.shortDescription }}</p>
+          </div>
+        </div>
+
+        <div class="item-actions">
+          <strong>{{ item.product.priceDisplay }}</strong>
+          <label>
+            Qty
+            <input type="number" min="1" [value]="item.quantity" (change)="updateQuantity(item.productId, +$any($event.target).value)" />
+          </label>
+          <button type="button" class="ghost-button" (click)="removeItem(item.productId)">Remove</button>
+        </div>
+      </article>
+    </section>
+
+    <section class="footer-actions" *ngIf="state.cart.length">
+      <a class="ghost-link" routerLink="/listing">Continue shopping</a>
+      <button type="button" class="primary-button" (click)="goToCheckout()">Checkout now</button>
+    </section>
+
+    <ng-template #emptyCart>
+      <section class="empty-state">
+        <h2>Your cart is empty.</h2>
+        <a class="primary-link" routerLink="/listing">Browse products</a>
+      </section>
+    </ng-template>
+  </div>
+</section>

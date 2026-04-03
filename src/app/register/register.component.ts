@@ -2,7 +2,7 @@
 import { Component, OnInit } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { AuthService } from '../services/auth.service';
-import { Router } from '@angular/router';
+import { ActivatedRoute, Router } from '@angular/router';
 
 @Component({
   standalone: false,
@@ -12,11 +12,13 @@ import { Router } from '@angular/router';
 })
 export class RegisterComponent implements OnInit{
   registerForm: FormGroup;
+  private returnUrl = '/dashboard';
 
   constructor(
     private fb: FormBuilder,
     private authService: AuthService,
-    private router: Router
+    private router: Router,
+    private route: ActivatedRoute
   ) {
     if (this.authService.isLoggedIn()) {
       this.router.navigate(['/dashboard']);
@@ -29,6 +31,8 @@ export class RegisterComponent implements OnInit{
   }
 
   ngOnInit(): void {
+    this.returnUrl = this.route.snapshot.queryParamMap.get('returnUrl') || '/dashboard';
+    localStorage.setItem('postAuthRedirect', this.returnUrl);
     this.registerWithGoogle();
   }
   onSubmit() {
@@ -36,7 +40,8 @@ export class RegisterComponent implements OnInit{
       this.authService.registration(this.registerForm.value).subscribe(
         (res:any) => {
           this.authService.login(res);
-          this.router.navigateByUrl('/dashboard');
+          localStorage.removeItem('postAuthRedirect');
+          this.router.navigateByUrl(this.returnUrl);
         },
         (error) => {
           alert('Registration failed. Please try again.'); // Show error message

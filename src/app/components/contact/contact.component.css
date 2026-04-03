@@ -1,0 +1,145 @@
+﻿:host {
+  display: block;
+}
+
+.contact-page {
+  min-height: 100vh;
+  padding: 28px 16px 48px;
+  background:
+    radial-gradient(circle at top left, rgba(255, 196, 124, 0.4), transparent 26%),
+    radial-gradient(circle at 92% 12%, rgba(111, 171, 255, 0.24), transparent 22%),
+    linear-gradient(180deg, #f7efe4 0%, #f5f3ee 35%, #efeee8 100%);
+}
+
+.contact-shell {
+  width: min(1180px, 100%);
+  margin: 0 auto;
+  display: grid;
+  gap: 24px;
+}
+
+.contact-hero,
+.contact-grid article,
+.contact-card {
+  border-radius: 32px;
+  border: 1px solid rgba(29, 39, 53, 0.08);
+  box-shadow: 0 24px 60px rgba(57, 39, 17, 0.08);
+}
+
+.contact-hero {
+  display: grid;
+  grid-template-columns: 1.1fr 0.9fr;
+  gap: 22px;
+}
+
+.hero-copy,
+.contact-card,
+.contact-grid article {
+  padding: 32px;
+  background: rgba(255, 255, 255, 0.76);
+}
+
+.eyebrow {
+  margin: 0 0 12px;
+  text-transform: uppercase;
+  letter-spacing: 0.16em;
+  font-size: 0.78rem;
+  font-weight: 800;
+  color: #9b5b2e;
+}
+
+.hero-copy h1,
+.contact-grid h2,
+.contact-card strong {
+  margin: 0;
+  font-family: 'Space Grotesk', 'Trebuchet MS', sans-serif;
+  color: #18212d;
+}
+
+.hero-copy h1 {
+  max-width: 11ch;
+  font-size: clamp(2.8rem, 5vw, 4.6rem);
+  line-height: 0.96;
+}
+
+.hero-copy p:last-of-type,
+.contact-card p,
+.contact-grid article p:last-of-type {
+  color: #5d6b7c;
+  line-height: 1.8;
+}
+
+.hero-actions {
+  display: flex;
+  gap: 12px;
+  flex-wrap: wrap;
+  margin-top: 26px;
+}
+
+.primary-cta,
+.secondary-cta {
+  min-height: 46px;
+  padding: 0 18px;
+  border-radius: 999px;
+  text-decoration: none;
+  font-weight: 700;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.primary-cta {
+  background: #1d2735;
+  color: #f7f4ed;
+}
+
+.secondary-cta {
+  border: 1px solid rgba(29, 39, 53, 0.16);
+  color: #1d2735;
+}
+
+.contact-card {
+  background: #1d2735;
+  color: #eef3f9;
+  display: flex;
+  flex-direction: column;
+  justify-content: flex-end;
+}
+
+.contact-card span {
+  color: #f3bb7f;
+  margin-bottom: 12px;
+  text-transform: uppercase;
+  letter-spacing: 0.14em;
+  font-size: 0.78rem;
+  font-weight: 800;
+}
+
+.contact-card strong {
+  color: inherit;
+  font-size: clamp(1.9rem, 4vw, 3rem);
+}
+
+.contact-card p {
+  color: #d4dde7;
+  margin-top: 18px;
+}
+
+.contact-grid {
+  display: grid;
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+  gap: 22px;
+}
+
+.contact-grid h2 {
+  font-size: 1.8rem;
+  line-height: 1.1;
+  max-width: 12ch;
+}
+
+@media (max-width: 980px) {
+  .contact-hero,
+  .contact-grid {
+    grid-template-columns: 1fr;
+  }
+}

@@ -13,14 +13,14 @@ import { ProfileService } from '../../profile.service';
   styleUrl: './header.component.css',
 })
 export class HeaderComponent {
-  
   authService = inject(AuthService);
   userService = inject(UserService);
-  profileService = inject(ProfileService)
+  profileService = inject(ProfileService);
   router = inject(Router);
   profileData: any = {};
   countdown: number = 0; // Time left in seconds
   formattedCountdown: string = ''; // Formatted string for display
+  searchTerm = '';
   private timerSubscription!: Subscription;
 
   ngOnInit(): void {
@@ -49,6 +49,13 @@ export class HeaderComponent {
 
   logout() {
     this.authService.logout(true);
+  }
+
+  onSearch(): void {
+    const trimmedValue = this.searchTerm.trim();
+    this.router.navigate(['/listing'], {
+      queryParams: trimmedValue ? { q: trimmedValue } : {}
+    });
   }
 
   ngOnDestroy(): void {

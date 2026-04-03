@@ -1,5 +1,5 @@
-import { Component, EventEmitter, Output } from '@angular/core';
-import { Router } from '@angular/router';
+import { Component, inject } from '@angular/core';
+import { AuthService } from '../../services/auth.service';
 
 @Component({
   selector: 'app-header-common',
@@ -9,19 +9,5 @@ import { Router } from '@angular/router';
   styleUrl: './header-common.component.css'
 })
 export class HeaderCommonComponent {
-
-  @Output() toggleSidebar = new EventEmitter<void>();
-
-  registerRoute: boolean = false;
-  
-  constructor(private router: Router) {
-    this.router.events.subscribe(() => {
-      this.registerRoute = this.router.url === '/login';
-    });
-  }
-  
-    onToggleSidebar() {
-      this.toggleSidebar.emit();
-    }
-    
+  authService = inject(AuthService);
 }

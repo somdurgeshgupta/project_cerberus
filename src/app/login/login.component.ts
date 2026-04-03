@@ -5,7 +5,7 @@ declare var FB:any;
 import { Component, OnInit } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { AuthService } from '../services/auth.service';
-import { Router } from '@angular/router';
+import { ActivatedRoute, Router } from '@angular/router';
 
 import { catchError, tap } from 'rxjs/operators';
 import { of } from 'rxjs';
@@ -18,8 +18,14 @@ import { of } from 'rxjs';
 })
 export class LoginComponent implements OnInit{
   loginForm: FormGroup;
+  private returnUrl = '/dashboard';
 
-  constructor(private fb: FormBuilder, private authService: AuthService, private router: Router) {
+  constructor(
+    private fb: FormBuilder,
+    private authService: AuthService,
+    private router: Router,
+    private route: ActivatedRoute
+  ) {
     if(authService.isLoggedIn()){
       this.router.navigate(['/dashboard']);
     }
@@ -31,6 +37,9 @@ export class LoginComponent implements OnInit{
   }
 
   ngOnInit(): void {
+    this.returnUrl = this.route.snapshot.queryParamMap.get('returnUrl') || '/dashboard';
+    localStorage.setItem('postAuthRedirect', this.returnUrl);
+
     const interval = setInterval(() => {
       if (typeof google !== 'undefined') {
         this.registerWithGoogle();
@@ -46,7 +55,8 @@ export class LoginComponent implements OnInit{
         tap((res: any) => {
           if (res.accessToken) {
             this.authService.login(res);
-            this.router.navigateByUrl('/dashboard'); // Redirect to dashboard on successful login
+            localStorage.removeItem('postAuthRedirect');
+            this.router.navigateByUrl(this.returnUrl);
           }
         }),
         catchError((error: any) => {

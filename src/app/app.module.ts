@@ -29,6 +29,10 @@ import { MatTooltipModule } from '@angular/material/tooltip';
 import { LoadingBarModule } from '@ngx-loading-bar/core';
 import { LoadingBarHttpClientModule } from '@ngx-loading-bar/http-client';
 import { AuthService } from './services/auth.service';
+import { LandingPageComponent } from './components/landing-page/landing-page.component';
+import { ProductsPageComponent } from './components/products-page/products-page.component';
+import { ProductListingComponent } from './components/product-listing/product-listing.component';
+import { ProductDetailsComponent } from './components/product-details/product-details.component';
 
 function initializeAuth(authService: AuthService) {
   return () => authService.initializeAuth();
@@ -49,7 +53,11 @@ function initializeAuth(authService: AuthService) {
     ContactComponent,
     HeaderCommonComponent,
     ForgotPasswordComponent,
-    LoaderComponent
+    LoaderComponent,
+    LandingPageComponent,
+    ProductsPageComponent,
+    ProductListingComponent,
+    ProductDetailsComponent
   ],
   imports: [
     BrowserModule,

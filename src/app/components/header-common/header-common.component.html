@@ -1,24 +1,19 @@
-<header class="header">
-  <nav class="nav-container">    
-    <!-- Navigation links -->
+<header class="public-header">
+  <nav class="public-nav" aria-label="Public navigation">
+    <a class="brand" routerLink="/">Cerberus</a>
 
-    <ul>
-      <li routerLinkActive="active" [routerLinkActiveOptions]="{ exact: true }">
-        <a routerLink="/about">About</a>
-      </li>
-      <li routerLinkActive="active" [routerLinkActiveOptions]="{ exact: true }">
-        <a routerLink="/pages">Pages</a>
-      </li>
-      <li routerLinkActive="active" [routerLinkActiveOptions]="{ exact: true }">
-        <a routerLink="/contact">Contact</a>
-      </li>
-      <li *ngIf="!registerRoute"  routerLinkActive="active" [routerLinkActiveOptions]="{ exact: true }">
-        <a class="login-button" routerLink="/login">Login</a>
-      </li>
-      <li *ngIf="registerRoute" routerLinkActive="active" [routerLinkActiveOptions]="{ exact: true }">
-        <a class="login-button" routerLink="/register">Register</a>
-      </li>
-    </ul>
+    <div class="nav-links">
+      <a routerLink="/products" routerLinkActive="active">Products</a>
+      <a routerLink="/listing" routerLinkActive="active">Listing</a>
+      <a routerLink="/about" routerLinkActive="active">About Us</a>
+      <a routerLink="/contact" routerLinkActive="active">Contact</a>
+    </div>
+
+    <div class="nav-actions">
+      <a *ngIf="!authService.isLoggedIn()" class="ghost-link" routerLink="/login">Sign in</a>
+      <a *ngIf="!authService.isLoggedIn()" class="solid-link" routerLink="/register">Create account</a>
+      <a *ngIf="authService.isLoggedIn()" class="solid-link" routerLink="/dashboard">Dashboard</a>
+    </div>
   </nav>
 </header>
 

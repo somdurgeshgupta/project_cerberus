@@ -1,41 +1,73 @@
-<!-- src/app/login/login.component.html -->
-<div class="login-container">
-  <h1>Login</h1>
-  <form [formGroup]="loginForm" (ngSubmit)="onSubmit()">
-    <div class="form-group">
-      <label for="email">Email:</label>
-      <input type="email" id="email" formControlName="email" required>
-      <div *ngIf="loginForm.get('email')?.invalid && loginForm.get('email')?.touched">
-        <small *ngIf="loginForm.get('email')?.errors?.['required']">Email is required.</small>
-        <small *ngIf="loginForm.get('email')?.errors?.['email']">Invalid email format.</small>
+<section class="auth-page">
+  <div class="auth-shell">
+    <aside class="auth-showcase">
+      <p class="eyebrow">Welcome back</p>
+      <h1>Step back into a storefront designed to feel calm, curated, and premium.</h1>
+      <p class="showcase-copy">
+        Pick up where you left off, revisit saved pieces, and move straight into your next order
+        with a cleaner login experience that matches the landing page.
+      </p>
+
+      <div class="showcase-card">
+        <span>Member perks</span>
+        <strong>Early access drops, saved favorites, and faster checkout.</strong>
       </div>
-    </div>
-    <div class="form-group">
-      <label for="password">Password:</label>
-      <input type="password" id="password" formControlName="password" required>
-      <div *ngIf="loginForm.get('password')?.invalid && loginForm.get('password')?.touched">
-        <small *ngIf="loginForm.get('password')?.errors?.['required']">Password is required.</small>
-        <small *ngIf="loginForm.get('password')?.errors?.['minlength']">Password must be at least 6 characters long.</small>
+
+      <div class="showcase-metrics">
+        <article>
+          <strong>15%</strong>
+          <span>first-order welcome offer</span>
+        </article>
+        <article>
+          <strong>120+</strong>
+          <span>curated brands in rotation</span>
+        </article>
       </div>
-    </div>
-    <div class="text-right mb-2">
-      <a href="/forgotpassword">Forgot Password?</a>
-    </div>
-    <div class="text-end">
-      <button type="submit" class="btn login-btn px-4" [disabled]="loginForm.invalid">Login</button>
-    </div>
-    
-    
-  </form>
-  <div class="social-login mb-4 text-center">
-    <h3 class="mb-2">Or login with</h3>
-    <div class="social-buttons justify-content-center">
-      <div id="google-btn">
+    </aside>
+
+    <div class="auth-card">
+      <p class="eyebrow">Sign in</p>
+      <h2>Access your Cerberus account</h2>
+      <p class="auth-copy">Use your email and password, or continue with Google.</p>
+
+      <form [formGroup]="loginForm" (ngSubmit)="onSubmit()" novalidate>
+        <div class="field-group">
+          <label for="email">Email</label>
+          <input type="email" id="email" formControlName="email" placeholder="you@example.com" required>
+          <small class="error-text" *ngIf="loginForm.get('email')?.invalid && loginForm.get('email')?.touched">
+            <span *ngIf="loginForm.get('email')?.errors?.['required']">Email is required.</span>
+            <span *ngIf="loginForm.get('email')?.errors?.['email']">Enter a valid email address.</span>
+          </small>
+        </div>
+
+        <div class="field-group">
+          <label for="password">Password</label>
+          <input type="password" id="password" formControlName="password" placeholder="Minimum 6 characters" required>
+          <small class="error-text" *ngIf="loginForm.get('password')?.invalid && loginForm.get('password')?.touched">
+            <span *ngIf="loginForm.get('password')?.errors?.['required']">Password is required.</span>
+            <span *ngIf="loginForm.get('password')?.errors?.['minlength']">Password must be at least 6 characters long.</span>
+          </small>
+        </div>
+
+        <div class="auth-row">
+          <a routerLink="/forgotpassword" class="inline-link">Forgot password?</a>
+          <a routerLink="/" class="inline-link muted">Back to home</a>
+        </div>
+
+        <button type="submit" class="primary-button" [disabled]="loginForm.invalid">Sign in</button>
+      </form>
+
+      <div class="social-panel">
+        <p>Or continue with</p>
+        <div class="google-button-wrap">
+          <div id="google-btn"></div>
+        </div>
       </div>
+
+      <p class="switch-copy">
+        New here?
+        <a routerLink="/register" class="inline-link">Create an account</a>
+      </p>
     </div>
   </div>
-  <div class="redirect text-center">
-    <p>Don't have an account? <a routerLink="/register" class="link">Sign Up</a></p>
-  </div>
-  
-</div>
+</section>

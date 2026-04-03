@@ -1,0 +1,41 @@
+﻿<section class="store-page">
+  <div class="store-shell">
+    <section class="store-hero">
+      <div class="hero-copy">
+        <p class="eyebrow">Products</p>
+        <h1>Browse a polished product story before you ever hit checkout.</h1>
+        <p>
+          Explore signature pieces, discover what makes each item useful, and move into login only
+          when you are ready to buy.
+        </p>
+        <div class="hero-actions">
+          <a class="primary-cta" routerLink="/listing">View full listing</a>
+          <a class="secondary-cta" routerLink="/contact">Talk to support</a>
+        </div>
+      </div>
+
+      <div class="hero-panel">
+        <span>Storefront principle</span>
+        <strong>Discovery stays public. Checkout becomes account-powered.</strong>
+      </div>
+    </section>
+
+    <section class="featured-products">
+      <article class="product-card" *ngFor="let product of heroProducts" [ngClass]="product.tone" (click)="openDetails(product.id)">
+        <span class="product-tag">{{ product.tag }}</span>
+        <div class="product-visual"></div>
+        <p class="product-category">{{ product.category }}</p>
+        <h2>{{ product.name }}</h2>
+        <p class="product-copy">{{ product.shortDescription }}</p>
+        <div class="product-footer">
+          <strong>{{ product.priceDisplay }}</strong>
+          <div class="product-actions">
+            <button type="button" class="details-link" (click)="$event.stopPropagation(); addToWishlist(product.id)">Wishlist</button>
+            <button type="button" class="details-link" (click)="$event.stopPropagation(); addToCart(product.id)">Cart</button>
+            <button type="button" class="buy-button" (click)="$event.stopPropagation(); startPurchase(product.id)">Buy now</button>
+          </div>
+        </div>
+      </article>
+    </section>
+  </div>
+</section>

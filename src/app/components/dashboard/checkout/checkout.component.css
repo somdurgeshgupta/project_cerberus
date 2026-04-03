@@ -1,0 +1,23 @@
+:host { display:block; }
+.member-page { min-height: calc(100vh - 120px); padding: 28px 16px 48px; background: radial-gradient(circle at top left, rgba(255,196,124,.28), transparent 26%), radial-gradient(circle at 92% 12%, rgba(111,171,255,.16), transparent 22%), linear-gradient(180deg,#f7efe4 0%,#f5f3ee 35%,#efeee8 100%); }
+.member-shell { width:min(1180px,100%); margin:0 auto; display:grid; gap:22px; }
+.member-hero,.list-card,.form-card { border-radius:32px; border:1px solid rgba(29,39,53,.08); background:rgba(255,255,255,.78); box-shadow:0 24px 60px rgba(57,39,17,.08); }
+.member-hero { display:flex; align-items:center; justify-content:space-between; gap:18px; padding:28px 32px; }
+.eyebrow { margin:0 0 12px; text-transform:uppercase; letter-spacing:.16em; font-size:.78rem; font-weight:800; color:#9b5b2e; }
+.member-hero h1,.list-card h2,.form-card h2 { margin:0; font-family:'Space Grotesk','Trebuchet MS',sans-serif; color:#18212d; }
+.member-hero h1 { max-width:12ch; font-size:clamp(2.3rem,4vw,3.8rem); line-height:1; }
+.summary-pill { padding:16px 20px; border-radius:24px; background:#1d2735; color:#eef3f9; }
+.summary-pill strong { display:block; font-size:1.7rem; }
+.checkout-layout { display:grid; grid-template-columns:1fr .9fr; gap:22px; }
+.list-card,.form-card { padding:28px; }
+.address-option { display:flex; align-items:flex-start; gap:12px; padding:16px 0; border-bottom:1px solid rgba(29,39,53,.08); }
+.address-option span { display:grid; gap:6px; }
+.address-option small { color:#5d6b7c; line-height:1.6; }
+.ghost-link,.primary-button { min-height:46px; padding:0 18px; border-radius:999px; display:inline-flex; align-items:center; justify-content:center; text-decoration:none; font-weight:700; }
+.ghost-link { margin-top:18px; border:1px solid rgba(29,39,53,.16); color:#1d2735; }
+.summary-row { display:flex; align-items:center; justify-content:space-between; margin:14px 0; color:#425166; }
+.checkout-item { display:flex; align-items:center; justify-content:space-between; margin:10px 0; color:#425166; }
+.summary-row.total { padding-top:14px; border-top:1px solid rgba(29,39,53,.08); color:#18212d; }
+textarea { width:100%; padding:14px; border-radius:18px; border:1px solid rgba(29,39,53,.12); margin:14px 0 18px; }
+.primary-button { border:0; background:#1d2735; color:#f7f4ed; }
+@media (max-width: 900px) { .member-hero,.checkout-layout { grid-template-columns:1fr; display:grid; } }

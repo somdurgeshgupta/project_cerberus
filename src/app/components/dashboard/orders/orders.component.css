@@ -1,0 +1,13 @@
+:host { display:block; }
+.orders-page { min-height: calc(100vh - 120px); padding: 28px 16px 48px; background: radial-gradient(circle at top left, rgba(255,196,124,.28), transparent 26%), radial-gradient(circle at 92% 12%, rgba(111,171,255,.16), transparent 22%), linear-gradient(180deg,#f7efe4 0%,#f5f3ee 35%,#efeee8 100%); }
+.orders-shell { width:min(1180px,100%); margin:0 auto; display:grid; gap:22px; }
+.orders-hero,.order-card,.empty-state { border-radius:32px; border:1px solid rgba(29,39,53,.08); background:rgba(255,255,255,.78); box-shadow:0 24px 60px rgba(57,39,17,.08); }
+.orders-hero { display:flex; align-items:center; justify-content:space-between; gap:18px; padding:28px 32px; }
+.eyebrow { margin:0 0 12px; text-transform:uppercase; letter-spacing:.16em; font-size:.78rem; font-weight:800; color:#9b5b2e; }
+.orders-hero h1,.order-card h2,.empty-state h2 { margin:0; font-family:'Space Grotesk','Trebuchet MS',sans-serif; color:#18212d; }
+.orders-hero h1 { max-width:12ch; font-size:clamp(2.3rem,4vw,3.8rem); line-height:1; }
+.orders-grid { display:grid; gap:18px; }
+.order-card { padding:28px; }
+.order-card p:last-of-type,.order-card span { color:#5d6b7c; line-height:1.8; }
+.shop-link,.primary-link { min-height:46px; padding:0 18px; border-radius:999px; display:inline-flex; align-items:center; justify-content:center; text-decoration:none; font-weight:700; border:0; background:#1d2735; color:#f7f4ed; }
+.empty-state { padding:32px; text-align:center; }

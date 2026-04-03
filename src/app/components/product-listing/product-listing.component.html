@@ -1,0 +1,32 @@
+﻿<section class="listing-page">
+  <div class="listing-shell">
+    <section class="listing-header">
+      <div>
+        <p class="eyebrow">Listing</p>
+        <h1>Browse the full catalog with a calmer visual hierarchy.</h1>
+      </div>
+      <p class="listing-copy">
+        {{ filteredProducts.length }} product{{ filteredProducts.length === 1 ? '' : 's' }} matched
+        your current storefront view.
+      </p>
+    </section>
+
+    <section class="listing-grid">
+      <article class="product-card" *ngFor="let product of filteredProducts" [ngClass]="product.tone" (click)="openDetails(product.id)">
+        <span class="product-tag">{{ product.tag }}</span>
+        <div class="product-visual"></div>
+        <p class="product-category">{{ product.category }}</p>
+        <h2>{{ product.name }}</h2>
+        <p class="product-copy">{{ product.shortDescription }}</p>
+        <div class="product-footer">
+          <strong>{{ product.priceDisplay }}</strong>
+          <div class="product-actions">
+            <button type="button" class="details-link" (click)="$event.stopPropagation(); addToWishlist(product.id)">Wishlist</button>
+            <button type="button" class="details-link" (click)="$event.stopPropagation(); addToCart(product.id)">Cart</button>
+            <button type="button" class="buy-button" (click)="$event.stopPropagation(); startPurchase(product.id)">Checkout</button>
+          </div>
+        </div>
+      </article>
+    </section>
+  </div>
+</section>

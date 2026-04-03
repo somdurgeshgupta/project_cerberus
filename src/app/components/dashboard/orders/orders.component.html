@@ -1,4 +1,27 @@
-<div class="dashboard">
-    <h1>Welcome to the Dashboard of orders</h1>
-    <router-outlet></router-outlet>
+<section class="orders-page">
+  <div class="orders-shell">
+    <section class="orders-hero">
+      <div>
+        <p class="eyebrow">Orders</p>
+        <h1>Track every order you place without leaving the dashboard.</h1>
+      </div>
+      <a class="shop-link" routerLink="/listing">Shop more</a>
+    </section>
+
+    <section class="orders-grid" *ngIf="orders.length; else emptyOrders">
+      <article class="order-card" *ngFor="let order of orders">
+        <p class="eyebrow">{{ order.status }}</p>
+        <h2>Order placed on {{ order.placedAt | date:'mediumDate' }}</h2>
+        <p>{{ order.items.length }} item{{ order.items.length === 1 ? '' : 's' }} | {{ order.totals.totalDisplay }}</p>
+        <span>{{ order.shippingAddress.line1 }}, {{ order.shippingAddress.city }}</span>
+      </article>
+    </section>
+
+    <ng-template #emptyOrders>
+      <section class="empty-state">
+        <h2>No orders yet.</h2>
+        <a class="primary-link" routerLink="/listing">Start shopping</a>
+      </section>
+    </ng-template>
   </div>
+</section>

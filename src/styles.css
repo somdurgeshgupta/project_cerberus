@@ -1,6 +1,37 @@
+@import url('https://fonts.googleapis.com/css2?family=Manrope:wght@400;500;600;700;800&family=Space+Grotesk:wght@400;500;700&display=swap');
+
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
+
+.profile-menu-panel {
+  margin-top: 10px;
+}
+
+.profile-menu-panel .mat-mdc-menu-content {
+  padding: 10px !important;
+  background: linear-gradient(180deg, #fffaf2 0%, #f4eadb 100%);
+  border: 1px solid rgba(29, 39, 53, 0.08);
+  border-radius: 24px;
+  box-shadow: 0 24px 60px rgba(57, 39, 17, 0.18);
+}
+
+.profile-menu-panel .mat-mdc-menu-item {
+  min-height: 48px;
+  border-radius: 16px;
+  color: #1d2735 !important;
+  font-weight: 700;
+}
+
+.profile-menu-panel .mat-mdc-menu-item:hover,
+.profile-menu-panel .mat-mdc-menu-item.cdk-program-focused,
+.profile-menu-panel .mat-mdc-menu-item.cdk-focused {
+  background: rgba(29, 39, 53, 0.08) !important;
+}
+
+.profile-menu-panel .mat-icon {
+  color: #9b5b2e !important;
+}
 
 
 body {

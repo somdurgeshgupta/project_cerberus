@@ -1,0 +1,52 @@
+<section class="member-page" *ngIf="summary">
+  <div class="member-shell">
+    <section class="member-hero">
+      <div>
+        <p class="eyebrow">Checkout</p>
+        <h1>Review your order and place it directly.</h1>
+      </div>
+      <div class="summary-pill">
+        <strong>${{ summary.totals.total }}</strong>
+        <span>total amount</span>
+      </div>
+    </section>
+
+    <section class="checkout-layout">
+      <div class="list-card">
+        <h2>Select delivery address</h2>
+        <label class="address-option" *ngFor="let address of summary.addresses">
+          <input type="radio" name="address" [value]="address.id || address._id" [(ngModel)]="selectedAddressId" />
+          <span>
+            <strong>{{ address.label }} - {{ address.fullName }}</strong>
+            <small>{{ address.line1 }}, {{ address.city }}, {{ address.state }} {{ address.postalCode }}</small>
+          </span>
+        </label>
+        <a class="ghost-link" routerLink="/dashboard/addresses">Manage addresses</a>
+      </div>
+
+      <div class="form-card">
+        <h2>Order summary</h2>
+        <div class="checkout-item" *ngFor="let item of summary.cart">
+          <span>{{ item.product.name }} x {{ item.quantity }}</span>
+          <strong>{{ item.product.priceDisplay || ('$' + item.product.price) }}</strong>
+        </div>
+        <div class="summary-row">
+          <span>Subtotal</span>
+          <strong>${{ summary.totals.subtotal }}</strong>
+        </div>
+        <div class="summary-row">
+          <span>Shipping</span>
+          <strong>${{ summary.totals.shipping }}</strong>
+        </div>
+        <div class="summary-row total">
+          <span>Total</span>
+          <strong>${{ summary.totals.total }}</strong>
+        </div>
+        <textarea [(ngModel)]="notes" rows="4" placeholder="Add delivery notes if needed"></textarea>
+        <button type="button" class="primary-button" (click)="placeOrder()" [disabled]="!selectedAddressId">
+          Place order
+        </button>
+      </div>
+    </section>
+  </div>
+</section>

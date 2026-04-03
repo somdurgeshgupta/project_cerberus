@@ -1,1 +1,42 @@
-<p>contact works!</p>
+﻿<section class="contact-page">
+  <div class="contact-shell">
+    <section class="contact-hero">
+      <div class="hero-copy">
+        <p class="eyebrow">Contact</p>
+        <h1>Talk to Cerberus when you need product guidance, order help, or brand support.</h1>
+        <p>
+          Whether someone is still browsing publicly or already signed in, this page is the calm,
+          branded place to reach your team.
+        </p>
+        <div class="hero-actions">
+          <a class="primary-cta" [routerLink]="authService.isLoggedIn() ? '/dashboard/profile' : '/products'">Explore products</a>
+          <a class="secondary-cta" href="mailto:support@cerberus.store">Email support</a>
+        </div>
+      </div>
+
+      <div class="contact-card">
+        <span>Support desk</span>
+        <strong>support&#64;cerberus.store</strong>
+        <p>Average response time: under 12 business hours for product and account support.</p>
+      </div>
+    </section>
+
+    <section class="contact-grid">
+      <article>
+        <p class="eyebrow">Sales</p>
+        <h2>Need help choosing the right product?</h2>
+        <p>Ask for recommendations, product comparisons, and shopping guidance before checkout.</p>
+      </article>
+      <article>
+        <p class="eyebrow">Orders</p>
+        <h2>Already placed an order?</h2>
+        <p>Contact us for shipping updates, payment questions, and post-purchase support.</p>
+      </article>
+      <article>
+        <p class="eyebrow">Partnerships</p>
+        <h2>Brand or collaboration inquiry?</h2>
+        <p>Reach out if you want to feature products, collaborate, or discuss store partnerships.</p>
+      </article>
+    </section>
+  </div>
+</section>

@@ -1,100 +1,79 @@
-/* Style for the header */
-.header {
-  background-color: #c7cbce; /* Light background for header */
-  padding: 18px 20px; /* Padding around the header */
-  box-shadow: 0px 4px 8px rgba(0, 0, 0, 0.1); /* Subtle shadow */
-  display: flex; /* Enable Flexbox on the header */
-  justify-content: space-between; /* Space out the children */
-  align-items: center; /* Vertically center the content */
-  position: sticky; /* Sticky position for the header */
-  top: 0; /* Stick to the top of the viewport */
-  z-index: 1000; /* Ensure the header stays above other content */
+.public-header {
+  position: sticky;
+  top: 0;
+  z-index: 1000;
+  padding: 18px 16px 0;
 }
 
-/* Style for the login button in the header */
-
-
-
-/* Dashboard button style */
-.header>a {
-  background-color: #536a83; /* Button color */
-  color: white; /* Button text color */
-  border: none; /* Remove border */
-  padding: 10px 20px; /* Padding inside the button */
-  font-size: 16px; /* Font size */
-  cursor: pointer; /* Pointer cursor on hover */
-  border-radius: 4px; /* Rounded corners */
+.public-nav {
+  width: min(1180px, 100%);
+  margin: 0 auto;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 18px;
+  padding: 18px 22px;
+  border-radius: 28px;
+  border: 1px solid rgba(29, 39, 53, 0.08);
+  background: rgba(255, 255, 255, 0.7);
+  backdrop-filter: blur(18px);
+  box-shadow: 0 20px 60px rgba(72, 52, 25, 0.08);
 }
 
-/* Navigation links */
-/* Flex container for navigation */
-.nav-container {
-  display: flex; /* Enable Flexbox for navigation */
-  justify-content: flex-end; /* Align all navigation links to the right */
-  align-items: center; /* Vertically center the content */
-  flex-grow: 1; /* Allow the navigation container to take up available space */
-  margin-right: 50px;
+.brand,
+.nav-links a,
+.ghost-link,
+.solid-link {
+  text-decoration: none;
 }
 
-/* Navigation links */
-.nav-container ul {
-  list-style-type: none; /* Remove list bullets */
-  margin: 0; /* Remove margin */
-  padding: 0; /* Remove padding */
-  display: flex; /* Display links in a row */
-  justify-content: flex-end; /* Ensure links stay aligned to the right */
+.brand {
+  font-family: 'Space Grotesk', 'Trebuchet MS', sans-serif;
+  font-size: 1.4rem;
+  font-weight: 700;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  color: #1d2735;
 }
 
-/* Navigation link item style */
-.nav-container ul li {
-  margin-left: 20px; /* Space between list items */
+.nav-links,
+.nav-actions {
+  display: flex;
+  align-items: center;
+  gap: 14px;
 }
 
-
-/* Link style */
-.nav-container ul li a {
-  text-decoration: none; /* Remove underline */
-  color: #333; /* Link color */
-  font-size: 16px; /* Font size for links */
+.nav-links a,
+.ghost-link {
+  color: #425166;
+  font-weight: 600;
 }
 
-/* Active link style */
-.nav-container ul li a:hover {
-  color: #007bff; /* Change color on hover */
+.nav-links a.active {
+  color: #9b5b2e;
 }
 
-/* Style for active navigation links */
-.active {
-  font-weight: bold;
-  color: #007bff;  /* Highlight color */
+.solid-link {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  min-height: 46px;
+  padding: 0 20px;
+  border-radius: 999px;
+  background: #1d2735;
+  color: #f7f4ed;
+  font-weight: 700;
+  box-shadow: 0 16px 30px rgba(29, 39, 53, 0.16);
 }
 
-.login-button {
-  background-color: #c7cbce; /* Button background */
-  color: #333; /* Text color */
-  border: 2px solid rgba(0, 0, 0, 0.1); /* Subtle border */
-  /* border-color: black; */
-  border-radius: 10px; /* Rounded corners */
-  padding: 5px 10px; /* Padding inside the button */
-  font-size: 16px; /* Font size for text */
-  cursor: pointer; /* Pointer cursor on hover */
-  /* transition: all 0.3s ease; Smooth hover effect */
-}
+@media (max-width: 760px) {
+  .public-nav {
+    flex-direction: column;
+    align-items: flex-start;
+  }
 
-.login-button:hover {
-  background-color: #c7cbce; /* Change background on hover */
-  color: white; /* Change text color on hover */
-  border-color: black; /* Darker border on hover */
-}
-
-/* Adjust the body to avoid overlap with the fixed header */
-body {
-  margin: 0; /* Remove default margins */
-  padding-top: 80px; /* Add padding equal to header height */
-}
-
-a {
-  all: unset; /* Remove any overrides */
-  color: blue; /* Reset to default link color */
-  text-decoration: underline; /* Add underline back */
+  .nav-links,
+  .nav-actions {
+    flex-wrap: wrap;
+  }
 }

@@ -8,12 +8,15 @@ import { ExpiredPageComponent } from './components/expired-page/expired-page.com
 import { AboutComponent } from './components/about/about.component';
 import { ContactComponent } from './components/contact/contact.component';
 import { ForgotPasswordComponent } from './forgot-password/forgot-password.component';
+import { LandingPageComponent } from './components/landing-page/landing-page.component';
+import { ProductsPageComponent } from './components/products-page/products-page.component';
+import { ProductListingComponent } from './components/product-listing/product-listing.component';
+import { ProductDetailsComponent } from './components/product-details/product-details.component';
 
 const routes: Routes = [
   {
     path: '',
-    redirectTo: 'login',
-    pathMatch: 'full'
+    component: LandingPageComponent
   },
   {
     path: 'login',
@@ -34,6 +37,18 @@ const routes: Routes = [
   {
     path: 'contact',
     component: ContactComponent
+  },
+  {
+    path: 'products',
+    component: ProductsPageComponent
+  },
+  {
+    path: 'listing',
+    component: ProductListingComponent
+  },
+  {
+    path: 'products/:id',
+    component: ProductDetailsComponent
   },
   {
     path: 'dashboard',

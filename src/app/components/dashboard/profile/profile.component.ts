@@ -15,6 +15,7 @@ export class ProfileComponent {
   profileData:any = {};
   selectedFile: File | null = null;
   profileImage: string | ArrayBuffer | null = '/basic_user.jpg'; // Default image
+  uploadStatus = '';
 
   constructor(private fb: FormBuilder, private userService : UserService,
     private profileService: ProfileService
@@ -65,6 +66,7 @@ export class ProfileComponent {
       this.userService.updateProfile(formData).subscribe((res:any)=>{
         this.profileService.updateProfileImage(res.imageUrl);
         this.selectedFile = null;
+        this.uploadStatus = 'Profile image updated successfully.';
       });
     }
   }

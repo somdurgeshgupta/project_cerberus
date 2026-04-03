@@ -270,7 +270,9 @@ export class AuthService {
             (res: any) => {
               if (res.accessToken) {
                 this.login(res);
-                this.router.navigateByUrl('/dashboard');
+                const redirectUrl = localStorage.getItem('postAuthRedirect') || '/dashboard';
+                localStorage.removeItem('postAuthRedirect');
+                this.router.navigateByUrl(redirectUrl);
               } else {
                 console.error('Token not received from backend.');
               }

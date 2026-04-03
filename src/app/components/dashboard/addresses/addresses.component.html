@@ -1,0 +1,57 @@
+<section class="member-page">
+  <div class="member-shell" *ngIf="storeState as state">
+    <section class="member-hero">
+      <div>
+        <p class="eyebrow">Addresses</p>
+        <h1>Save delivery addresses for faster checkout.</h1>
+      </div>
+      <div class="summary-pill">
+        <strong>{{ state.addresses.length }}</strong>
+        <span>saved addresses</span>
+      </div>
+    </section>
+
+    <section class="address-layout">
+      <form class="form-card" [formGroup]="addressForm" (ngSubmit)="saveAddress()">
+        <h2>Add a new address</h2>
+        <div class="field-grid">
+          <input type="text" formControlName="label" placeholder="Home / Office" />
+          <input type="text" formControlName="fullName" placeholder="Full name" />
+          <input type="text" formControlName="phoneNumber" placeholder="Phone number" />
+          <input type="text" formControlName="line1" placeholder="Address line 1" />
+          <input type="text" formControlName="line2" placeholder="Address line 2" />
+          <input type="text" formControlName="city" placeholder="City" />
+          <input type="text" formControlName="state" placeholder="State" />
+          <input type="text" formControlName="postalCode" placeholder="Postal code" />
+          <input type="text" formControlName="country" placeholder="Country" />
+        </div>
+        <label class="checkbox-row">
+          <input type="checkbox" formControlName="isDefault" />
+          Set as default address
+        </label>
+        <button type="submit" class="primary-button">Save address</button>
+      </form>
+
+      <section class="list-card">
+        <article class="address-card" *ngFor="let address of state.addresses">
+          <p class="eyebrow">{{ address.label }}</p>
+          <h2>{{ address.fullName }}</h2>
+          <p>{{ address.line1 }} {{ address.line2 }}</p>
+          <p>{{ address.city }}, {{ address.state }} {{ address.postalCode }}</p>
+          <p>{{ address.country }} | {{ address.phoneNumber }}</p>
+          <strong *ngIf="address.isDefault">Default address</strong>
+          <div class="address-actions">
+            <button
+              type="button"
+              class="ghost-button"
+              *ngIf="!address.isDefault"
+              (click)="setDefaultAddress(address)">
+              Make default
+            </button>
+            <button type="button" class="ghost-button danger" (click)="deleteAddress(address.id || address._id)">Delete</button>
+          </div>
+        </article>
+      </section>
+    </section>
+  </div>
+</section>

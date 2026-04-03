@@ -1,43 +1,80 @@
-<!-- src/app/register/register.component.html -->
-<div class="login-container">
-  <h1>Register</h1>
-  <form [formGroup]="registerForm" (ngSubmit)="onSubmit()">
-    <div class="form-group">
-      <label for="name">Name:</label>
-      <input type="text" id="name" formControlName="name" required>
-      <div *ngIf="registerForm.get('name')?.invalid && registerForm.get('name')?.touched">
-        <small *ngIf="registerForm.get('name')?.errors?.['required']">name is required.</small>
+﻿<section class="auth-page">
+  <div class="auth-shell">
+    <aside class="auth-showcase">
+      <p class="eyebrow">New account</p>
+      <h1>Join the same polished storefront experience from your very first click.</h1>
+      <p class="showcase-copy">
+        Create your profile to save favorites, track orders, and unlock member pricing across
+        fashion, home, and seasonal edits.
+      </p>
+
+      <div class="showcase-list">
+        <article>
+          <strong>Wishlist syncing</strong>
+          <span>Save the products that fit your style and come back anytime.</span>
+        </article>
+        <article>
+          <strong>Faster checkout</strong>
+          <span>Keep your details ready for a smoother purchase journey.</span>
+        </article>
+        <article>
+          <strong>Members-only offers</strong>
+          <span>Get early access to drops and welcome discounts.</span>
+        </article>
       </div>
-    </div>
-    <div class="form-group">
-      <label for="email">Email:</label>
-      <input type="email" id="email" formControlName="email" required>
-      <div *ngIf="registerForm.get('email')?.invalid && registerForm.get('email')?.touched">
-        <small *ngIf="registerForm.get('email')?.errors?.['required']">Email is required.</small>
-        <small *ngIf="registerForm.get('email')?.errors?.['email']">Invalid email format.</small>
+    </aside>
+
+    <div class="auth-card">
+      <p class="eyebrow">Create account</p>
+      <h2>Start your Cerberus membership</h2>
+      <p class="auth-copy">A few details and you are ready to shop with the full experience.</p>
+
+      <form [formGroup]="registerForm" (ngSubmit)="onSubmit()" novalidate>
+        <div class="field-group">
+          <label for="name">Full name</label>
+          <input type="text" id="name" formControlName="name" placeholder="Your full name" required>
+          <small class="error-text" *ngIf="registerForm.get('name')?.invalid && registerForm.get('name')?.touched">
+            <span *ngIf="registerForm.get('name')?.errors?.['required']">Name is required.</span>
+          </small>
+        </div>
+
+        <div class="field-group">
+          <label for="email">Email</label>
+          <input type="email" id="email" formControlName="email" placeholder="you@example.com" required>
+          <small class="error-text" *ngIf="registerForm.get('email')?.invalid && registerForm.get('email')?.touched">
+            <span *ngIf="registerForm.get('email')?.errors?.['required']">Email is required.</span>
+            <span *ngIf="registerForm.get('email')?.errors?.['email']">Enter a valid email address.</span>
+          </small>
+        </div>
+
+        <div class="field-group">
+          <label for="password">Password</label>
+          <input type="password" id="password" formControlName="password" placeholder="Minimum 6 characters" required>
+          <small class="error-text" *ngIf="registerForm.get('password')?.invalid && registerForm.get('password')?.touched">
+            <span *ngIf="registerForm.get('password')?.errors?.['required']">Password is required.</span>
+            <span *ngIf="registerForm.get('password')?.errors?.['minlength']">Password must be at least 6 characters long.</span>
+          </small>
+        </div>
+
+        <div class="auth-row">
+          <a routerLink="/" class="inline-link muted">Back to home</a>
+          <a routerLink="/login" class="inline-link">Already have an account?</a>
+        </div>
+
+        <button type="submit" class="primary-button" [disabled]="registerForm.invalid">Create account</button>
+      </form>
+
+      <div class="social-panel">
+        <p>Or continue with</p>
+        <div class="google-button-wrap">
+          <div id="google-btn"></div>
+        </div>
       </div>
-    </div>
-    <div class="form-group">
-      <label for="password">Password:</label>
-      <input type="password" id="password" formControlName="password" required>
-      <div *ngIf="registerForm.get('password')?.invalid && registerForm.get('password')?.touched">
-        <small *ngIf="registerForm.get('password')?.errors?.['required']">Password is required.</small>
-        <small *ngIf="registerForm.get('password')?.errors?.['minlength']">Password must be at least 6 characters long.</small>
-      </div>
-    </div>
-    <!-- <button type="submit" class="btn" [disabled]="registerForm.invalid">Register</button> -->
-    <div>
-      <button type="submit" class="btn login-btn px-4" [disabled]="registerForm.invalid">Register</button>
-    </div>
-  </form>
-  <div class="social-login mb-4 text-center">
-    <h3 class="mb-2">Or login with</h3>
-    <div class="social-buttons justify-content-center">
-      <div id="google-btn">
-      </div>
+
+      <p class="switch-copy">
+        Already registered?
+        <a routerLink="/login" class="inline-link">Sign in instead</a>
+      </p>
     </div>
   </div>
-  <div class="redirect text-center">
-    <p>Already have an account? <a routerLink="/login" class="link">Login</a></p>
-  </div>
-</div>
+</section>

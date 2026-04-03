@@ -1,0 +1,133 @@
+﻿<div class="landing-page">
+  <section class="hero-shell">
+    <header class="hero-nav">
+      <a class="brand" routerLink="/">Cerberus</a>
+
+      <nav class="nav-links" aria-label="Primary navigation">
+        <a href="#collections">Collections</a>
+        <a href="#featured">Featured</a>
+        <a href="#story">Story</a>
+        <a routerLink="/about">About Us</a>
+        <a routerLink="/contact">Contacts</a>
+      </nav>
+
+      <div class="nav-actions">
+        <a class="ghost-link" routerLink="/login">Sign in</a>
+        <a class="solid-link" routerLink="/register">Create account</a>
+      </div>
+    </header>
+
+    <div class="hero-grid">
+      <div class="hero-copy">
+        <p class="eyebrow">Curated commerce for modern living</p>
+        <h1>Shop statement pieces with the ease of your favorite daily ritual.</h1>
+        <p class="hero-text">
+          Discover fashion, decor, and essentials chosen for texture, quality, and clean design.
+          Built for shoppers who want fewer tabs and better taste.
+        </p>
+
+        <div class="hero-actions">
+          <a class="primary-cta" routerLink="/products">Shop the edit</a>
+          <a class="secondary-cta" routerLink="/listing">Browse listing</a>
+        </div>
+
+        <div class="hero-metrics">
+          <article *ngFor="let item of highlights">
+            <strong>{{ item.value }}</strong>
+            <span>{{ item.label }}</span>
+          </article>
+        </div>
+      </div>
+
+      <div class="hero-visual" aria-hidden="true">
+        <div class="visual-card visual-main">
+          <p>Spring Capsule</p>
+          <strong>Balanced neutrals, sharp accents, and warm utility pieces.</strong>
+          <span>Designed to move from work mode to weekend.</span>
+        </div>
+        <div class="visual-card visual-floating floating-left">
+          <span>Trending now</span>
+          <strong>Minimal carry goods</strong>
+        </div>
+        <div class="visual-card visual-floating floating-right">
+          <span>Members save</span>
+          <strong>Extra 15% on first order</strong>
+        </div>
+        <div class="orb orb-one"></div>
+        <div class="orb orb-two"></div>
+      </div>
+    </div>
+  </section>
+
+  <section class="collections-section" id="collections">
+    <div class="section-heading">
+      <p class="eyebrow">Curated collections</p>
+      <h2>Designed to look editorial, built to convert like a store.</h2>
+    </div>
+
+    <div class="collection-grid">
+      <article class="collection-card" *ngFor="let category of categories">
+        <p>{{ category.accent }}</p>
+        <h3>{{ category.name }}</h3>
+        <span>{{ category.subtitle }}</span>
+      </article>
+    </div>
+  </section>
+
+  <section class="featured-section" id="featured">
+    <div class="featured-intro">
+      <div>
+        <p class="eyebrow">Featured products</p>
+        <h2>High-intent product moments with room for real inventory later.</h2>
+      </div>
+      <a routerLink="/listing">See all products</a>
+    </div>
+
+    <div class="product-grid">
+      <article class="product-card" *ngFor="let product of featuredProducts" [ngClass]="product.tone" (click)="viewProduct(product.id)">
+        <span class="product-tag">{{ product.tag }}</span>
+        <div class="product-visual"></div>
+        <p class="product-category">{{ product.category }}</p>
+        <h3>{{ product.name }}</h3>
+        <p>{{ product.shortDescription }}</p>
+        <div class="product-footer">
+          <strong>{{ product.price }}</strong>
+          <div class="product-cta-group">
+            <button type="button" class="outline-button" (click)="$event.stopPropagation(); addToCart(product.id)">Cart</button>
+            <button type="button" (click)="$event.stopPropagation(); startPurchase(product.id)">Buy</button>
+          </div>
+        </div>
+      </article>
+    </div>
+  </section>
+
+  <section class="story-section" id="story">
+    <div class="story-card">
+      <p class="eyebrow">Why it works</p>
+      <h2>A landing page that feels branded first and generic never.</h2>
+      <p>
+        This concept gives your ecommerce frontend a polished first impression with strong contrast,
+        layered depth, product storytelling, and clear conversion paths into sign up or shopping.
+      </p>
+    </div>
+
+    <div class="testimonial-stack">
+      <article *ngFor="let testimonial of testimonials">
+        <p class="quote">"{{ testimonial.quote }}"</p>
+        <strong>{{ testimonial.author }}</strong>
+        <span>{{ testimonial.role }}</span>
+      </article>
+    </div>
+  </section>
+
+  <section class="cta-section">
+    <div>
+      <p class="eyebrow">Ready to launch</p>
+      <h2>Turn first-time visitors into returning customers.</h2>
+    </div>
+    <div class="cta-actions">
+      <a class="solid-link" routerLink="/products">Start shopping</a>
+      <a class="ghost-link dark" routerLink="/login">I already have an account</a>
+    </div>
+  </section>
+</div>

@@ -1,0 +1,40 @@
+<section class="member-page">
+  <div class="member-shell" *ngIf="storeState as state">
+    <section class="member-hero">
+      <div>
+        <p class="eyebrow">Wishlist</p>
+        <h1>Save the products you want to revisit later.</h1>
+      </div>
+      <div class="summary-pill">
+        <strong>{{ state.wishlist.length }}</strong>
+        <span>saved items</span>
+      </div>
+    </section>
+
+    <section class="item-grid" *ngIf="state.wishlist.length; else emptyWishlist">
+      <article class="item-card" *ngFor="let item of state.wishlist">
+        <div class="item-main clickable" (click)="openProduct(item.productId)">
+          <div class="item-visual" [ngClass]="item.product.imageTone"></div>
+          <div>
+            <p class="eyebrow">{{ item.product.category }}</p>
+            <h2>{{ item.product.name }}</h2>
+            <p>{{ item.product.shortDescription }}</p>
+          </div>
+        </div>
+
+        <div class="item-actions">
+          <strong>{{ item.product.priceDisplay }}</strong>
+          <button type="button" class="ghost-button" (click)="remove(item.productId)">Remove</button>
+          <button type="button" class="primary-button small" (click)="moveToCart(item.productId)">Add to cart</button>
+        </div>
+      </article>
+    </section>
+
+    <ng-template #emptyWishlist>
+      <section class="empty-state">
+        <h2>Your wishlist is empty.</h2>
+        <a class="primary-link" routerLink="/listing">Discover products</a>
+      </section>
+    </ng-template>
+  </div>
+</section>

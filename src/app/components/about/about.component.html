@@ -1,21 +1,95 @@
-<div class="container-fluid">
-    <div class="container">
-        <div class="row my-4 justify-content-sm-center">
-            <div class="col-8">
-                <div class="bg-danger py-4 text-center">
-                    Heading
-                </div>
-            </div>
+<section class="about-page">
+  <div class="about-shell">
+    <section class="hero-grid">
+      <div class="hero-copy">
+        <p class="eyebrow">About Cerberus</p>
+        <h1>We built Cerberus for shoppers who want fewer tabs and better taste.</h1>
+        <p class="lead-copy">
+          Cerberus brings design-led fashion, home pieces, and everyday essentials into one calm,
+          premium storefront so discovery feels intentional from the first scroll to checkout.
+        </p>
 
+        <div class="hero-actions">
+          <a class="primary-cta" [routerLink]="authService.isLoggedIn() ? '/dashboard/orders' : '/'">Explore products</a>
+          <a class="secondary-cta" [routerLink]="authService.isLoggedIn() ? '/dashboard/contact' : '/contact'">Talk to us</a>
         </div>
-        <div class="row">
-            <div class="col-sm-6 py-5">
-                <img class="img-fluid" src="https://i0.wp.com/picjumbo.com/wp-content/uploads/beautiful-fall-waterfall-free-image.jpeg" alt="image "/>
-            </div>
-            <div class="col-sm-6 py-5">
-                <img class="img-fluid" src="https://i0.wp.com/picjumbo.com/wp-content/uploads/beautiful-fall-waterfall-free-image.jpeg" alt="image "/>
-            </div>
-            
+      </div>
+
+      <div class="hero-visual" aria-hidden="true">
+        <div class="visual-card visual-main">
+          <span>Our approach</span>
+          <strong>Editorial taste, ecommerce clarity, and a smoother path to purchase.</strong>
         </div>
-    </div>
-</div>
+        <div class="visual-card visual-floating top-card">
+          <span>Curated</span>
+          <strong>Design-first product selection</strong>
+        </div>
+        <div class="visual-card visual-floating bottom-card">
+          <span>Trusted</span>
+          <strong>Secure sign in and member tools</strong>
+        </div>
+      </div>
+    </section>
+
+    <section class="principles-grid">
+      <article class="principle-card">
+        <p class="eyebrow">Mission</p>
+        <h2>Make online shopping feel high quality, not high noise.</h2>
+        <p>
+          We focus on clarity, better product presentation, and a visual language that helps people
+          browse confidently before they decide to sign in or buy.
+        </p>
+      </article>
+
+      <article class="principle-card">
+        <p class="eyebrow">Experience</p>
+        <h2>Public discovery, account-powered checkout.</h2>
+        <p>
+          Visitors can explore the website and product story freely. Signing in becomes useful at the
+          moment of purchase, saved preferences, order tracking, and account settings.
+        </p>
+      </article>
+    </section>
+
+    <section class="stats-grid">
+      <article>
+        <strong>120+</strong>
+        <span>curated brands and product stories</span>
+      </article>
+      <article>
+        <strong>4.9/5</strong>
+        <span>average satisfaction from loyal customers</span>
+      </article>
+      <article>
+        <strong>48h</strong>
+        <span>dispatch target on featured collections</span>
+      </article>
+    </section>
+
+    <section class="story-band">
+      <div class="story-copy">
+        <p class="eyebrow">What matters to us</p>
+        <h2>Good visuals should guide trust, not just decorate the page.</h2>
+        <p>
+          Every screen in Cerberus is moving toward the same goal: help shoppers understand the
+          brand, browse comfortably, and only ask for account creation when it gives them clear value.
+        </p>
+      </div>
+
+      <div class="story-list">
+        <article>
+          <strong>Browse first</strong>
+          <span>Guests can understand the brand and explore the storefront before committing.</span>
+        </article>
+        <article>
+          <strong>Convert later</strong>
+          <span>Sign in and sign up appear where they support purchase, tracking, and preferences.</span>
+        </article>
+        <article>
+          <strong>Protect members</strong>
+          <span>Settings and account tools stay inside the authenticated experience.</span>
+        </article>
+      </div>
+    </section>
+  </div>
+</section>

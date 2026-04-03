@@ -5,23 +5,34 @@
         <li>
           <a
             class="sidebar-item flex items-center gap-2 px-3 py-2 rounded hover:bg-stone-100 focus:bg-stone-100"
-            routerLink="/dashboard/categories"
-            routerLinkActive="active"
-            [routerLinkActiveOptions]="{ exact: true }"
-          >
-            <i class="icon-category"></i>
-            <span>Categories</span>
-          </a>
-        </li>
-        <li>
-          <a
-            class="sidebar-item flex items-center gap-2 px-3 py-2 rounded hover:bg-stone-100 focus:bg-stone-100"
             routerLink="/dashboard/orders"
             routerLinkActive="active"
             [routerLinkActiveOptions]="{ exact: true }"
           >
             <i class="icon-order"></i>
             <span>Orders</span>
+          </a>
+        </li>
+        <li>
+          <a
+            class="sidebar-item flex items-center gap-2 px-3 py-2 rounded hover:bg-stone-100 focus:bg-stone-100"
+            routerLink="/dashboard/profile"
+            routerLinkActive="active"
+            [routerLinkActiveOptions]="{ exact: true }"
+          >
+            <i class="icon-profile"></i>
+            <span>Profile</span>
+          </a>
+        </li>
+        <li *ngIf="authService.isLoggedIn()">
+          <a
+            class="sidebar-item flex items-center gap-2 px-3 py-2 rounded hover:bg-stone-100 focus:bg-stone-100"
+            routerLink="/dashboard/settings"
+            routerLinkActive="active"
+            [routerLinkActiveOptions]="{ exact: true }"
+          >
+            <i class="icon-settings"></i>
+            <span>Settings</span>
           </a>
         </li>
         <hr class="my-3 border-stone-200" />
