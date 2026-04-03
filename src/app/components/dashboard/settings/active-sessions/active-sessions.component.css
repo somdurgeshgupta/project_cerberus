@@ -74,6 +74,12 @@
   color: #ffffff;
   padding: 0.65rem 1rem;
   font-weight: 700;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  white-space: nowrap;
+  flex-shrink: 0;
+  min-width: 112px;
   cursor: pointer;
 }
 
