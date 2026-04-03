@@ -23,7 +23,9 @@
     <section class="featured-products">
       <article class="product-card" *ngFor="let product of heroProducts" [ngClass]="product.tone" (click)="openDetails(product.id)">
         <span class="product-tag">{{ product.tag }}</span>
-        <div class="product-visual"></div>
+        <div class="product-visual">
+          <img class="product-image" [src]="product.imageUrl" [alt]="product.name" loading="lazy" />
+        </div>
         <p class="product-category">{{ product.category }}</p>
         <h2>{{ product.name }}</h2>
         <p class="product-copy">{{ product.shortDescription }}</p>

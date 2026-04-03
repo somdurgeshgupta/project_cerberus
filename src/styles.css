@@ -6,31 +6,54 @@
 
 .profile-menu-panel {
   margin-top: 10px;
+  --mat-menu-container-color: transparent;
 }
 
+.profile-menu-panel.mat-mdc-menu-panel {
+  border-radius: 28px !important;
+  overflow: hidden;
+  box-shadow: 0 28px 70px rgba(57, 39, 17, 0.18) !important;
+}
+
+.profile-menu-panel .mat-mdc-menu-panel,
+.profile-menu-panel .mdc-menu-surface,
 .profile-menu-panel .mat-mdc-menu-content {
-  padding: 10px !important;
-  background: linear-gradient(180deg, #fffaf2 0%, #f4eadb 100%);
+  padding: 12px !important;
+  background:
+    radial-gradient(circle at top right, rgba(243, 187, 127, 0.22), transparent 28%),
+    linear-gradient(180deg, #fffaf2 0%, #f4eadb 100%);
   border: 1px solid rgba(29, 39, 53, 0.08);
-  border-radius: 24px;
-  box-shadow: 0 24px 60px rgba(57, 39, 17, 0.18);
+  border-radius: 28px;
+  box-shadow: 0 28px 70px rgba(57, 39, 17, 0.18);
+  min-width: 240px;
 }
 
 .profile-menu-panel .mat-mdc-menu-item {
-  min-height: 48px;
-  border-radius: 16px;
+  min-height: 52px;
+  border-radius: 18px;
   color: #1d2735 !important;
   font-weight: 700;
+  letter-spacing: 0.01em;
+  background: transparent !important;
 }
 
 .profile-menu-panel .mat-mdc-menu-item:hover,
 .profile-menu-panel .mat-mdc-menu-item.cdk-program-focused,
 .profile-menu-panel .mat-mdc-menu-item.cdk-focused {
   background: rgba(29, 39, 53, 0.08) !important;
+  transform: translateX(2px);
 }
 
 .profile-menu-panel .mat-icon {
   color: #9b5b2e !important;
+  margin-right: 14px;
+}
+
+.profile-menu-panel .mdc-list-item__primary-text,
+.profile-menu-panel .mat-mdc-menu-item .mdc-list-item__primary-text {
+  display: flex;
+  align-items: center;
+  color: #1d2735 !important;
 }
 
 

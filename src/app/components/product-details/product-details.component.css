@@ -4,7 +4,8 @@
 .details-layout { display: grid; grid-template-columns: 0.9fr 1.1fr; gap: 22px; }
 .visual-panel, .details-card, .related-card { border-radius: 32px; border: 1px solid rgba(29, 39, 53, 0.08); box-shadow: 0 24px 60px rgba(57, 39, 17, 0.08); }
 .visual-panel { padding: 28px; background: rgba(255, 255, 255, 0.76); }
-.product-visual { min-height: 420px; border-radius: 28px; }
+.product-visual { min-height: 420px; border-radius: 28px; overflow: hidden; }
+.product-image { width: 100%; min-height: 420px; height: 100%; object-fit: cover; display: block; }
 .visual-panel.sun .product-visual { background: radial-gradient(circle at 30% 30%, rgba(255, 210, 131, 0.95), transparent 30%), linear-gradient(135deg, #f4b975 0%, #f7e4c7 100%); }
 .visual-panel.sky .product-visual { background: radial-gradient(circle at 35% 35%, rgba(177, 220, 255, 0.9), transparent 28%), linear-gradient(135deg, #91c4ff 0%, #eef5fb 100%); }
 .visual-panel.clay .product-visual { background: radial-gradient(circle at 35% 35%, rgba(255, 188, 156, 0.86), transparent 28%), linear-gradient(135deg, #d78e75 0%, #f3d6cb 100%); }

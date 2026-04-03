@@ -1,6 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
 import { StoreCollectionState, StoreService } from '../../../services/store.service';
+import { forkJoin } from 'rxjs';
 
 @Component({
   selector: 'app-cart',
@@ -11,6 +12,7 @@ import { StoreCollectionState, StoreService } from '../../../services/store.serv
 export class CartComponent implements OnInit {
   storeState?: StoreCollectionState;
   loading = false;
+  brokenImages = new Set<string>();
 
   constructor(
     private storeService: StoreService,
@@ -23,9 +25,30 @@ export class CartComponent implements OnInit {
 
   loadCart(): void {
     this.loading = true;
-    this.storeService.getMyStore().subscribe({
-      next: (state) => {
-        this.storeState = state;
+    this.brokenImages.clear();
+
+    forkJoin({
+      state: this.storeService.getMyStore(),
+      products: this.storeService.getProducts()
+    }).subscribe({
+      next: ({ state, products }) => {
+        const productMap = new Map(products.map((product) => [product.id, product]));
+
+        this.storeState = {
+          ...state,
+          cart: state.cart.map((item) => {
+            const liveProduct = productMap.get(item.productId);
+            return {
+              ...item,
+              product: {
+                ...item.product,
+                imageUrl: item.product.imageUrl || liveProduct?.imageUrl || '',
+                imageTone: item.product.imageTone || liveProduct?.tone || 'sun',
+                shortDescription: item.product.shortDescription || liveProduct?.shortDescription || ''
+              }
+            };
+          })
+        };
         this.loading = false;
       },
       error: () => {
@@ -37,7 +60,23 @@ export class CartComponent implements OnInit {
   updateQuantity(productId: string, quantity: number): void {
     const nextQuantity = Math.max(1, quantity);
     this.storeService.updateCartQuantity(productId, nextQuantity).subscribe((state) => {
-      this.storeState = state;
+      this.storeState = {
+        ...state,
+        cart: state.cart.map((item) =>
+          item.productId === productId && this.storeState
+            ? {
+                ...item,
+                product: {
+                  ...item.product,
+                  imageUrl:
+                    item.product.imageUrl ||
+                    this.storeState.cart.find((cartItem) => cartItem.productId === item.productId)?.product.imageUrl ||
+                    ''
+                }
+              }
+            : item
+        )
+      };
     });
   }
 
@@ -45,6 +84,14 @@ export class CartComponent implements OnInit {
     this.storeService.removeFromCart(productId).subscribe((state) => {
       this.storeState = state;
     });
+  }
+
+  hasValidImage(productId: string, imageUrl?: string): boolean {
+    return !!imageUrl && !this.brokenImages.has(productId);
+  }
+
+  markImageBroken(productId: string): void {
+    this.brokenImages.add(productId);
   }
 
   goToCheckout(): void {

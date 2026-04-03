@@ -22,6 +22,14 @@ export class CheckoutComponent implements OnInit {
     private router: Router
   ) {}
 
+  formatCurrency(amount: number): string {
+    return new Intl.NumberFormat('en-IN', {
+      style: 'currency',
+      currency: 'INR',
+      maximumFractionDigits: 0
+    }).format(amount || 0);
+  }
+
   ngOnInit(): void {
     this.route.queryParamMap.subscribe((params) => {
       this.source = params.get('source') === 'buy-now' ? 'buy-now' : 'cart';
@@ -52,8 +60,11 @@ export class CheckoutComponent implements OnInit {
             ],
             totals: {
               subtotal: product.price,
-              shipping: 12,
-              total: product.price + 12
+              shipping: 99,
+              total: product.price + 99,
+              subtotalDisplay: this.formatCurrency(product.price),
+              shippingDisplay: this.formatCurrency(99),
+              totalDisplay: this.formatCurrency(product.price + 99)
             }
           };
         });

@@ -1,4 +1,4 @@
-import { Component, inject } from '@angular/core';
+import { Component, ElementRef, HostListener, inject } from '@angular/core';
 import { AuthService } from '../../services/auth.service';
 import { Router } from '@angular/router';
 import { UserService } from '../../services/user.service';
@@ -17,10 +17,12 @@ export class HeaderComponent {
   userService = inject(UserService);
   profileService = inject(ProfileService);
   router = inject(Router);
+  elementRef = inject(ElementRef);
   profileData: any = {};
   countdown: number = 0; // Time left in seconds
   formattedCountdown: string = ''; // Formatted string for display
   searchTerm = '';
+  isProfileMenuOpen = false;
   private timerSubscription!: Subscription;
 
   ngOnInit(): void {
@@ -48,7 +50,21 @@ export class HeaderComponent {
 
 
   logout() {
+    this.isProfileMenuOpen = false;
     this.authService.logout(true);
+  }
+
+  toggleProfileMenu(): void {
+    this.isProfileMenuOpen = !this.isProfileMenuOpen;
+  }
+
+  closeProfileMenu(): void {
+    this.isProfileMenuOpen = false;
+  }
+
+  navigateTo(path: string): void {
+    this.isProfileMenuOpen = false;
+    this.router.navigate([path]);
   }
 
   onSearch(): void {
@@ -87,6 +103,13 @@ export class HeaderComponent {
   onImageError(event: Event): void {
     const imgElement = event.target as HTMLImageElement;
     imgElement.src = '/basic_user.jpg'; // Set fallback image if an error occurs
+  }
+
+  @HostListener('document:click', ['$event'])
+  handleDocumentClick(event: Event): void {
+    if (!this.elementRef.nativeElement.contains(event.target)) {
+      this.isProfileMenuOpen = false;
+    }
   }
   
 }

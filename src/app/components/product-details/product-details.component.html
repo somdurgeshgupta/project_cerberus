@@ -2,7 +2,9 @@
   <div class="details-shell">
     <section class="details-layout">
       <div class="visual-panel" [ngClass]="product.tone">
-        <div class="product-visual"></div>
+        <div class="product-visual">
+          <img class="product-image" [src]="product.imageUrl" [alt]="product.name" />
+        </div>
       </div>
 
       <div class="details-card">

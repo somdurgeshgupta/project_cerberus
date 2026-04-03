@@ -4,11 +4,13 @@ import { environment } from '../../environments/environment';
 
 export interface StoreProduct {
   id: string;
+  productId?: string;
   name: string;
   category: string;
   price: number;
   priceDisplay: string;
   tag: string;
+  imageUrl: string;
   tone: 'sun' | 'sky' | 'clay' | 'forest';
   shortDescription: string;
   longDescription: string;
@@ -42,6 +44,7 @@ export interface StoreCollectionState {
       category: string;
       price: number;
       priceDisplay: string;
+      imageUrl: string;
       imageTone: string;
       shortDescription: string;
     };
@@ -55,6 +58,7 @@ export interface StoreCollectionState {
       category: string;
       price: number;
       priceDisplay: string;
+      imageUrl: string;
       imageTone: string;
       shortDescription: string;
     };

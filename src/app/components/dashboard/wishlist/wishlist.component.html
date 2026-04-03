@@ -14,7 +14,9 @@
     <section class="item-grid" *ngIf="state.wishlist.length; else emptyWishlist">
       <article class="item-card" *ngFor="let item of state.wishlist">
         <div class="item-main clickable" (click)="openProduct(item.productId)">
-          <div class="item-visual" [ngClass]="item.product.imageTone"></div>
+          <div class="item-visual" [ngClass]="item.product.imageTone">
+            <img class="item-image" [src]="item.product.imageUrl" [alt]="item.product.name" loading="lazy" />
+          </div>
           <div>
             <p class="eyebrow">{{ item.product.category }}</p>
             <h2>{{ item.product.name }}</h2>

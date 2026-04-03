@@ -6,7 +6,7 @@
         <h1>Review your order and place it directly.</h1>
       </div>
       <div class="summary-pill">
-        <strong>${{ summary.totals.total }}</strong>
+        <strong>{{ summary.totals.totalDisplay || formatCurrency(summary.totals.total) }}</strong>
         <span>total amount</span>
       </div>
     </section>
@@ -28,19 +28,19 @@
         <h2>Order summary</h2>
         <div class="checkout-item" *ngFor="let item of summary.cart">
           <span>{{ item.product.name }} x {{ item.quantity }}</span>
-          <strong>{{ item.product.priceDisplay || ('$' + item.product.price) }}</strong>
+          <strong>{{ item.product.priceDisplay || formatCurrency(item.product.price) }}</strong>
         </div>
         <div class="summary-row">
           <span>Subtotal</span>
-          <strong>${{ summary.totals.subtotal }}</strong>
+          <strong>{{ summary.totals.subtotalDisplay || formatCurrency(summary.totals.subtotal) }}</strong>
         </div>
         <div class="summary-row">
           <span>Shipping</span>
-          <strong>${{ summary.totals.shipping }}</strong>
+          <strong>{{ summary.totals.shippingDisplay || formatCurrency(summary.totals.shipping) }}</strong>
         </div>
         <div class="summary-row total">
           <span>Total</span>
-          <strong>${{ summary.totals.total }}</strong>
+          <strong>{{ summary.totals.totalDisplay || formatCurrency(summary.totals.total) }}</strong>
         </div>
         <textarea [(ngModel)]="notes" rows="4" placeholder="Add delivery notes if needed"></textarea>
         <button type="button" class="primary-button" (click)="placeOrder()" [disabled]="!selectedAddressId">
