@@ -41,11 +41,6 @@ const routes: Routes = [
     canActivate: [authGuard]
   },
   {
-    path: 'chatting',
-    loadChildren: () => import('./components/chatting-application/chatting-application.module').then(m => m.ChattingApplicationModule),
-    canActivate: [authGuard]
-  },
-  {
     path: 'expired-page',
     component: ExpiredPageComponent
   },

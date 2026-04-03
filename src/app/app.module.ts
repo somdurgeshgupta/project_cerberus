@@ -26,10 +26,6 @@ import { MatToolbarModule } from '@angular/material/toolbar';
 import { MatMenuModule } from '@angular/material/menu';
 import { MatIconModule } from '@angular/material/icon';
 import { MatTooltipModule } from '@angular/material/tooltip';
-import { ChattingApplicationComponent } from './components/chatting-application/chatting-application.component';
-import { ChatComponent } from './components/chatting-application/chat/chat.component';
-import { UserListComponent } from './components/chatting-application/user-list/user-list.component';
-// app.module.ts
 import { LoadingBarModule } from '@ngx-loading-bar/core';
 import { LoadingBarHttpClientModule } from '@ngx-loading-bar/http-client';
 
@@ -48,10 +44,7 @@ import { LoadingBarHttpClientModule } from '@ngx-loading-bar/http-client';
     ContactComponent,
     HeaderCommonComponent,
     ForgotPasswordComponent,
-    LoaderComponent,
-    ChattingApplicationComponent,
-    ChatComponent,
-    UserListComponent
+    LoaderComponent
   ],
   imports: [
     BrowserModule,
