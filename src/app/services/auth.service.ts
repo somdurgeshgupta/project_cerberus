@@ -46,8 +46,12 @@ export class AuthService {
     localStorage.setItem('authToken', token);
 
     // Decode the token to extract expiration time
-    const decodedToken: any = jwtDecode(token);
-    const expirationTime = decodedToken.exp * 1000; // Convert to milliseconds
+    const expirationTime = this.getTokenExpiration(token);
+
+    if (!expirationTime) {
+      this.clearSession();
+      return;
+    }
 
     // Save expiration time in localStorage
     localStorage.setItem('tokenExpiration', expirationTime.toString());
@@ -77,13 +81,12 @@ export class AuthService {
 
   autoLogin(): void {
     const token = localStorage.getItem('authToken');
-    const expirationTime = localStorage.getItem('tokenExpiration');
-
-    if (token && expirationTime) {
-      const expiration = parseInt(expirationTime, 10);
+    if (token) {
+      const expiration = this.getTokenExpiration(token);
       const currentTime = Date.now();
 
-      if (expiration > currentTime) {
+      if (expiration && expiration > currentTime) {
+        localStorage.setItem('tokenExpiration', expiration.toString());
         // Token is still valid, set a new timer
         this.startLogoutCountdown(expiration - currentTime);
       } else {
@@ -97,8 +100,11 @@ export class AuthService {
     // Clear any existing timer or observable subscription
     this.clearTimer();
 
+    const safeDuration = Math.max(0, duration);
+    this.logoutTimerSubject.next(Math.floor(safeDuration / 1000));
+
     // Update the timer observable every second
-    const expirationTime = Date.now() + duration;
+    const expirationTime = Date.now() + safeDuration;
     this.logoutTimerSubscription = interval(1000)
       .pipe(
         takeWhile(() => Date.now() < expirationTime), // Stop when expired
@@ -112,7 +118,7 @@ export class AuthService {
     // Set a hard logout timer
     this.tokenExpirationTimer = setTimeout(() => {
       this.logout();
-    }, duration);
+    }, safeDuration);
   }
 
   private clearTimer(): void {
@@ -138,11 +144,21 @@ export class AuthService {
 
   isLoggedIn(): boolean {
     const token = localStorage.getItem('authToken');
-    const expirationTime = localStorage.getItem('tokenExpiration');
-    if (token && expirationTime) {
-      return parseInt(expirationTime, 10) > Date.now(); // Check if token is still valid
+    if (token) {
+      const expirationTime = this.getTokenExpiration(token);
+      return !!expirationTime && expirationTime > Date.now();
     }
     return false;
+  }
+
+  private getTokenExpiration(token: string): number | null {
+    try {
+      const decodedToken: { exp?: number } = jwtDecode(token);
+      return decodedToken.exp ? decodedToken.exp * 1000 : null;
+    } catch (error) {
+      console.error('Failed to decode token expiration:', error);
+      return null;
+    }
   }
 
 
@@ -212,13 +228,4 @@ export class AuthService {
   forgotpassword(val:any){
     return this.http.post(environment.API_URL + 'users/forgetpassword', val);
   }
-
-downloadcsv(val?: any): any {
-  return this.http.get(
-    `${environment.API_URL}ideploy/export-csv`
-  );
-}
-
-
-
 }

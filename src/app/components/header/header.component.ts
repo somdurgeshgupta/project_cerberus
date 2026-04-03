@@ -73,14 +73,17 @@ export class HeaderComponent {
   }
 
   formatCountdown(seconds: number): string {
-    // Convert seconds into minutes and seconds
-    const minutes = Math.floor(seconds / 60);
-    const secs = seconds % 60;
-    const hours = Math.floor(minutes / 60); // Calculate hours
-    const remainingMinutes = minutes % 60; // Remaining minutes after hours
+    const totalSeconds = Math.max(0, seconds);
+    const days = Math.floor(totalSeconds / 86400);
+    const hours = Math.floor((totalSeconds % 86400) / 3600);
+    const minutes = Math.floor((totalSeconds % 3600) / 60);
+    const secs = totalSeconds % 60;
 
-    // Return formatted string as HH:MM:SS or similar
-    return `${this.pad(hours)}:${this.pad(remainingMinutes)}:${this.pad(secs)}`;
+    if (days > 0) {
+      return `${days}d ${this.pad(hours)}:${this.pad(minutes)}:${this.pad(secs)}`;
+    }
+
+    return `${this.pad(hours)}:${this.pad(minutes)}:${this.pad(secs)}`;
   }
 
   pad(value: number): string {

@@ -1,7 +1,6 @@
 import { NgModule } from '@angular/core';
 import { RouterModule, Routes } from '@angular/router';
 import { DashboardComponent } from './dashboard.component';
-import { ProductsComponent } from './products/products.component';
 import { CategoriesComponent } from './categories/categories.component';
 import { OrdersComponent } from './orders/orders.component';
 import { AboutComponent } from '../about/about.component';
@@ -17,10 +16,6 @@ const routes: Routes = [
       {
         path: 'categories',
         component: CategoriesComponent, // Nested route
-      },
-      {
-        path: 'products',
-        component: ProductsComponent, // Nested route
       },
       {
         path: 'orders',
