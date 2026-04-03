@@ -103,6 +103,16 @@
   padding: 0;
 }
 
+.profile-trigger {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  border: none;
+  background: transparent;
+  padding: 0;
+  cursor: pointer;
+}
+
 /* Profile Picture */
 .profile-picture {
   width: 40px;
@@ -117,6 +127,13 @@
 .profile-picture:hover {
   transform: scale(1.1);
   border-color: #648db9;
+}
+
+.profile-trigger-icon {
+  color: #4d6176;
+  font-size: 22px;
+  width: 22px;
+  height: 22px;
 }
 
 /* Login Button */

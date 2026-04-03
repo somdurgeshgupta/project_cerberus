@@ -1,0 +1,52 @@
+.settings-shell {
+  display: grid;
+  grid-template-columns: 260px minmax(0, 1fr);
+  gap: 1.5rem;
+  align-items: start;
+}
+
+.settings-sidebar {
+  background: #ffffff;
+  border: 1px solid #dde4ea;
+  border-radius: 18px;
+  padding: 1.25rem;
+  box-shadow: 0 12px 30px rgba(22, 35, 52, 0.06);
+  position: sticky;
+  top: 88px;
+}
+
+.settings-sidebar h2 {
+  margin: 0 0 1rem;
+  font-size: 1.25rem;
+  color: #1d2a38;
+}
+
+.settings-link {
+  display: block;
+  padding: 0.8rem 0.95rem;
+  border-radius: 12px;
+  text-decoration: none;
+  color: #405466;
+  font-weight: 600;
+  transition: background-color 0.2s ease, color 0.2s ease;
+}
+
+.settings-link:hover,
+.settings-link.active {
+  background: #edf4fb;
+  color: #1f5f99;
+}
+
+.settings-content {
+  min-width: 0;
+}
+
+@media (max-width: 900px) {
+  .settings-shell {
+    grid-template-columns: 1fr;
+  }
+
+  .settings-sidebar {
+    position: static;
+  }
+}

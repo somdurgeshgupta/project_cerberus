@@ -1,0 +1,37 @@
+<section class="sessions-panel">
+  <div class="sessions-header">
+    <div>
+      <h3>Active Sessions</h3>
+      <p>Manage where your account is currently signed in.</p>
+    </div>
+  </div>
+
+  <div *ngIf="loading" class="sessions-empty">Loading active sessions...</div>
+
+  <div *ngIf="!loading && !sessions.length" class="sessions-empty">
+    No active sessions found.
+  </div>
+
+  <article class="session-card" *ngFor="let session of sessions">
+    <div class="session-topline">
+      <div class="session-device">
+        <h4>{{ session.userAgent || 'Unknown device' }}</h4>
+        <span class="current-badge" *ngIf="session.isCurrent">Current Session</span>
+      </div>
+      <button
+        class="revoke-button"
+        type="button"
+        (click)="revokeSession(session)"
+        [disabled]="revokingSessionId === session.sessionId"
+      >
+        {{ session.isCurrent ? 'Sign Out' : 'Revoke' }}
+      </button>
+    </div>
+
+    <div class="session-meta">
+      <span>IP: {{ session.ipAddress || 'Unavailable' }}</span>
+      <span>Started: {{ formatDate(session.createdAt) }}</span>
+      <span>Last used: {{ formatDate(session.lastUsedAt) }}</span>
+    </div>
+  </article>
+</section>

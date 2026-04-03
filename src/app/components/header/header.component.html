@@ -26,11 +26,13 @@
     <!-- Profile Menu -->
     <ul class="profile-menu">
       <li>
-        <img
-          class="profile-picture"
-          [src]="profileData.profileImage"
-          alt="User Profile"  
-          [matMenuTriggerFor]="profileMenu" />
+        <button class="profile-trigger" type="button" [matMenuTriggerFor]="profileMenu">
+          <img
+            class="profile-picture"
+            [src]="profileData.profileImage"
+            alt="User Profile" />
+          <mat-icon class="profile-trigger-icon">expand_more</mat-icon>
+        </button>
       </li>
       <li>
         <a class="login-button" (click)="logout()">Logout</a>

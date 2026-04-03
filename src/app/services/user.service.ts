@@ -21,6 +21,14 @@ export class UserService {
     return this.http.post(environment.API_URL + 'profile/upload-profile-image', image);
   }
 
+  getActiveSessions() {
+    return this.http.get(environment.API_URL + 'users/me/sessions');
+  }
+
+  revokeSession(sessionId: string) {
+    return this.http.delete(environment.API_URL + 'users/me/sessions/' + sessionId);
+  }
+
   
   
 }
