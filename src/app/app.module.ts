@@ -1,4 +1,4 @@
-import { NgModule } from '@angular/core';
+import { APP_INITIALIZER, NgModule } from '@angular/core';
 import { BrowserModule } from '@angular/platform-browser';
 
 import { AppRoutingModule } from './app-routing.module';
@@ -28,6 +28,11 @@ import { MatIconModule } from '@angular/material/icon';
 import { MatTooltipModule } from '@angular/material/tooltip';
 import { LoadingBarModule } from '@ngx-loading-bar/core';
 import { LoadingBarHttpClientModule } from '@ngx-loading-bar/http-client';
+import { AuthService } from './services/auth.service';
+
+function initializeAuth(authService: AuthService) {
+  return () => authService.initializeAuth();
+}
 
 
 @NgModule({
@@ -61,7 +66,14 @@ import { LoadingBarHttpClientModule } from '@ngx-loading-bar/http-client';
     LoadingBarHttpClientModule
 ],
   providers: [
-    provideAnimationsAsync(), provideHttpClient(withInterceptors([authInterceptor, loaderInterceptor]))
+    provideAnimationsAsync(),
+    provideHttpClient(withInterceptors([authInterceptor, loaderInterceptor])),
+    {
+      provide: APP_INITIALIZER,
+      useFactory: initializeAuth,
+      deps: [AuthService],
+      multi: true
+    }
   ],
   bootstrap: [AppComponent]
 })

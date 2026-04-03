@@ -1,60 +1,78 @@
 declare var google:any;
-import { HttpClient } from '@angular/common/http';
+import { HttpBackend, HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { environment } from '../../environments/environment';
 import { jwtDecode } from 'jwt-decode';
 import { Router } from '@angular/router';
-import { BehaviorSubject, interval, Observable, Subscription } from 'rxjs';
-import { map, takeWhile } from 'rxjs/operators';
+import { BehaviorSubject, Observable, Subscription, firstValueFrom, interval, throwError } from 'rxjs';
+import { catchError, filter, finalize, map, take, takeWhile, tap } from 'rxjs/operators';
 
 @Injectable({
   providedIn: 'root',
 })
 
 export class AuthService {
-  constructor(private http: HttpClient, private router: Router) {  }
+  private rawHttp: HttpClient;
+  private accessToken: string | null = null;
+  private accessTokenExpiration: number | null = null;
   private tokenExpirationTimer: any;
   private logoutTimerSubscription: Subscription | null = null;
   private logoutTimerSubject = new BehaviorSubject<number>(0); // Remaining time in seconds
   public logoutTimer$ = this.logoutTimerSubject.asObservable(); // Observable to track timer
   
-  private tokenKey = 'authToken'; // Key to store token in localStorage
+  private refreshInProgress = false;
+  private refreshTokenSubject = new BehaviorSubject<string | null>(null);
+  private authInitialized = false;
+  private authInitializationPromise: Promise<void> | null = null;
+
+  constructor(private http: HttpClient, private router: Router, httpBackend: HttpBackend) {
+    this.rawHttp = new HttpClient(httpBackend);
+  }
 
   registration(val: any) {
-    return this.http.post(environment.API_URL + 'users/register', val);
+    return this.http.post(environment.API_URL + 'users/register', val, { withCredentials: true });
   }
 
   loginUser(val: any) {
     console.log("submit api")
-    return this.http.post(environment.API_URL + 'users/login', val);
+    return this.http.post(environment.API_URL + 'users/login', val, { withCredentials: true });
   }
 
   getToken(): string | null {
-    return localStorage.getItem(this.tokenKey);
+    return this.accessToken;
+  }
+
+  initializeAuth(): Promise<void> {
+    if (this.authInitialized) {
+      return Promise.resolve();
+    }
+
+    if (this.authInitializationPromise) {
+      return this.authInitializationPromise;
+    }
+
+    this.authInitializationPromise = this.bootstrapAuth();
+    return this.authInitializationPromise;
   }
 
   googlelogin(token: string){
     let data = { "tokendata": token }
-    return this.http.post(environment.API_URL + 'googlelogin', data);
+    return this.http.post(environment.API_URL + 'googlelogin', data, { withCredentials: true });
   }
 
-  login(token: string): void {
+  login(authResponse: { accessToken: string }): void {
     // Clear any existing state before starting a new session
     this.clearSession();
 
-    // Save token to localStorage
-    localStorage.setItem('authToken', token);
-
-    // Decode the token to extract expiration time
-    const expirationTime = this.getTokenExpiration(token);
+    const expirationTime = this.getTokenExpiration(authResponse.accessToken);
 
     if (!expirationTime) {
       this.clearSession();
       return;
     }
 
-    // Save expiration time in localStorage
-    localStorage.setItem('tokenExpiration', expirationTime.toString());
+    this.accessToken = authResponse.accessToken;
+    this.accessTokenExpiration = expirationTime;
 
     // Start a new logout timer
     this.startLogoutCountdown(expirationTime - Date.now());
@@ -62,13 +80,9 @@ export class AuthService {
 
   logout(btnCLicked?: boolean): void {
     console.warn('Session expired or user logged out. Logging out the user...');
-    if (typeof google !== 'undefined') {
-      google.accounts.id.revoke(localStorage.getItem('googleAuthToken') || '', (done: any) => {
-        console.log('Google token revoked.');
-      });
-    } else {
-      console.error('Google object is not available.');
-    }
+    this.rawHttp.post(`${environment.API_URL}users/logout`, {}, { withCredentials: true }).subscribe({
+      error: () => {}
+    });
     this.clearSession(); // Clear all session-related data and timers
     if(btnCLicked){
       this.router.navigate(['/expired-page']);
@@ -80,20 +94,7 @@ export class AuthService {
   }
 
   autoLogin(): void {
-    const token = localStorage.getItem('authToken');
-    if (token) {
-      const expiration = this.getTokenExpiration(token);
-      const currentTime = Date.now();
-
-      if (expiration && expiration > currentTime) {
-        localStorage.setItem('tokenExpiration', expiration.toString());
-        // Token is still valid, set a new timer
-        this.startLogoutCountdown(expiration - currentTime);
-      } else {
-        // Token has expired, log the user out
-        this.logout();
-      }
-    }
+    void this.initializeAuth();
   }
 
   private startLogoutCountdown(duration: number): void {
@@ -112,12 +113,12 @@ export class AuthService {
       )
       .subscribe({
         next: (timeLeft) => this.logoutTimerSubject.next(timeLeft),
-        complete: () => this.logout()
+        complete: () => this.handleAccessTokenExpiry()
       });
 
     // Set a hard logout timer
     this.tokenExpirationTimer = setTimeout(() => {
-      this.logout();
+      this.handleAccessTokenExpiry();
     }, safeDuration);
   }
 
@@ -138,17 +139,92 @@ export class AuthService {
   private clearSession(): void {
     // Clear timers and localStorage
     this.clearTimer();
+    this.accessToken = null;
+    this.accessTokenExpiration = null;
+    this.refreshTokenSubject.next(null);
+    this.refreshInProgress = false;
     this.logoutTimerSubject.next(0);
-    localStorage.clear();
   }
 
   isLoggedIn(): boolean {
-    const token = localStorage.getItem('authToken');
-    if (token) {
-      const expirationTime = this.getTokenExpiration(token);
+    if (this.accessToken) {
+      const expirationTime = this.accessTokenExpiration ?? this.getTokenExpiration(this.accessToken);
       return !!expirationTime && expirationTime > Date.now();
     }
     return false;
+  }
+
+  refreshAccessToken(): Observable<string> {
+    if (this.refreshInProgress) {
+      return this.refreshTokenSubject.pipe(
+        filter((token): token is string => !!token),
+        take(1)
+      );
+    }
+
+    this.refreshInProgress = true;
+    this.refreshTokenSubject.next(null);
+
+    return this.rawHttp.post<{ accessToken: string }>(
+      `${environment.API_URL}users/refresh-token`,
+      {},
+      { withCredentials: true }
+    ).pipe(
+      tap((response) => {
+        const expirationTime = this.getTokenExpiration(response.accessToken);
+        if (expirationTime) {
+          this.accessToken = response.accessToken;
+          this.accessTokenExpiration = expirationTime;
+          this.startLogoutCountdown(expirationTime - Date.now());
+        }
+
+        this.refreshInProgress = false;
+        this.refreshTokenSubject.next(response.accessToken);
+      }),
+      map((response) => response.accessToken),
+      catchError((error) => {
+        this.refreshInProgress = false;
+        this.clearSession();
+        return throwError(() => error);
+      })
+    );
+  }
+
+  private handleAccessTokenExpiry(): void {
+    this.refreshAccessToken().subscribe({
+      next: () => {
+        // The new access token is already stored and the timer restarted.
+      },
+      error: () => this.logout()
+    });
+  }
+
+  private async bootstrapAuth(): Promise<void> {
+    try {
+      if (this.accessToken) {
+        const expiration = this.accessTokenExpiration ?? this.getTokenExpiration(this.accessToken);
+        const currentTime = Date.now();
+
+        if (expiration && expiration > currentTime) {
+          this.startLogoutCountdown(expiration - currentTime);
+          return;
+        }
+      }
+
+      await firstValueFrom(
+        this.refreshAccessToken().pipe(
+          catchError(() => {
+            this.clearSession();
+            return [];
+          })
+        )
+      );
+    } catch (error) {
+      this.clearSession();
+    } finally {
+      this.authInitialized = true;
+      this.authInitializationPromise = null;
+    }
   }
 
   private getTokenExpiration(token: string): number | null {
@@ -192,9 +268,8 @@ export class AuthService {
           // Send the Google credential to the backend for verification
           this.googlelogin(response.credential).subscribe(
             (res: any) => {
-              if (res.token) {
-                this.login(res.token);
-                localStorage.setItem('googleAuthToken', response.credential);
+              if (res.accessToken) {
+                this.login(res);
                 this.router.navigateByUrl('/dashboard');
               } else {
                 console.error('Token not received from backend.');

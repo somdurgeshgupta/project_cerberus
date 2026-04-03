@@ -6,12 +6,4 @@ import { Component, inject } from '@angular/core';
   templateUrl: './dashboard.component.html',
   styleUrl: './dashboard.component.css'
 })
-export class DashboardComponent {
-  
-  isSidebarOpen: boolean = true;
-
-  toggleSidebar(event?: any) {
-    this.isSidebarOpen = event ? false : !this.isSidebarOpen;
-  }
-  
-}
+export class DashboardComponent {}

@@ -35,7 +35,7 @@ export class RegisterComponent implements OnInit{
     if (this.registerForm.valid) {
       this.authService.registration(this.registerForm.value).subscribe(
         (res:any) => {
-          this.authService.login(res.token);
+          this.authService.login(res);
           this.router.navigateByUrl('/dashboard');
         },
         (error) => {

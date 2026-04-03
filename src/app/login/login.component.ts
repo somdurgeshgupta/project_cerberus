@@ -44,9 +44,8 @@ export class LoginComponent implements OnInit{
     if (this.loginForm.valid) {
       this.authService.loginUser(this.loginForm.value).pipe(
         tap((res: any) => {
-          if (res.token) {
-            this.authService.login(res.token);
-            // localStorage.setItem('authToken', res.token);
+          if (res.accessToken) {
+            this.authService.login(res);
             this.router.navigateByUrl('/dashboard'); // Redirect to dashboard on successful login
           }
         }),

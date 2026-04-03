@@ -1,6 +1,6 @@
-import { Component, EventEmitter, inject, Output } from '@angular/core';
+import { Component, inject } from '@angular/core';
 import { AuthService } from '../../services/auth.service';
-import { NavigationEnd, Router } from '@angular/router';
+import { Router } from '@angular/router';
 import { UserService } from '../../services/user.service';
 import { Subscription } from 'rxjs';
 import { ProfileService } from '../../profile.service';
@@ -23,32 +23,18 @@ export class HeaderComponent {
   formattedCountdown: string = ''; // Formatted string for display
   private timerSubscription!: Subscription;
 
-  @Output() toggleSidebar = new EventEmitter<void>();
-
-  
-  onToggleSidebar(req?:any) {
-    req ? this.toggleSidebar.emit(req) : this.toggleSidebar.emit();
-  }
-
   ngOnInit(): void {
     this.profileService.currentProfileImage.subscribe(imageUrl => {
       this.profileData.profileImage = imageUrl;
       // this.checkuserID();
     });
-    this.authService.autoLogin();
-      this.timerSubscription = this.authService.logoutTimer$.subscribe((timeLeft) => {
-        this.countdown = timeLeft;
-        this.formattedCountdown = this.formatCountdown(this.countdown);
-      });
-    if(this.authService.isLoggedIn()){
-      this.checkuserID();
-    } 
-    this.router.events.subscribe((event) => {
-      if (event instanceof NavigationEnd) {
-        // Check if the current route matches About or Contact
-        if (['/dashboard/about', '/dashboard/contact'].includes(event.urlAfterRedirects)) {
-          this.onToggleSidebar(true); // Close the sidebar
-        }
+    this.timerSubscription = this.authService.logoutTimer$.subscribe((timeLeft) => {
+      this.countdown = timeLeft;
+      this.formattedCountdown = this.formatCountdown(this.countdown);
+    });
+    this.authService.initializeAuth().then(() => {
+      if(this.authService.isLoggedIn()){
+        this.checkuserID();
       }
     });
   }

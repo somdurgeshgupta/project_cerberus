@@ -1,32 +1,50 @@
 import { inject } from '@angular/core';
 import { HttpInterceptorFn } from '@angular/common/http';
 import { Router } from '@angular/router';
-import { catchError } from 'rxjs/operators';
+import { catchError, switchMap } from 'rxjs/operators';
 import { throwError } from 'rxjs';
-import { LoadingBarService } from '@ngx-loading-bar/core';
+import { AuthService } from '../services/auth.service';
 
 export const authInterceptor: HttpInterceptorFn = (req, next) => {
-  const token = localStorage.getItem('authToken');
-
   // Inject Router dynamically
   const router = inject(Router);
+  const authService = inject(AuthService);
+  const token = authService.getToken();
+  const isRefreshRequest = req.url.includes('/users/refresh-token') || req.url.includes('/users/login') || req.url.includes('/users/register') || req.url.includes('/googlelogin');
 
   const authReq = token
     ? req.clone({
+        withCredentials: true,
         setHeaders: {
           Authorization: `Bearer ${token}`,
         },
       })
-    : req;
+    : req.clone({ withCredentials: true });
 
   return next(authReq).pipe(
     // Catch errors in the response
     catchError((error) => {
-      if (error.status === 401 || (error.status === 500 && error.message == 'The user with the given ID was not found.')) {
-        // Handle JWT expiration
-        console.warn('JWT expired. Logging out the user...');
-        localStorage.removeItem('authToken'); // Clear token from storage
-        router.navigate(['/login']); // Redirect to login page
+      if (error.status === 401 && !isRefreshRequest) {
+        return authService.refreshAccessToken().pipe(
+          switchMap((newAccessToken) => {
+            const retryReq = req.clone({
+              setHeaders: {
+                Authorization: `Bearer ${newAccessToken}`,
+              },
+            });
+            return next(retryReq);
+          }),
+          catchError((refreshError) => {
+            authService.logout();
+            router.navigate(['/login']);
+            return throwError(() => refreshError);
+          })
+        );
+      }
+
+      if (error.status === 500 && error.message == 'The user with the given ID was not found.') {
+        authService.logout();
+        router.navigate(['/login']);
       }
 
       // Rethrow the error so other handlers can process it
