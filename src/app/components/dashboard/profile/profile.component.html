@@ -10,19 +10,19 @@
         </p>
       </div>
 
-      <div class="profile-summary">
-        <img [src]="profileImage" alt="Profile" class="summary-image" referrerpolicy="no-referrer" (error)="onImageError()" />
-        <div class="profile-summary-copy">
-          <strong>{{ profileForm.get('name')?.value || 'Cerberus Member' }}</strong>
-          <span>{{ profileForm.get('email')?.value || 'Signed-in customer' }}</span>
+      <!-- <div class="profile-summary">
+        <img [src]="profileImage" alt="Profile" class="summary-image" referrerpolicy="no-referrer" (error)="profileImage = '/basic_user.jpg'" />
+        <div class="profile-summary-copy" style="min-width: 0; overflow: hidden;">
+          <strong style="display: block; white-space: nowrap; overflow: hidden; text-overflow: ellipsis;">{{ profileForm.get('name')?.value || 'Cerberus Member' }}</strong>
+          <span style="display: block; white-space: nowrap; overflow: hidden; text-overflow: ellipsis;">{{ profileForm.get('email')?.value || 'Signed-in customer' }}</span>
         </div>
-      </div>
+      </div> -->
     </section>
 
     <section class="profile-card">
       <div class="upload-panel">
         <label for="profileImageInput" class="upload-label">
-          <img [src]="profileImage" alt="Profile" class="upload-preview" referrerpolicy="no-referrer" (error)="onImageError()" />
+          <img [src]="profileImage" alt="Profile" class="upload-preview" referrerpolicy="no-referrer" (error)="profileImage = '/basic_user.jpg'" />
           <span>Tap to choose a new profile image</span>
         </label>
         <input id="profileImageInput" type="file" accept="image/*" (change)="onImageSelected($event)" hidden />
