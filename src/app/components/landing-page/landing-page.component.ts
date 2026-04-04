@@ -49,8 +49,8 @@ export class LandingPageComponent implements OnInit {
       return;
     }
 
-    this.storeService.getProducts().subscribe((products) => {
-      this.featuredProducts = products.slice(0, 3);
+    this.storeService.getProducts({ limit: 3 }).subscribe((response) => {
+      this.featuredProducts = response.items.slice(0, 3);
     });
   }
 

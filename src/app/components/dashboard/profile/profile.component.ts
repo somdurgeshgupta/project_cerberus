@@ -32,8 +32,9 @@ export class ProfileComponent {
     this.userService.getUserProfile().subscribe({
       next: (res: any) => {
         if (res) {
+          this.profileData = res;
           this.profileForm.patchValue(res);
-          this.profileImage = res.profileImage ? res.profileImage : res.picture || '/basic_user.jpg';
+          this.profileImage = this.resolveProfileImage(res);
         }
       },
       error: (error: any) => {
@@ -69,5 +70,13 @@ export class ProfileComponent {
         this.uploadStatus = 'Profile image updated successfully.';
       });
     }
+  }
+
+  resolveProfileImage(data: any): string {
+    return data?.profileImage || data?.picture || '/basic_user.jpg';
+  }
+
+  onImageError(): void {
+    this.profileImage = '/basic_user.jpg';
   }
 }

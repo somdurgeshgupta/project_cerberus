@@ -15,7 +15,17 @@
       <article class="item-card" *ngFor="let item of state.wishlist">
         <div class="item-main clickable" (click)="openProduct(item.productId)">
           <div class="item-visual" [ngClass]="item.product.imageTone">
-            <img class="item-image" [src]="item.product.imageUrl" [alt]="item.product.name" loading="lazy" />
+            <img
+              *ngIf="hasValidImage(item.productId, item.product.imageUrl)"
+              class="item-image"
+              [src]="item.product.imageUrl"
+              [alt]="item.product.name"
+              loading="lazy"
+              (error)="markImageBroken(item.productId)" />
+            <div class="item-image-fallback" *ngIf="!hasValidImage(item.productId, item.product.imageUrl)">
+              <span>{{ item.product.category }}</span>
+              <strong>{{ item.product.name }}</strong>
+            </div>
           </div>
           <div>
             <p class="eyebrow">{{ item.product.category }}</p>
@@ -26,8 +36,10 @@
 
         <div class="item-actions">
           <strong>{{ item.product.priceDisplay }}</strong>
-          <button type="button" class="ghost-button" (click)="remove(item.productId)">Remove</button>
-          <button type="button" class="primary-button small" (click)="moveToCart(item.productId)">Add to cart</button>
+          <div class="action-group">
+            <button type="button" class="ghost-button" (click)="remove(item.productId)">Remove</button>
+            <button type="button" class="primary-button small" (click)="moveToCart(item.productId)">Add to cart</button>
+          </div>
         </div>
       </article>
     </section>

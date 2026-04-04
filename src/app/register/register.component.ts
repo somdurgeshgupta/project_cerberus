@@ -12,7 +12,7 @@ import { ActivatedRoute, Router } from '@angular/router';
 })
 export class RegisterComponent implements OnInit{
   registerForm: FormGroup;
-  private returnUrl = '/dashboard';
+  private returnUrl = '/products';
 
   constructor(
     private fb: FormBuilder,
@@ -21,7 +21,7 @@ export class RegisterComponent implements OnInit{
     private route: ActivatedRoute
   ) {
     if (this.authService.isLoggedIn()) {
-      this.router.navigate(['/dashboard']);
+      this.router.navigate(['/products']);
     }
     this.registerForm = this.fb.group({
       name: ['', Validators.required],
@@ -31,7 +31,7 @@ export class RegisterComponent implements OnInit{
   }
 
   ngOnInit(): void {
-    this.returnUrl = this.route.snapshot.queryParamMap.get('returnUrl') || '/dashboard';
+    this.returnUrl = this.route.snapshot.queryParamMap.get('returnUrl') || '/products';
     localStorage.setItem('postAuthRedirect', this.returnUrl);
     this.registerWithGoogle();
   }

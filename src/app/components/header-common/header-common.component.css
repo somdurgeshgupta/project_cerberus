@@ -23,8 +23,51 @@
 .brand,
 .nav-links a,
 .ghost-link,
-.solid-link {
+.solid-link,
+.search-shell button {
   text-decoration: none;
+}
+
+.search-shell {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  flex: 1;
+  max-width: 460px;
+  padding: 10px 14px;
+  border-radius: 999px;
+  border: 1px solid rgba(29, 39, 53, 0.08);
+  background: rgba(255, 255, 255, 0.86);
+}
+
+.search-icon {
+  color: #9b5b2e;
+  font-size: 0.82rem;
+  font-weight: 800;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+}
+
+.search-shell input {
+  flex: 1;
+  border: 0;
+  background: transparent;
+  color: #1d2735;
+  font-size: 0.96rem;
+}
+
+.search-shell input:focus {
+  outline: none;
+}
+
+.search-shell button {
+  min-height: 38px;
+  padding: 0 16px;
+  border: 0;
+  border-radius: 999px;
+  background: #1d2735;
+  color: #f7f4ed;
+  font-weight: 700;
 }
 
 .brand {
@@ -73,7 +116,8 @@
   }
 
   .nav-links,
-  .nav-actions {
+  .nav-actions,
+  .search-shell {
     flex-wrap: wrap;
   }
 }

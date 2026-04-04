@@ -11,8 +11,8 @@
       </div>
 
       <div class="profile-summary">
-        <img [src]="profileImage" alt="Profile" class="summary-image" />
-        <div>
+        <img [src]="profileImage" alt="Profile" class="summary-image" referrerpolicy="no-referrer" (error)="onImageError()" />
+        <div class="profile-summary-copy">
           <strong>{{ profileForm.get('name')?.value || 'Cerberus Member' }}</strong>
           <span>{{ profileForm.get('email')?.value || 'Signed-in customer' }}</span>
         </div>
@@ -22,7 +22,7 @@
     <section class="profile-card">
       <div class="upload-panel">
         <label for="profileImageInput" class="upload-label">
-          <img [src]="profileImage" alt="Profile" class="upload-preview" />
+          <img [src]="profileImage" alt="Profile" class="upload-preview" referrerpolicy="no-referrer" (error)="onImageError()" />
           <span>Tap to choose a new profile image</span>
         </label>
         <input id="profileImageInput" type="file" accept="image/*" (change)="onImageSelected($event)" hidden />

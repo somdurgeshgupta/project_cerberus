@@ -12,8 +12,10 @@ export class CheckoutComponent implements OnInit {
   summary: any;
   selectedAddressId = '';
   notes = '';
+  addressNotice = '';
   source: 'cart' | 'buy-now' = 'cart';
   productId: string | null = null;
+  variantId: string | null = null;
   buyNowProduct: any = null;
 
   constructor(
@@ -34,6 +36,7 @@ export class CheckoutComponent implements OnInit {
     this.route.queryParamMap.subscribe((params) => {
       this.source = params.get('source') === 'buy-now' ? 'buy-now' : 'cart';
       this.productId = params.get('productId');
+      this.variantId = params.get('variantId');
       this.loadSummary();
     });
   }
@@ -42,9 +45,10 @@ export class CheckoutComponent implements OnInit {
     this.storeService.getCheckoutSummary().subscribe((summary) => {
       const defaultAddress = summary.addresses.find((address: any) => address.isDefault) || summary.addresses[0];
       this.selectedAddressId = defaultAddress?.id || defaultAddress?._id || '';
+      this.addressNotice = summary.addresses?.length ? '' : 'Add a delivery address before you can place your order.';
 
       if (this.source === 'buy-now' && this.productId) {
-        this.storeService.getProductById(this.productId).subscribe((product) => {
+        this.storeService.getProductById(this.productId, this.variantId).subscribe((product) => {
           this.buyNowProduct = product;
           this.summary = {
             ...summary,
@@ -54,7 +58,7 @@ export class CheckoutComponent implements OnInit {
                 quantity: 1,
                 product: {
                   ...product,
-                  imageTone: product.tone
+                  imageTone: product.selectedVariant?.tone || product.tone
                 }
               }
             ],
@@ -76,15 +80,23 @@ export class CheckoutComponent implements OnInit {
     });
   }
 
+  getVariantLabel(selection?: { design?: string; color?: string; size?: string } | null): string {
+    return [selection?.design, selection?.color, selection?.size].filter((value): value is string => !!value).join(' / ');
+  }
+
   placeOrder(): void {
     if (!this.selectedAddressId) {
+      this.addressNotice = 'Add a delivery address before you can place your order.';
       return;
     }
+
+    this.addressNotice = '';
 
     this.storeService.placeOrder({
       source: this.source,
       addressId: this.selectedAddressId,
       productId: this.productId || undefined,
+      variantId: this.variantId || undefined,
       notes: this.notes
     }).subscribe(() => {
       this.router.navigate(['/dashboard/orders']);

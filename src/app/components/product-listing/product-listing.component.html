@@ -1,4 +1,4 @@
-﻿<section class="listing-page">
+<section class="listing-page">
   <div class="listing-shell">
     <section class="listing-header">
       <div>
@@ -6,22 +6,30 @@
         <h1>Browse the full catalog with a calmer visual hierarchy.</h1>
       </div>
       <p class="listing-copy">
-        {{ filteredProducts.length }} product{{ filteredProducts.length === 1 ? '' : 's' }} matched
-        your current storefront view.
+        {{ totalProducts }} product{{ totalProducts === 1 ? '' : 's' }} matched your current storefront view.
       </p>
     </section>
 
-    <section class="listing-grid">
-      <article class="product-card" *ngFor="let product of filteredProducts" [ngClass]="product.tone" (click)="openDetails(product.id)">
-        <span class="product-tag">{{ product.tag }}</span>
+    <section class="listing-grid" #listingGrid>
+      <article class="product-card" *ngFor="let product of products" [ngClass]="product.tone" (click)="openDetails(product.id)">
+        <span class="product-tag">{{ product.discountLabel || product.tag }}</span>
         <div class="product-visual">
           <img class="product-image" [src]="product.imageUrl" [alt]="product.name" loading="lazy" />
         </div>
-        <p class="product-category">{{ product.category }}</p>
+        <p class="product-category">{{ product.brandName || product.category }}</p>
         <h2>{{ product.name }}</h2>
         <p class="product-copy">{{ product.shortDescription }}</p>
+
+        <div class="product-rating" *ngIf="product.rating">
+          <strong>{{ product.rating | number:'1.1-1' }}</strong>
+          <span>{{ product.reviewCount || 0 }} reviews</span>
+        </div>
+
         <div class="product-footer">
-          <strong>{{ product.priceDisplay }}</strong>
+          <div class="price-block">
+            <strong>{{ product.priceDisplay }}</strong>
+            <span class="strikethrough" *ngIf="product.hasDiscount && product.originalPriceDisplay">{{ product.originalPriceDisplay }}</span>
+          </div>
           <div class="product-actions">
             <button type="button" class="details-link" (click)="$event.stopPropagation(); addToWishlist(product.id)">Wishlist</button>
             <button type="button" class="details-link" (click)="$event.stopPropagation(); addToCart(product.id)">Cart</button>
@@ -30,5 +38,8 @@
         </div>
       </article>
     </section>
+
+    <div class="loading-state" *ngIf="loading">Loading more products...</div>
+    <div class="loading-state" *ngIf="!loading && !products.length">No products matched this search.</div>
   </div>
 </section>

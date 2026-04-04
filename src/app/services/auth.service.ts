@@ -270,7 +270,7 @@ export class AuthService {
             (res: any) => {
               if (res.accessToken) {
                 this.login(res);
-                const redirectUrl = localStorage.getItem('postAuthRedirect') || '/dashboard';
+                const redirectUrl = localStorage.getItem('postAuthRedirect') || '/products';
                 localStorage.removeItem('postAuthRedirect');
                 this.router.navigateByUrl(redirectUrl);
               } else {

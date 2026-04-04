@@ -17,8 +17,8 @@ export class ProductsPageComponent {
     private router: Router,
     private storeService: StoreService
   ) {
-    this.storeService.getProducts().subscribe((products) => {
-      this.heroProducts = products.slice(0, 3);
+    this.storeService.getProducts({ limit: 3 }).subscribe((response) => {
+      this.heroProducts = response.items.slice(0, 3);
     });
   }
 

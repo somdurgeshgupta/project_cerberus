@@ -18,7 +18,7 @@ import { of } from 'rxjs';
 })
 export class LoginComponent implements OnInit{
   loginForm: FormGroup;
-  private returnUrl = '/dashboard';
+  private returnUrl = '/products';
 
   constructor(
     private fb: FormBuilder,
@@ -27,7 +27,7 @@ export class LoginComponent implements OnInit{
     private route: ActivatedRoute
   ) {
     if(authService.isLoggedIn()){
-      this.router.navigate(['/dashboard']);
+      this.router.navigate(['/products']);
     }
     this.loginForm = this.fb.group({
       email: ['', [Validators.required, Validators.email]],
@@ -37,7 +37,7 @@ export class LoginComponent implements OnInit{
   }
 
   ngOnInit(): void {
-    this.returnUrl = this.route.snapshot.queryParamMap.get('returnUrl') || '/dashboard';
+    this.returnUrl = this.route.snapshot.queryParamMap.get('returnUrl') || '/products';
     localStorage.setItem('postAuthRedirect', this.returnUrl);
 
     const interval = setInterval(() => {

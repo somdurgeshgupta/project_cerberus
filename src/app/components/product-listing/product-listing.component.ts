@@ -1,4 +1,4 @@
-﻿import { Component, OnInit } from '@angular/core';
+import { Component, ElementRef, HostListener, OnInit, ViewChild } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
 import { AuthService } from '../../services/auth.service';
 import { StoreProduct, StoreService } from '../../services/store.service';
@@ -10,9 +10,13 @@ import { StoreProduct, StoreService } from '../../services/store.service';
   styleUrl: './product-listing.component.css'
 })
 export class ProductListingComponent implements OnInit {
+  @ViewChild('listingGrid') listingGrid?: ElementRef<HTMLElement>;
   searchTerm = '';
-  allProducts: StoreProduct[] = [];
-  filteredProducts: StoreProduct[] = [];
+  products: StoreProduct[] = [];
+  totalProducts = 0;
+  hasMore = true;
+  loading = false;
+  readonly pageSize = 10;
 
   constructor(
     private route: ActivatedRoute,
@@ -22,24 +26,52 @@ export class ProductListingComponent implements OnInit {
   ) {}
 
   ngOnInit(): void {
-    this.storeService.getProducts().subscribe((products) => {
-      this.allProducts = products;
-      this.filteredProducts = products;
-      this.route.queryParamMap.subscribe((params) => {
-        this.searchTerm = params.get('q') ?? '';
-        this.applyFilter();
-      });
+    this.route.queryParamMap.subscribe((params) => {
+      this.searchTerm = params.get('q') ?? '';
+      this.products = [];
+      this.totalProducts = 0;
+      this.hasMore = true;
+      this.loadProducts(true);
     });
   }
 
-  applyFilter(): void {
-    const query = this.searchTerm.trim().toLowerCase();
-    this.filteredProducts = this.allProducts.filter((product) =>
-      !query ||
-      product.name.toLowerCase().includes(query) ||
-      product.category.toLowerCase().includes(query) ||
-      product.shortDescription.toLowerCase().includes(query)
-    );
+  @HostListener('window:scroll')
+  onWindowScroll(): void {
+    const gridElement = this.listingGrid?.nativeElement;
+    if (!gridElement || this.loading || !this.hasMore) {
+      return;
+    }
+
+    const gridBottom = gridElement.getBoundingClientRect().bottom;
+    const viewportBottom = window.innerHeight;
+    const preloadOffset = 40;
+
+    if (gridBottom <= viewportBottom + preloadOffset) {
+      this.loadProducts();
+    }
+  }
+
+  loadProducts(reset = false): void {
+    if (this.loading || (!reset && !this.hasMore)) {
+      return;
+    }
+
+    this.loading = true;
+    this.storeService.getProducts({
+      limit: this.pageSize,
+      skip: reset ? 0 : this.products.length,
+      q: this.searchTerm.trim()
+    }).subscribe({
+      next: (response) => {
+        this.products = reset ? response.items : [...this.products, ...response.items];
+        this.totalProducts = response.pagination.total;
+        this.hasMore = response.pagination.hasMore;
+        this.loading = false;
+      },
+      error: () => {
+        this.loading = false;
+      }
+    });
   }
 
   startPurchase(productId: string): void {

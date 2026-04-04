@@ -28,7 +28,7 @@
 
 .profile-overview {
   display: grid;
-  grid-template-columns: 1.1fr 0.9fr;
+  grid-template-columns: minmax(0, 1.35fr) minmax(360px, 0.95fr);
   gap: 22px;
   padding: 32px;
 }
@@ -42,6 +42,10 @@
   color: #9b5b2e;
 }
 
+.profile-hero .eyebrow {
+  font-size: 1rem;
+}
+
 .profile-hero h1,
 .profile-summary strong {
   margin: 0;
@@ -50,9 +54,10 @@
 }
 
 .profile-hero h1 {
-  max-width: 11ch;
-  font-size: clamp(2.5rem, 4vw, 4rem);
-  line-height: 0.98;
+  max-width: none;
+  font-size: clamp(1.35rem, 2vw, 1.9rem);
+  line-height: 1.08;
+  white-space: nowrap;
 }
 
 .profile-hero p,
@@ -70,12 +75,15 @@
   display: flex;
   align-items: center;
   gap: 16px;
+  min-width: 0;
+  justify-self: stretch;
+  width: 100%;
 }
 
 .summary-image,
 .upload-preview {
-  width: 92px;
-  height: 92px;
+  width: 112px;
+  height: 112px;
   border-radius: 50%;
   object-fit: cover;
   border: 3px solid rgba(243, 187, 127, 0.35);
@@ -84,11 +92,23 @@
 .profile-summary strong {
   display: block;
   color: #ffffff;
-  font-size: 1.35rem;
+  font-size: 1.55rem;
+}
+
+.profile-summary-copy {
+  min-width: 0;
+  flex: 1 1 auto;
+}
+
+.profile-summary-copy strong,
+.profile-summary-copy span {
+  display: block;
+  word-break: break-word;
 }
 
 .profile-summary span {
   color: #d4dde7;
+  font-size: 1rem;
 }
 
 .profile-card {

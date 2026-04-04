@@ -4,17 +4,24 @@
 .member-hero,.form-card,.list-card,.address-card { border-radius:32px; border:1px solid rgba(29,39,53,.08); background:rgba(255,255,255,.78); box-shadow:0 24px 60px rgba(57,39,17,.08); }
 .member-hero { display:flex; align-items:center; justify-content:space-between; gap:18px; padding:28px 32px; }
 .eyebrow { margin:0 0 12px; text-transform:uppercase; letter-spacing:.16em; font-size:.78rem; font-weight:800; color:#9b5b2e; }
+.member-hero .eyebrow { font-size:1rem; }
 .member-hero h1,.form-card h2,.address-card h2 { margin:0; font-family:'Space Grotesk','Trebuchet MS',sans-serif; color:#18212d; }
-.member-hero h1 { max-width:12ch; font-size:clamp(2.3rem,4vw,3.8rem); line-height:1; }
+.member-hero h1 { max-width:none; font-size:clamp(1.35rem,2vw,1.9rem); line-height:1.08; white-space:nowrap; }
 .summary-pill { padding:16px 20px; border-radius:24px; background:#1d2735; color:#eef3f9; }
 .summary-pill strong { display:block; font-size:1.7rem; }
 .address-layout { display:grid; grid-template-columns:1fr 1fr; gap:22px; }
 .form-card,.list-card { padding:28px; }
 .field-grid { display:grid; grid-template-columns:1fr 1fr; gap:14px; margin-top:18px; }
+.field-group { display:grid; gap:8px; color:#425166; font-weight:600; }
+.field-group span strong { color:#b24a3f; }
 .field-grid input { width:100%; min-height:50px; padding:0 14px; border-radius:16px; border:1px solid rgba(29,39,53,.12); }
+.field-error { color:#b24a3f; font-size:.82rem; font-weight:600; }
+.required-note { margin:16px 0 0; color:#5d6b7c; }
 .checkbox-row { display:flex; align-items:center; gap:10px; margin:18px 0; color:#425166; }
+.form-actions { display:flex; gap:12px; flex-wrap:wrap; }
 .primary-button,.ghost-button { min-height:46px; padding:0 18px; border-radius:999px; font-weight:700; }
 .primary-button { border:0; background:#1d2735; color:#f7f4ed; }
+.checkout-link { display:inline-flex; align-items:center; justify-content:center; text-decoration:none; }
 .list-card { display:grid; gap:16px; }
 .address-card { padding:22px; }
 .address-card p { color:#5d6b7c; line-height:1.8; margin:6px 0; }

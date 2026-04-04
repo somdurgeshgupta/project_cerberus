@@ -1,6 +1,39 @@
 import { inject, Injectable } from '@angular/core';
-import { HttpClient } from '@angular/common/http';
+import { HttpClient, HttpParams } from '@angular/common/http';
 import { environment } from '../../environments/environment';
+
+export interface ProductVariant {
+  variantId: string;
+  sku?: string;
+  name?: string;
+  design?: string;
+  color?: string;
+  size?: string;
+  inventoryCount?: number;
+  imageUrl?: string;
+  tone?: 'sun' | 'sky' | 'clay' | 'forest';
+  attributes?: Record<string, unknown>;
+  price: number;
+  basePrice?: number;
+  priceDisplay?: string;
+  basePriceDisplay?: string;
+}
+
+export interface ProductVariantOptions {
+  designs: string[];
+  colors: string[];
+  sizes: string[];
+}
+
+export interface ProductReview {
+  reviewId: string;
+  title?: string;
+  comment: string;
+  rating: number;
+  userName: string;
+  verified?: boolean;
+  createdAt?: string | null;
+}
 
 export interface StoreProduct {
   id: string;
@@ -8,13 +41,42 @@ export interface StoreProduct {
   name: string;
   category: string;
   price: number;
+  basePrice?: number;
   priceDisplay: string;
+  basePriceDisplay?: string;
+  originalPrice?: number;
+  originalPriceDisplay?: string;
+  hasDiscount?: boolean;
+  discountLabel?: string;
   tag: string;
   imageUrl: string;
   tone: 'sun' | 'sky' | 'clay' | 'forest';
   shortDescription: string;
   longDescription: string;
   material: string;
+  rating?: number;
+  reviewCount?: number;
+  brand?: unknown;
+  brandName?: string;
+  categoryHierarchy?: unknown[];
+  discount?: unknown;
+  variants?: ProductVariant[];
+  variantOptions?: ProductVariantOptions;
+  selectedVariant?: ProductVariant | null;
+  reviews?: {
+    count: number;
+    items: ProductReview[];
+  };
+}
+
+export interface StoreProductListResponse {
+  items: StoreProduct[];
+  pagination: {
+    limit: number;
+    skip: number;
+    total: number;
+    hasMore: boolean;
+  };
 }
 
 export interface AddressRecord {
@@ -32,6 +94,15 @@ export interface AddressRecord {
   isDefault?: boolean;
 }
 
+export interface ProductSelectionSnapshot {
+  variantId?: string;
+  sku?: string;
+  name?: string;
+  design?: string;
+  color?: string;
+  size?: string;
+}
+
 export interface StoreCollectionState {
   addresses: AddressRecord[];
   cart: Array<{
@@ -43,10 +114,13 @@ export interface StoreCollectionState {
       name: string;
       category: string;
       price: number;
+      basePrice?: number;
       priceDisplay: string;
       imageUrl: string;
       imageTone: string;
       shortDescription: string;
+      brandName?: string;
+      selectedVariant?: ProductSelectionSnapshot | null;
     };
   }>;
   wishlist: Array<{
@@ -61,6 +135,8 @@ export interface StoreCollectionState {
       imageUrl: string;
       imageTone: string;
       shortDescription: string;
+      brandName?: string;
+      selectedVariant?: ProductSelectionSnapshot | null;
     };
   }>;
 }
@@ -72,28 +148,48 @@ export class StoreService {
   private http = inject(HttpClient);
   private baseUrl = `${environment.API_URL}store`;
 
-  getProducts() {
-    return this.http.get<StoreProduct[]>(`${this.baseUrl}/products`);
+  getProducts(params?: { limit?: number; skip?: number; q?: string; excludeId?: string }) {
+    let httpParams = new HttpParams();
+
+    if (params?.limit) {
+      httpParams = httpParams.set('limit', String(params.limit));
+    }
+    if (typeof params?.skip === 'number') {
+      httpParams = httpParams.set('skip', String(params.skip));
+    }
+    if (params?.q) {
+      httpParams = httpParams.set('q', params.q);
+    }
+    if (params?.excludeId) {
+      httpParams = httpParams.set('excludeId', params.excludeId);
+    }
+
+    return this.http.get<StoreProductListResponse>(`${this.baseUrl}/products`, { params: httpParams });
   }
 
-  getProductById(productId: string) {
-    return this.http.get<StoreProduct>(`${this.baseUrl}/products/${productId}`);
+  getProductById(productId: string, variantId?: string | null) {
+    let params = new HttpParams();
+    if (variantId) {
+      params = params.set('variantId', variantId);
+    }
+
+    return this.http.get<StoreProduct>(`${this.baseUrl}/products/${productId}`, { params });
   }
 
   getMyStore() {
     return this.http.get<StoreCollectionState>(`${this.baseUrl}/me/store`);
   }
 
-  addToCart(productId: string, quantity = 1) {
-    return this.http.post<StoreCollectionState>(`${this.baseUrl}/cart`, { productId, quantity });
+  addToCart(productId: string, quantity = 1, variantId?: string | null) {
+    return this.http.post<StoreCollectionState>(`${this.baseUrl}/cart`, { productId, quantity, variantId });
   }
 
-  updateCartQuantity(productId: string, quantity: number) {
-    return this.http.put<StoreCollectionState>(`${this.baseUrl}/cart/${productId}`, { quantity });
+  updateCartQuantity(itemId: string, quantity: number) {
+    return this.http.put<StoreCollectionState>(`${this.baseUrl}/cart/${itemId}`, { quantity });
   }
 
-  removeFromCart(productId: string) {
-    return this.http.delete<StoreCollectionState>(`${this.baseUrl}/cart/${productId}`);
+  removeFromCart(itemId: string) {
+    return this.http.delete<StoreCollectionState>(`${this.baseUrl}/cart/${itemId}`);
   }
 
   addToWishlist(productId: string) {
@@ -124,7 +220,7 @@ export class StoreService {
     return this.http.get<any>(`${this.baseUrl}/checkout/summary`);
   }
 
-  placeOrder(payload: { source: 'cart' | 'buy-now'; addressId: string; productId?: string; quantity?: number; notes?: string }) {
+  placeOrder(payload: { source: 'cart' | 'buy-now'; addressId: string; productId?: string; quantity?: number; variantId?: string; notes?: string }) {
     return this.http.post<any>(`${this.baseUrl}/orders/place`, payload);
   }
 }

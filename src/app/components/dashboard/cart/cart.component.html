@@ -30,6 +30,9 @@
           <div>
             <p class="eyebrow">{{ item.product.category }}</p>
             <h2>{{ item.product.name }}</h2>
+            <p *ngIf="item.product.selectedVariant?.variantId">
+              {{ getVariantLabel(item.product.selectedVariant) }}
+            </p>
             <p>{{ item.product.shortDescription }}</p>
           </div>
         </div>
@@ -38,9 +41,9 @@
           <strong>{{ item.product.priceDisplay }}</strong>
           <label>
             Qty
-            <input type="number" min="1" [value]="item.quantity" (change)="updateQuantity(item.productId, +$any($event.target).value)" />
+            <input type="number" min="1" [value]="item.quantity" (change)="updateQuantity(item.id, +$any($event.target).value)" />
           </label>
-          <button type="button" class="ghost-button" (click)="removeItem(item.productId)">Remove</button>
+          <button type="button" class="ghost-button" (click)="removeItem(item.id)">Remove</button>
         </div>
       </article>
     </section>

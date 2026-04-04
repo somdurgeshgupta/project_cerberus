@@ -27,8 +27,9 @@ export class HeaderComponent {
 
   ngOnInit(): void {
     this.profileService.currentProfileImage.subscribe(imageUrl => {
-      this.profileData.profileImage = imageUrl;
-      // this.checkuserID();
+      if (imageUrl) {
+        this.profileData.profileImage = imageUrl;
+      }
     });
     this.timerSubscription = this.authService.logoutTimer$.subscribe((timeLeft) => {
       this.countdown = timeLeft;
@@ -44,8 +45,12 @@ export class HeaderComponent {
   checkuserID() {
     this.userService.getUserProfile().subscribe((res:any)=>{
       this.profileData = res;
-      this.profileData.profileImage = this.profileData.profileImage ? this.profileData.profileImage : this.profileData.picture || '/basic_user.jpg';
+      this.profileData.profileImage = this.resolveProfileImage(this.profileData);
     })
+  }
+
+  resolveProfileImage(data: any): string {
+    return data?.profileImage || data?.picture || '/basic_user.jpg';
   }
 
 
@@ -103,6 +108,7 @@ export class HeaderComponent {
   onImageError(event: Event): void {
     const imgElement = event.target as HTMLImageElement;
     imgElement.src = '/basic_user.jpg'; // Set fallback image if an error occurs
+    this.profileData.profileImage = '/basic_user.jpg';
   }
 
   @HostListener('document:click', ['$event'])

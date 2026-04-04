@@ -11,6 +11,7 @@ import { AddressRecord, StoreCollectionState, StoreService } from '../../../serv
 export class AddressesComponent implements OnInit {
   storeState?: StoreCollectionState;
   addressForm: FormGroup;
+  submitted = false;
 
   constructor(
     private storeService: StoreService,
@@ -41,7 +42,10 @@ export class AddressesComponent implements OnInit {
   }
 
   saveAddress(): void {
+    this.submitted = true;
+
     if (this.addressForm.invalid) {
+      this.addressForm.markAllAsTouched();
       return;
     }
 
@@ -50,7 +54,13 @@ export class AddressesComponent implements OnInit {
         this.storeState.addresses = addresses;
       }
       this.addressForm.reset({ country: 'India', isDefault: false });
+      this.submitted = false;
     });
+  }
+
+  hasError(controlName: string): boolean {
+    const control = this.addressForm.get(controlName);
+    return !!control && control.invalid && (control.touched || this.submitted);
   }
 
   deleteAddress(addressId?: string): void {

@@ -2,11 +2,19 @@
   <nav class="public-nav" aria-label="Public navigation">
     <a class="brand" routerLink="/">Cerberus</a>
 
-    <div class="nav-links">
+    <form class="search-shell" *ngIf="shouldShowSearch()" (ngSubmit)="onSearch()">
+      <span class="search-icon">Search</span>
+      <input
+        type="search"
+        name="search"
+        [(ngModel)]="searchTerm"
+        placeholder="Search products, collections, categories" />
+      <button type="submit">Search</button>
+    </form>
+
+    <div class="nav-links" *ngIf="!shouldShowSearch()">
       <a routerLink="/products" routerLinkActive="active">Products</a>
       <a routerLink="/listing" routerLinkActive="active">Listing</a>
-      <a routerLink="/about" routerLinkActive="active">About Us</a>
-      <a routerLink="/contact" routerLinkActive="active">Contact</a>
     </div>
 
     <div class="nav-actions">

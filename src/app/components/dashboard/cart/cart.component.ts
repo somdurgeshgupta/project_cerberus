@@ -32,7 +32,7 @@ export class CartComponent implements OnInit {
       products: this.storeService.getProducts()
     }).subscribe({
       next: ({ state, products }) => {
-        const productMap = new Map(products.map((product) => [product.id, product]));
+        const productMap = new Map(products.items.map((product) => [product.id, product]));
 
         this.storeState = {
           ...state,
@@ -57,13 +57,13 @@ export class CartComponent implements OnInit {
     });
   }
 
-  updateQuantity(productId: string, quantity: number): void {
+  updateQuantity(itemId: string, quantity: number): void {
     const nextQuantity = Math.max(1, quantity);
-    this.storeService.updateCartQuantity(productId, nextQuantity).subscribe((state) => {
+    this.storeService.updateCartQuantity(itemId, nextQuantity).subscribe((state) => {
       this.storeState = {
         ...state,
         cart: state.cart.map((item) =>
-          item.productId === productId && this.storeState
+          item.id === itemId && this.storeState
             ? {
                 ...item,
                 product: {
@@ -80,8 +80,8 @@ export class CartComponent implements OnInit {
     });
   }
 
-  removeItem(productId: string): void {
-    this.storeService.removeFromCart(productId).subscribe((state) => {
+  removeItem(itemId: string): void {
+    this.storeService.removeFromCart(itemId).subscribe((state) => {
       this.storeState = state;
     });
   }
@@ -92,6 +92,10 @@ export class CartComponent implements OnInit {
 
   markImageBroken(productId: string): void {
     this.brokenImages.add(productId);
+  }
+
+  getVariantLabel(selection?: { design?: string; color?: string; size?: string } | null): string {
+    return [selection?.design, selection?.color, selection?.size].filter((value): value is string => !!value).join(' / ');
   }
 
   goToCheckout(): void {

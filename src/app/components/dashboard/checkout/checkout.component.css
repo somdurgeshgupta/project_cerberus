@@ -4,12 +4,16 @@
 .member-hero,.list-card,.form-card { border-radius:32px; border:1px solid rgba(29,39,53,.08); background:rgba(255,255,255,.78); box-shadow:0 24px 60px rgba(57,39,17,.08); }
 .member-hero { display:flex; align-items:center; justify-content:space-between; gap:18px; padding:28px 32px; }
 .eyebrow { margin:0 0 12px; text-transform:uppercase; letter-spacing:.16em; font-size:.78rem; font-weight:800; color:#9b5b2e; }
-.member-hero h1,.list-card h2,.form-card h2 { margin:0; font-family:'Space Grotesk','Trebuchet MS',sans-serif; color:#18212d; }
-.member-hero h1 { max-width:12ch; font-size:clamp(2.3rem,4vw,3.8rem); line-height:1; }
+.member-hero .eyebrow { font-size:1rem; }
+.member-hero h1,.list-card h2,.form-card h2 { margin:0; font-family:'Space Grotesk','Trebuchet MS',sans-serif; color:#18212d; text-wrap:balance; }
+.member-hero h1 { max-width:none; font-size:clamp(1.35rem,2vw,1.9rem); line-height:1.08; white-space:nowrap; }
 .summary-pill { padding:16px 20px; border-radius:24px; background:#1d2735; color:#eef3f9; }
 .summary-pill strong { display:block; font-size:1.7rem; }
 .checkout-layout { display:grid; grid-template-columns:1fr .9fr; gap:22px; }
 .list-card,.form-card { padding:28px; }
+.address-notice { display:grid; gap:6px; margin:16px 0 18px; padding:16px 18px; border-radius:20px; background:rgba(155,91,46,.12); border:1px solid rgba(155,91,46,.18); }
+.address-notice strong { color:#8a3f24; }
+.address-notice span { color:#5d6b7c; line-height:1.6; }
 .address-option { display:flex; align-items:flex-start; gap:12px; padding:16px 0; border-bottom:1px solid rgba(29,39,53,.08); }
 .address-option span { display:grid; gap:6px; }
 .address-option small { color:#5d6b7c; line-height:1.6; }

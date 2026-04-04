@@ -1,6 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
 import { StoreCollectionState, StoreService } from '../../../services/store.service';
+import { forkJoin } from 'rxjs';
 
 @Component({
   selector: 'app-wishlist',
@@ -10,6 +11,7 @@ import { StoreCollectionState, StoreService } from '../../../services/store.serv
 })
 export class WishlistComponent implements OnInit {
   storeState?: StoreCollectionState;
+  brokenImages = new Set<string>();
 
   constructor(
     private storeService: StoreService,
@@ -21,8 +23,29 @@ export class WishlistComponent implements OnInit {
   }
 
   loadWishlist(): void {
-    this.storeService.getMyStore().subscribe((state) => {
-      this.storeState = state;
+    this.brokenImages.clear();
+
+    forkJoin({
+      state: this.storeService.getMyStore(),
+      products: this.storeService.getProducts()
+    }).subscribe(({ state, products }) => {
+      const productMap = new Map(products.items.map((product) => [product.id, product]));
+
+      this.storeState = {
+        ...state,
+        wishlist: state.wishlist.map((item) => {
+          const liveProduct = productMap.get(item.productId);
+          return {
+            ...item,
+            product: {
+              ...item.product,
+              imageUrl: item.product.imageUrl || liveProduct?.imageUrl || '',
+              imageTone: item.product.imageTone || liveProduct?.tone || 'sun',
+              shortDescription: item.product.shortDescription || liveProduct?.shortDescription || ''
+            }
+          };
+        })
+      };
     });
   }
 
@@ -42,5 +65,13 @@ export class WishlistComponent implements OnInit {
 
   openProduct(productId: string): void {
     this.router.navigate(['/products', productId]);
+  }
+
+  hasValidImage(productId: string, imageUrl?: string): boolean {
+    return !!imageUrl && !this.brokenImages.has(productId);
+  }
+
+  markImageBroken(productId: string): void {
+    this.brokenImages.add(productId);
   }
 }

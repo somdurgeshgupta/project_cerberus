@@ -14,6 +14,10 @@
     <section class="checkout-layout">
       <div class="list-card">
         <h2>Select delivery address</h2>
+        <div class="address-notice" *ngIf="addressNotice">
+          <strong>Address required.</strong>
+          <span>{{ addressNotice }}</span>
+        </div>
         <label class="address-option" *ngFor="let address of summary.addresses">
           <input type="radio" name="address" [value]="address.id || address._id" [(ngModel)]="selectedAddressId" />
           <span>
@@ -27,7 +31,12 @@
       <div class="form-card">
         <h2>Order summary</h2>
         <div class="checkout-item" *ngFor="let item of summary.cart">
-          <span>{{ item.product.name }} x {{ item.quantity }}</span>
+          <span>
+            {{ item.product.name }} x {{ item.quantity }}
+            <small *ngIf="item.product.selectedVariant?.variantId">
+              {{ getVariantLabel(item.product.selectedVariant) }}
+            </small>
+          </span>
           <strong>{{ item.product.priceDisplay || formatCurrency(item.product.price) }}</strong>
         </div>
         <div class="summary-row">
@@ -43,7 +52,7 @@
           <strong>{{ summary.totals.totalDisplay || formatCurrency(summary.totals.total) }}</strong>
         </div>
         <textarea [(ngModel)]="notes" rows="4" placeholder="Add delivery notes if needed"></textarea>
-        <button type="button" class="primary-button" (click)="placeOrder()" [disabled]="!selectedAddressId">
+        <button type="button" class="primary-button" (click)="placeOrder()">
           Place order
         </button>
       </div>

@@ -1,7 +1,7 @@
 <header class="dashboard-header">
   <nav class="dashboard-nav">
     <div class="brand-block">
-      <a class="brand" routerLink="/">Cerberus</a>
+      <a class="brand" routerLink="/products">Cerberus</a>
       <span class="brand-subtitle">Member dashboard</span>
     </div>
 
@@ -25,8 +25,9 @@
           aria-haspopup="menu">
         <img
           class="profile-picture"
-          [src]="profileData.profileImage"
+          [src]="resolveProfileImage(profileData)"
           alt="User Profile"
+          referrerpolicy="no-referrer"
           (error)="onImageError($event)" />
         <span class="profile-copy">
           <strong>{{ profileData.name || 'Cerberus Member' }}</strong>
