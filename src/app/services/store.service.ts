@@ -208,7 +208,7 @@ export class StoreService {
     return this.http.post<AddressRecord[]>(`${this.baseUrl}/addresses`, address);
   }
 
-  updateAddress(addressId: string, address: AddressRecord) {
+  updateAddress(addressId: string, address: Partial<AddressRecord>) {
     return this.http.put<AddressRecord[]>(`${this.baseUrl}/addresses/${addressId}`, address);
   }
 

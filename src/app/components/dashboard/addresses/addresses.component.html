@@ -13,7 +13,10 @@
 
     <section class="address-layout">
       <form class="form-card" [formGroup]="addressForm" (ngSubmit)="saveAddress()">
-        <h2>Add a new address</h2>
+        <h2>{{ editingAddressId ? 'Edit address' : 'Add a new address' }}</h2>
+        <p class="form-copy">
+          {{ editingAddressId ? 'Update the saved address details below.' : 'Add a delivery address for faster checkout.' }}
+        </p>
         <div class="field-grid">
           <label class="field-group">
             <span>Label <strong>*</strong></span>
@@ -66,7 +69,14 @@
           Set as default address
         </label>
         <div class="form-actions">
-          <button type="submit" class="primary-button">Save address</button>
+          <button type="submit" class="primary-button">{{ editingAddressId ? 'Update address' : 'Save address' }}</button>
+          <button
+            *ngIf="editingAddressId"
+            type="button"
+            class="ghost-button"
+            (click)="cancelEditing()">
+            Cancel
+          </button>
           <a
             *ngIf="state.addresses.length"
             class="ghost-button checkout-link"
@@ -84,6 +94,12 @@
           <p>{{ address.country }} | {{ address.phoneNumber }}</p>
           <strong *ngIf="address.isDefault">Default address</strong>
           <div class="address-actions">
+            <button
+              type="button"
+              class="ghost-button"
+              (click)="startEditing(address)">
+              Edit
+            </button>
             <button
               type="button"
               class="ghost-button"
