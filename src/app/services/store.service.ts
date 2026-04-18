@@ -238,6 +238,10 @@ export class StoreService {
     return this.http.get<any[]>(`${this.baseUrl}/orders`);
   }
 
+  getOrderById(orderId: string) {
+    return this.http.get<any>(`${this.baseUrl}/orders/${orderId}`);
+  }
+
   addAddress(address: AddressRecord) {
     return this.http.post<AddressRecord[]>(`${this.baseUrl}/addresses`, address);
   }

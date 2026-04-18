@@ -1,0 +1,110 @@
+<section class="order-details-page">
+  <div class="order-details-shell" *ngIf="order; else orderFallback">
+    <section class="order-hero">
+      <div>
+        <a class="back-link" routerLink="/dashboard/orders">Back to orders</a>
+        <p class="eyebrow" [ngClass]="getStatusClass(order.status)">{{ getStatusLabel(order.status) }}</p>
+        <h1>Order {{ order.id }}</h1>
+        <p class="hero-copy">
+          {{ order.items.length }} item{{ order.items.length === 1 ? '' : 's' }} · {{ order.totals.totalDisplay }} ·
+          {{ order.updatedAt || order.placedAt | date:'mediumDate' }}
+        </p>
+      </div>
+      <div class="summary-pill">
+        <strong>{{ order.payment?.status | titlecase }}</strong>
+        <span>{{ order.payment?.method | titlecase }} payment</span>
+      </div>
+    </section>
+
+    <section class="details-layout">
+      <div class="items-panel">
+        <h2>Items in this order</h2>
+        <article class="detail-item" *ngFor="let item of order.items; let i = index">
+          <a
+            class="item-link"
+            [routerLink]="['/products', item.productId]"
+            [queryParams]="item.productSnapshot.selectedVariant?.variantId ? { variantId: item.productSnapshot.selectedVariant?.variantId } : null">
+            <div class="item-visual" [ngClass]="item.productSnapshot.imageTone || 'sun'">
+              <img
+                *ngIf="hasValidImage(order.id + '-' + i, item.productSnapshot.imageUrl)"
+                class="item-image"
+                [src]="item.productSnapshot.imageUrl"
+                [alt]="item.productSnapshot.name"
+                loading="lazy"
+                (error)="markImageBroken(order.id + '-' + i)" />
+              <div class="item-image-fallback" *ngIf="!hasValidImage(order.id + '-' + i, item.productSnapshot.imageUrl)">
+                <span>{{ item.productSnapshot.category }}</span>
+                <strong>{{ item.productSnapshot.name }}</strong>
+              </div>
+            </div>
+          </a>
+
+          <div class="item-copy">
+            <p class="eyebrow">{{ item.productSnapshot.category }}</p>
+            <h3>
+              <a
+                class="product-link"
+                [routerLink]="['/products', item.productId]"
+                [queryParams]="item.productSnapshot.selectedVariant?.variantId ? { variantId: item.productSnapshot.selectedVariant?.variantId } : null">
+                {{ item.productSnapshot.name }}
+              </a>
+            </h3>
+            <p *ngIf="item.productSnapshot.selectedVariant?.variantId">{{ getVariantLabel(item.productSnapshot.selectedVariant) }}</p>
+            <p>{{ item.productSnapshot.shortDescription }}</p>
+          </div>
+
+          <div class="item-meta">
+            <strong>{{ item.quantity }} x {{ item.productSnapshot.price | currency:'INR':'symbol':'1.0-0':'en-IN' }}</strong>
+          </div>
+        </article>
+      </div>
+
+      <div class="info-stack">
+        <section class="info-card">
+          <h2>Delivery address</h2>
+          <p>{{ order.shippingAddress.fullName }}</p>
+          <p>{{ order.shippingAddress.line1 }}</p>
+          <p *ngIf="order.shippingAddress.line2">{{ order.shippingAddress.line2 }}</p>
+          <p>{{ order.shippingAddress.city }}, {{ order.shippingAddress.state }} {{ order.shippingAddress.postalCode }}</p>
+          <p>{{ order.shippingAddress.country }}</p>
+          <p>{{ order.shippingAddress.phoneNumber }}</p>
+        </section>
+
+        <section class="info-card">
+          <h2>Payment summary</h2>
+          <div class="summary-row">
+            <span>Subtotal</span>
+            <strong>{{ order.totals.subtotalDisplay }}</strong>
+          </div>
+          <div class="summary-row">
+            <span>Shipping</span>
+            <strong>{{ order.totals.shippingDisplay }}</strong>
+          </div>
+          <div class="summary-row total">
+            <span>Total</span>
+            <strong>{{ order.totals.totalDisplay }}</strong>
+          </div>
+          <div class="payment-meta">
+            <span>Method: {{ order.payment?.method | titlecase }}</span>
+            <span>Status: {{ order.payment?.status | titlecase }}</span>
+            <span *ngIf="order.payment?.paidAt">Paid on {{ order.payment.paidAt | date:'medium' }}</span>
+          </div>
+        </section>
+
+        <section class="info-card" *ngIf="order.notes">
+          <h2>Notes</h2>
+          <p class="notes">{{ order.notes }}</p>
+        </section>
+      </div>
+    </section>
+  </div>
+
+  <ng-template #orderFallback>
+    <div class="order-details-shell">
+      <section class="empty-state">
+        <h2>{{ errorMessage || 'Loading order details...' }}</h2>
+        <a class="back-link primary-link" routerLink="/dashboard/orders">Back to orders</a>
+      </section>
+    </div>
+  </ng-template>
+</section>

@@ -9,18 +9,54 @@
     </section>
 
     <section class="orders-grid" *ngIf="orders.length; else emptyOrders">
-      <article class="order-card" *ngFor="let order of orders">
-        <p class="eyebrow" [ngClass]="getStatusClass(order)">{{ getStatusLabel(order) }}</p>
-        <h2>
-          {{ order.status === 'placed' || order.status === 'processing' || order.status === 'shipped' || order.status === 'delivered'
-            ? 'Order placed on '
-            : 'Transaction updated on ' }}
-          {{ getDisplayDate(order) | date:'mediumDate' }}
-        </h2>
-        <p>{{ order.items.length }} item{{ order.items.length === 1 ? '' : 's' }} | {{ order.totals.totalDisplay }}</p>
-        <span>{{ order.shippingAddress.line1 }}, {{ order.shippingAddress.city }}</span>
-        <span *ngIf="order.payment?.method">Payment: {{ order.payment.method | titlecase }} | {{ order.payment?.status | titlecase }}</span>
-        <span *ngIf="order.status === 'payment-failed'">This payment did not complete, so the order was not confirmed.</span>
+      <article class="order-card" *ngFor="let order of orders" (click)="openOrder(order.id)">
+        <div class="order-visual" [ngClass]="getPrimaryItem(order)?.productSnapshot?.imageTone || 'sun'">
+          <img
+            *ngIf="hasValidImage(order.id, getPrimaryItem(order)?.productSnapshot?.imageUrl)"
+            class="order-image"
+            [src]="getPrimaryItem(order)?.productSnapshot?.imageUrl"
+            [alt]="getPrimaryItem(order)?.productSnapshot?.name || 'Order image'"
+            loading="lazy"
+            (error)="markImageBroken(order.id)" />
+          <div class="order-image-fallback" *ngIf="!hasValidImage(order.id, getPrimaryItem(order)?.productSnapshot?.imageUrl)">
+            <span>{{ getPrimaryItem(order)?.productSnapshot?.category || 'Order' }}</span>
+            <strong>{{ getPrimaryItem(order)?.productSnapshot?.name || 'Your order' }}</strong>
+          </div>
+        </div>
+
+        <div class="order-copy">
+          <div class="order-head">
+            <div>
+              <p class="eyebrow" [ngClass]="getStatusClass(order)">{{ getStatusLabel(order) }}</p>
+              <h2>{{ getPrimaryItem(order)?.productSnapshot?.name || 'Order details' }}</h2>
+            </div>
+            <div class="order-total">
+              <strong>{{ order.totals.totalDisplay }}</strong>
+              <span>{{ order.items.length }} item{{ order.items.length === 1 ? '' : 's' }}</span>
+            </div>
+          </div>
+
+          <p class="order-meta">
+            {{ order.status === 'placed' || order.status === 'processing' || order.status === 'shipped' || order.status === 'delivered'
+              ? 'Placed '
+              : 'Updated ' }}
+            {{ getDisplayDate(order) | date:'mediumDate' }}
+            <span *ngIf="getPrimaryItem(order)?.productSnapshot?.selectedVariant?.variantId">
+              | {{ getVariantLabel(getPrimaryItem(order)?.productSnapshot?.selectedVariant) }}
+            </span>
+          </p>
+
+          <div class="order-preview-row">
+            <span class="address-chip">{{ order.shippingAddress.city }}, {{ order.shippingAddress.state }}</span>
+            <span class="payment-chip" *ngIf="order.payment?.method">
+              {{ order.payment.method | titlecase }} | {{ order.payment?.status | titlecase }}
+            </span>
+            <span class="more-chip" *ngIf="getRemainingItemCount(order)">+{{ getRemainingItemCount(order) }} more</span>
+          </div>
+
+          <p class="order-note" *ngIf="order.status === 'payment-failed'">Payment did not complete, so this order was not confirmed.</p>
+          <a class="details-link" [routerLink]="['/dashboard/orders', order.id]" (click)="$event.stopPropagation()">View details</a>
+        </div>
       </article>
     </section>
 

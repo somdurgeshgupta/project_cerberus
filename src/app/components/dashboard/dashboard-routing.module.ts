@@ -12,6 +12,7 @@ import { CartComponent } from './cart/cart.component';
 import { WishlistComponent } from './wishlist/wishlist.component';
 import { AddressesComponent } from './addresses/addresses.component';
 import { CheckoutComponent } from './checkout/checkout.component';
+import { OrderDetailsComponent } from './orders/order-details.component';
 
 const routes: Routes = [
   {
@@ -21,6 +22,10 @@ const routes: Routes = [
       {
         path: 'orders',
         component: OrdersComponent, // Nested route
+      },
+      {
+        path: 'orders/:orderId',
+        component: OrderDetailsComponent,
       },
       {
         path: 'contact',

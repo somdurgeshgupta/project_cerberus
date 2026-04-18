@@ -15,9 +15,10 @@ import { CartComponent } from './cart/cart.component';
 import { WishlistComponent } from './wishlist/wishlist.component';
 import { AddressesComponent } from './addresses/addresses.component';
 import { CheckoutComponent } from './checkout/checkout.component';
+import { OrderDetailsComponent } from './orders/order-details.component';
 
 @NgModule({
-  declarations: [OrdersComponent, ProfileComponent, SettingsComponent, ActiveSessionsComponent, CartComponent, WishlistComponent, AddressesComponent, CheckoutComponent],
+  declarations: [OrdersComponent, OrderDetailsComponent, ProfileComponent, SettingsComponent, ActiveSessionsComponent, CartComponent, WishlistComponent, AddressesComponent, CheckoutComponent],
   imports: [
     CommonModule,
     DashboardRoutingModule,
