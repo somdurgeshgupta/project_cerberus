@@ -17,11 +17,15 @@
 .address-option { display:flex; align-items:flex-start; gap:12px; padding:16px 0; border-bottom:1px solid rgba(29,39,53,.08); }
 .address-option span { display:grid; gap:6px; }
 .address-option small { color:#5d6b7c; line-height:1.6; }
-.ghost-link,.primary-button { min-height:46px; padding:0 18px; border-radius:999px; display:inline-flex; align-items:center; justify-content:center; text-decoration:none; font-weight:700; }
+.ghost-link,.primary-button,.ghost-button { min-height:46px; padding:0 18px; border-radius:999px; display:inline-flex; align-items:center; justify-content:center; text-decoration:none; font-weight:700; }
 .ghost-link { margin-top:18px; border:1px solid rgba(29,39,53,.16); color:#1d2735; }
 .summary-row { display:flex; align-items:center; justify-content:space-between; margin:14px 0; color:#425166; }
 .checkout-item { display:flex; align-items:center; justify-content:space-between; margin:10px 0; color:#425166; }
 .summary-row.total { padding-top:14px; border-top:1px solid rgba(29,39,53,.08); color:#18212d; }
 textarea { width:100%; padding:14px; border-radius:18px; border:1px solid rgba(29,39,53,.12); margin:14px 0 18px; }
+.payment-notice { margin-bottom:14px; padding:14px 16px; border-radius:16px; background:rgba(155,91,46,.12); border:1px solid rgba(155,91,46,.18); color:#8a3f24; }
+.action-stack { display:grid; gap:12px; }
 .primary-button { border:0; background:#1d2735; color:#f7f4ed; }
+.ghost-button { border:1px solid rgba(29,39,53,.16); background:rgba(255,255,255,.58); color:#1d2735; }
+.primary-button[disabled],.ghost-button[disabled] { opacity:.65; cursor:not-allowed; }
 @media (max-width: 900px) { .member-hero,.checkout-layout { grid-template-columns:1fr; display:grid; } }

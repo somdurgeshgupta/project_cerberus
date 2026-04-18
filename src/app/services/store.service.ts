@@ -141,6 +141,40 @@ export interface StoreCollectionState {
   }>;
 }
 
+export interface PlaceOrderPayload {
+  source: 'cart' | 'buy-now';
+  addressId: string;
+  productId?: string;
+  quantity?: number;
+  variantId?: string;
+  notes?: string;
+}
+
+export interface RazorpayOrderResponse {
+  keyId: string;
+  orderId: string;
+  razorpayOrderId: string;
+  amount: number;
+  currency: string;
+  customer: {
+    name?: string;
+    email?: string;
+    contact?: string;
+  };
+}
+
+export interface RazorpayVerifyPayload {
+  orderId: string;
+  razorpay_order_id: string;
+  razorpay_payment_id: string;
+  razorpay_signature: string;
+}
+
+export interface RazorpayFailurePayload {
+  orderId: string;
+  reason?: string;
+}
+
 @Injectable({
   providedIn: 'root'
 })
@@ -220,7 +254,19 @@ export class StoreService {
     return this.http.get<any>(`${this.baseUrl}/checkout/summary`);
   }
 
-  placeOrder(payload: { source: 'cart' | 'buy-now'; addressId: string; productId?: string; quantity?: number; variantId?: string; notes?: string }) {
+  placeOrder(payload: PlaceOrderPayload) {
     return this.http.post<any>(`${this.baseUrl}/orders/place`, payload);
+  }
+
+  createRazorpayOrder(payload: PlaceOrderPayload) {
+    return this.http.post<RazorpayOrderResponse>(`${this.baseUrl}/payments/razorpay/order`, payload);
+  }
+
+  verifyRazorpayPayment(payload: RazorpayVerifyPayload) {
+    return this.http.post<any>(`${this.baseUrl}/payments/razorpay/verify`, payload);
+  }
+
+  markRazorpayPaymentFailed(payload: RazorpayFailurePayload) {
+    return this.http.post<any>(`${this.baseUrl}/payments/razorpay/fail`, payload);
   }
 }

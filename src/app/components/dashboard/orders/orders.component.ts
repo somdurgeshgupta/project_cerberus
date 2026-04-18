@@ -18,4 +18,24 @@ export class OrdersComponent implements OnInit {
       this.orders = orders;
     });
   }
+
+  getStatusLabel(order: any): string {
+    const status = String(order?.status || '').replace(/-/g, ' ');
+    return status ? status.charAt(0).toUpperCase() + status.slice(1) : 'Unknown';
+  }
+
+  getStatusClass(order: any): string {
+    const status = String(order?.status || '');
+    if (status === 'payment-failed' || status === 'cancelled') {
+      return 'status-failed';
+    }
+    if (status === 'pending-payment') {
+      return 'status-pending';
+    }
+    return 'status-success';
+  }
+
+  getDisplayDate(order: any): string | null {
+    return order?.updatedAt || order?.placedAt || null;
+  }
 }

@@ -3,7 +3,7 @@
     <section class="member-hero">
       <div>
         <p class="eyebrow">Checkout</p>
-        <h1>Review your order and place it directly.</h1>
+        <h1>Review your order and complete payment to confirm it.</h1>
       </div>
       <div class="summary-pill">
         <strong>{{ summary.totals.totalDisplay || formatCurrency(summary.totals.total) }}</strong>
@@ -52,9 +52,12 @@
           <strong>{{ summary.totals.totalDisplay || formatCurrency(summary.totals.total) }}</strong>
         </div>
         <textarea [(ngModel)]="notes" rows="4" placeholder="Add delivery notes if needed"></textarea>
-        <button type="button" class="primary-button" (click)="placeOrder()">
-          Place order
-        </button>
+        <div class="payment-notice" *ngIf="paymentNotice">{{ paymentNotice }}</div>
+        <div class="action-stack">
+          <button type="button" class="primary-button" [disabled]="isPlacingOrder" (click)="startCheckout()">
+            {{ isPlacingOrder ? 'Opening Razorpay...' : 'Pay with Razorpay (Test)' }}
+          </button>
+        </div>
       </div>
     </section>
   </div>

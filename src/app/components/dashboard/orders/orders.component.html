@@ -10,10 +10,17 @@
 
     <section class="orders-grid" *ngIf="orders.length; else emptyOrders">
       <article class="order-card" *ngFor="let order of orders">
-        <p class="eyebrow">{{ order.status }}</p>
-        <h2>Order placed on {{ order.placedAt | date:'mediumDate' }}</h2>
+        <p class="eyebrow" [ngClass]="getStatusClass(order)">{{ getStatusLabel(order) }}</p>
+        <h2>
+          {{ order.status === 'placed' || order.status === 'processing' || order.status === 'shipped' || order.status === 'delivered'
+            ? 'Order placed on '
+            : 'Transaction updated on ' }}
+          {{ getDisplayDate(order) | date:'mediumDate' }}
+        </h2>
         <p>{{ order.items.length }} item{{ order.items.length === 1 ? '' : 's' }} | {{ order.totals.totalDisplay }}</p>
         <span>{{ order.shippingAddress.line1 }}, {{ order.shippingAddress.city }}</span>
+        <span *ngIf="order.payment?.method">Payment: {{ order.payment.method | titlecase }} | {{ order.payment?.status | titlecase }}</span>
+        <span *ngIf="order.status === 'payment-failed'">This payment did not complete, so the order was not confirmed.</span>
       </article>
     </section>
 
