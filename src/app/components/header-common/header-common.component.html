@@ -20,7 +20,57 @@
     <div class="nav-actions">
       <a *ngIf="!authService.isLoggedIn()" class="ghost-link" routerLink="/login">Sign in</a>
       <a *ngIf="!authService.isLoggedIn()" class="solid-link" routerLink="/register">Create account</a>
-      <a *ngIf="authService.isLoggedIn()" class="solid-link" routerLink="/dashboard">Dashboard</a>
+      <div class="profile-menu-shell" *ngIf="authService.isLoggedIn()">
+        <button
+          class="profile-chip"
+          type="button"
+          (click)="toggleProfileMenu()"
+          [attr.aria-expanded]="isProfileMenuOpen"
+          aria-haspopup="menu">
+          <img
+            class="profile-picture"
+            [src]="resolveProfileImage(profileData)"
+            alt="User Profile"
+            referrerpolicy="no-referrer"
+            (error)="onImageError($event)" />
+          <span class="profile-copy">
+            <strong>{{ profileData.name || 'Cerberus Member' }}</strong>
+            <small>{{ profileData.email || 'Signed in' }}</small>
+          </span>
+          <mat-icon class="profile-trigger-icon" [class.open]="isProfileMenuOpen">expand_more</mat-icon>
+        </button>
+
+        <div class="profile-dropdown" *ngIf="isProfileMenuOpen" role="menu">
+          <button type="button" class="dropdown-item" (click)="navigateTo('/dashboard/orders')">
+            <mat-icon>receipt_long</mat-icon>
+            <span>Orders</span>
+          </button>
+          <button type="button" class="dropdown-item" (click)="navigateTo('/dashboard/cart')">
+            <mat-icon>shopping_bag</mat-icon>
+            <span>Cart</span>
+          </button>
+          <button type="button" class="dropdown-item" (click)="navigateTo('/dashboard/wishlist')">
+            <mat-icon>favorite</mat-icon>
+            <span>Wishlist</span>
+          </button>
+          <button type="button" class="dropdown-item" (click)="navigateTo('/dashboard/profile')">
+            <mat-icon>badge</mat-icon>
+            <span>Profile</span>
+          </button>
+          <button type="button" class="dropdown-item" (click)="navigateTo('/dashboard/addresses')">
+            <mat-icon>home_pin</mat-icon>
+            <span>Addresses</span>
+          </button>
+          <button type="button" class="dropdown-item" (click)="navigateTo('/dashboard/settings')">
+            <mat-icon>tune</mat-icon>
+            <span>Settings</span>
+          </button>
+          <button type="button" class="dropdown-item logout-item" (click)="logout()">
+            <mat-icon>logout</mat-icon>
+            <span>Logout</span>
+          </button>
+        </div>
+      </div>
     </div>
   </nav>
 </header>

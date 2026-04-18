@@ -12,6 +12,8 @@ import { catchError, filter, finalize, map, take, takeWhile, tap } from 'rxjs/op
 })
 
 export class AuthService {
+  private readonly accessTokenStorageKey = 'cerberus_access_token';
+  private readonly accessTokenExpirationStorageKey = 'cerberus_access_token_expiration';
   private rawHttp: HttpClient;
   private accessToken: string | null = null;
   private accessTokenExpiration: number | null = null;
@@ -73,6 +75,8 @@ export class AuthService {
 
     this.accessToken = authResponse.accessToken;
     this.accessTokenExpiration = expirationTime;
+    localStorage.setItem(this.accessTokenStorageKey, this.accessToken);
+    localStorage.setItem(this.accessTokenExpirationStorageKey, String(this.accessTokenExpiration));
 
     // Start a new logout timer
     this.startLogoutCountdown(expirationTime - Date.now());
@@ -141,6 +145,8 @@ export class AuthService {
     this.clearTimer();
     this.accessToken = null;
     this.accessTokenExpiration = null;
+    localStorage.removeItem(this.accessTokenStorageKey);
+    localStorage.removeItem(this.accessTokenExpirationStorageKey);
     this.refreshTokenSubject.next(null);
     this.refreshInProgress = false;
     this.logoutTimerSubject.next(0);
@@ -175,6 +181,8 @@ export class AuthService {
         if (expirationTime) {
           this.accessToken = response.accessToken;
           this.accessTokenExpiration = expirationTime;
+          localStorage.setItem(this.accessTokenStorageKey, this.accessToken);
+          localStorage.setItem(this.accessTokenExpirationStorageKey, String(this.accessTokenExpiration));
           this.startLogoutCountdown(expirationTime - Date.now());
         }
 
@@ -201,6 +209,14 @@ export class AuthService {
 
   private async bootstrapAuth(): Promise<void> {
     try {
+      const storedAccessToken = localStorage.getItem(this.accessTokenStorageKey);
+      const storedAccessTokenExpiration = Number(localStorage.getItem(this.accessTokenExpirationStorageKey) || 0);
+
+      if (storedAccessToken && storedAccessTokenExpiration > Date.now()) {
+        this.accessToken = storedAccessToken;
+        this.accessTokenExpiration = storedAccessTokenExpiration;
+      }
+
       if (this.accessToken) {
         const expiration = this.accessTokenExpiration ?? this.getTokenExpiration(this.accessToken);
         const currentTime = Date.now();
