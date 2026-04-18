@@ -27,3 +27,9 @@
 .product-footer { justify-content: space-between; margin-top: 24px; }
 .product-footer strong { font-size: 1.35rem; color: #18212d; }
 @media (max-width: 980px) { .store-hero, .featured-products { grid-template-columns: 1fr; } }
+@media (max-width: 640px) {
+  .hero-copy, .hero-panel, .product-card { padding: 22px; }
+  .hero-copy h1 { max-width: none; font-size: clamp(2.1rem, 10vw, 3rem); }
+  .product-footer { align-items: flex-start; }
+  .primary-cta, .secondary-cta, .details-link, .buy-button { width: 100%; box-sizing: border-box; }
+}

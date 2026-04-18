@@ -29,3 +29,11 @@
   .listing-header { flex-direction: column; align-items: start; }
   .listing-grid { grid-template-columns: 1fr; }
 }
+@media (max-width: 640px) {
+  .listing-header,
+  .product-card { padding: 22px; }
+  .listing-header h1 { max-width: none; font-size: clamp(2rem, 10vw, 2.8rem); }
+  .product-footer,
+  .product-actions { align-items: stretch; }
+  .details-link, .buy-button { width: 100%; box-sizing: border-box; }
+}

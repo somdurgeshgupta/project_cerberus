@@ -62,3 +62,10 @@
   .related-grid,
   .reviews-grid { grid-template-columns: 1fr; }
 }
+@media (max-width: 640px) {
+  .visual-panel, .details-card, .review-card, .related-card { padding: 22px; }
+  .details-card h1 { max-width: none; font-size: clamp(2rem, 11vw, 3rem); }
+  .section-heading h2 { max-width: none; font-size: clamp(1.7rem, 8vw, 2.4rem); }
+  .buy-button, .details-link, .related-card a { width: 100%; box-sizing: border-box; }
+  .pricing-row { align-items: flex-start; }
+}

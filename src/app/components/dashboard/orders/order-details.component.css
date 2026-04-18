@@ -43,4 +43,6 @@
 @media (max-width: 900px) {
   .order-hero,.details-layout,.detail-item { grid-template-columns:1fr; display:grid; }
   .item-visual { width:100%; height:220px; }
+  .order-hero,.items-panel,.info-card { padding:22px; }
+  .summary-pill,.back-link,.primary-link { width:100%; box-sizing:border-box; }
 }

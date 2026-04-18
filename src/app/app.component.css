@@ -1,4 +1,10 @@
 .main-content {
     padding: 2rem;
   }
+
+@media (max-width: 760px) {
+  .main-content {
+    padding: 1rem;
+  }
+}
   

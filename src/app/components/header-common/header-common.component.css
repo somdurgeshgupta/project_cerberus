@@ -18,6 +18,7 @@
   background: rgba(255, 255, 255, 0.7);
   backdrop-filter: blur(18px);
   box-shadow: 0 20px 60px rgba(72, 52, 25, 0.08);
+  box-sizing: border-box;
 }
 
 .brand,
@@ -38,6 +39,7 @@
   border-radius: 999px;
   border: 1px solid rgba(29, 39, 53, 0.08);
   background: rgba(255, 255, 255, 0.86);
+  box-sizing: border-box;
 }
 
 .search-icon {
@@ -117,7 +119,8 @@
   display: inline-flex;
   align-items: center;
   gap: 12px;
-  min-width: 290px;
+  min-width: min(290px, 100%);
+  max-width: 100%;
   padding: 10px 14px 10px 10px;
   border: 1px solid rgba(29, 39, 53, 0.08);
   border-radius: 28px;
@@ -147,6 +150,8 @@
   display: flex;
   flex-direction: column;
   align-items: flex-start;
+  min-width: 0;
+  flex: 1 1 auto;
 }
 
 .profile-copy strong {
@@ -235,12 +240,18 @@
   .nav-actions {
     width: 100%;
   }
+
+  .nav-actions {
+    justify-content: flex-end;
+  }
 }
 
 @media (max-width: 760px) {
   .public-nav {
     flex-direction: column;
     align-items: flex-start;
+    padding: 16px;
+    gap: 14px;
   }
 
   .nav-links,
@@ -249,14 +260,67 @@
     flex-wrap: wrap;
   }
 
+  .nav-links,
+  .nav-actions {
+    width: 100%;
+  }
+
+  .search-shell {
+    max-width: none;
+    padding: 10px 12px;
+  }
+
+  .search-shell button {
+    width: 100%;
+  }
+
   .profile-chip {
     width: 100%;
     justify-content: space-between;
+    min-width: 0;
   }
 
   .profile-dropdown {
     left: 0;
     right: auto;
-    width: min(100%, 320px);
+    width: min(100vw - 32px, 320px);
+  }
+}
+
+@media (max-width: 520px) {
+  .public-header {
+    position: static;
+    padding: 12px 12px 0;
+  }
+
+  .brand {
+    font-size: 1.18rem;
+  }
+
+  .nav-links {
+    gap: 10px 14px;
+  }
+
+  .search-shell {
+    display: grid;
+    grid-template-columns: 1fr;
+    gap: 10px;
+  }
+
+  .search-icon {
+    font-size: 0.74rem;
+  }
+
+  .profile-picture {
+    width: 42px;
+    height: 42px;
+  }
+
+  .profile-copy strong {
+    font-size: 0.9rem;
+  }
+
+  .profile-copy small {
+    max-width: 100%;
   }
 }

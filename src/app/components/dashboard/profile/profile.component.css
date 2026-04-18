@@ -57,7 +57,7 @@
   max-width: none;
   font-size: clamp(1.35rem, 2vw, 1.9rem);
   line-height: 1.08;
-  white-space: nowrap;
+  text-wrap: balance;
 }
 
 .profile-hero p,
@@ -180,5 +180,21 @@
   .profile-overview,
   .field-grid {
     grid-template-columns: 1fr;
+  }
+
+  .profile-overview,
+  .profile-card {
+    padding: 22px;
+  }
+
+  .profile-summary {
+    padding: 20px;
+  }
+}
+
+@media (max-width: 520px) {
+  .profile-summary {
+    flex-direction: column;
+    align-items: flex-start;
   }
 }
