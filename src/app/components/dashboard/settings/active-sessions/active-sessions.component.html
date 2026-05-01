@@ -21,7 +21,7 @@
       <button
         class="revoke-button"
         type="button"
-        (click)="revokeSession(session)"
+        (click)="requestRevokeSession(session)"
         [disabled]="revokingSessionId === session.sessionId"
       >
         {{ session.isCurrent ? 'Sign Out' : 'Revoke' }}
@@ -34,4 +34,53 @@
       <span>Last used: {{ formatDate(session.lastUsedAt) }}</span>
     </div>
   </article>
+
+  <div
+    class="confirmation-backdrop"
+    *ngIf="sessionPendingRevoke"
+    role="presentation"
+    (click)="cancelRevokeSession()"
+  >
+    <div
+      class="confirmation-dialog"
+      role="dialog"
+      aria-modal="true"
+      aria-labelledby="revoke-session-title"
+      (click)="$event.stopPropagation()"
+    >
+      <h4 id="revoke-session-title">
+        {{ sessionPendingRevoke.isCurrent ? 'Sign out of this session?' : 'Revoke this session?' }}
+      </h4>
+      <p>
+        {{
+          sessionPendingRevoke.isCurrent
+            ? 'This will sign you out of your current session.'
+            : 'This device will lose access to your account.'
+        }}
+      </p>
+
+      <div class="confirmation-actions">
+        <button
+          class="confirmation-cancel"
+          type="button"
+          (click)="cancelRevokeSession()"
+          [disabled]="revokingSessionId === sessionPendingRevoke.sessionId"
+        >
+          Cancel
+        </button>
+        <button
+          class="confirmation-confirm"
+          type="button"
+          (click)="confirmRevokeSession()"
+          [disabled]="revokingSessionId === sessionPendingRevoke.sessionId"
+        >
+          {{
+            revokingSessionId === sessionPendingRevoke.sessionId
+              ? 'Working...'
+              : (sessionPendingRevoke.isCurrent ? 'Sign Out' : 'Revoke')
+          }}
+        </button>
+      </div>
+    </div>
+  </div>
 </section>

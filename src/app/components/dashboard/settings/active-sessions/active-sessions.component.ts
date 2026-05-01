@@ -21,6 +21,7 @@ export class ActiveSessionsComponent implements OnInit {
   sessions: ActiveSession[] = [];
   loading = false;
   revokingSessionId: string | null = null;
+  sessionPendingRevoke: ActiveSession | null = null;
 
   constructor(private userService: UserService, private authService: AuthService) {}
 
@@ -41,11 +42,32 @@ export class ActiveSessionsComponent implements OnInit {
     });
   }
 
-  revokeSession(session: ActiveSession): void {
+  requestRevokeSession(session: ActiveSession): void {
+    this.sessionPendingRevoke = session;
+  }
+
+  cancelRevokeSession(): void {
+    if (this.revokingSessionId) {
+      return;
+    }
+
+    this.sessionPendingRevoke = null;
+  }
+
+  confirmRevokeSession(): void {
+    if (!this.sessionPendingRevoke) {
+      return;
+    }
+
+    this.revokeSession(this.sessionPendingRevoke);
+  }
+
+  private revokeSession(session: ActiveSession): void {
     this.revokingSessionId = session.sessionId;
     this.userService.revokeSession(session.sessionId).subscribe({
       next: () => {
         this.revokingSessionId = null;
+        this.sessionPendingRevoke = null;
         if (session.isCurrent) {
           this.authService.logout(true);
           return;
@@ -54,6 +76,7 @@ export class ActiveSessionsComponent implements OnInit {
       },
       error: () => {
         this.revokingSessionId = null;
+        this.sessionPendingRevoke = null;
       }
     });
   }
