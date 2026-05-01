@@ -22,7 +22,7 @@ export class AppComponent {
   }
 
   shouldShowPublicHeader(): boolean {
-    const currentRoute = this.router.url;
+    const currentRoute = this.router.url.split(/[?#]/)[0] || '/';
     const isHiddenExactRoute = this.hiddenPublicHeaderRoutes.includes(currentRoute);
     const isHiddenPrefixRoute = this.hiddenPublicHeaderPrefixes.some((prefix) => currentRoute.startsWith(prefix));
 
