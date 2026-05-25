@@ -2,7 +2,7 @@ import { Component, ElementRef, HostListener, inject } from '@angular/core';
 import { AuthService } from '../../services/auth.service';
 import { Router } from '@angular/router';
 import { UserService } from '../../services/user.service';
-import { ProfileService } from '../../profile.service';
+import { Subscription } from 'rxjs';
 
 @Component({
   selector: 'app-header-common',
@@ -15,18 +15,18 @@ export class HeaderCommonComponent {
   authService = inject(AuthService);
   router = inject(Router);
   userService = inject(UserService);
-  profileService = inject(ProfileService);
   elementRef = inject(ElementRef);
   searchTerm = '';
   profileData: any = {};
   isProfileMenuOpen = false;
+  private subscriptions = new Subscription();
 
   ngOnInit(): void {
-    this.profileService.currentProfileImage.subscribe((imageUrl) => {
-      if (imageUrl) {
-        this.profileData.profileImage = imageUrl;
-      }
-    });
+    this.subscriptions.add(
+      this.userService.currentUser$.subscribe((user) => {
+        this.profileData = user ? { ...user, profileImage: this.resolveProfileImage(user) } : {};
+      })
+    );
 
     this.authService.initializeAuth().then(() => {
       if (this.authService.isLoggedIn()) {
@@ -47,10 +47,7 @@ export class HeaderCommonComponent {
   }
 
   loadProfile(): void {
-    this.userService.getUserProfile().subscribe((res: any) => {
-      this.profileData = res;
-      this.profileData.profileImage = this.resolveProfileImage(this.profileData);
-    });
+    this.subscriptions.add(this.userService.getUserProfile().subscribe());
   }
 
   resolveProfileImage(data: any): string {
@@ -82,5 +79,9 @@ export class HeaderCommonComponent {
     if (!this.elementRef.nativeElement.contains(event.target)) {
       this.isProfileMenuOpen = false;
     }
+  }
+
+  ngOnDestroy(): void {
+    this.subscriptions.unsubscribe();
   }
 }

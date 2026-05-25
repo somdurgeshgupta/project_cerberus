@@ -6,6 +6,7 @@ import { jwtDecode } from 'jwt-decode';
 import { Router } from '@angular/router';
 import { BehaviorSubject, Observable, Subscription, firstValueFrom, interval, throwError } from 'rxjs';
 import { catchError, filter, finalize, map, take, takeWhile, tap } from 'rxjs/operators';
+import { UserService } from './user.service';
 
 @Injectable({
   providedIn: 'root',
@@ -27,7 +28,12 @@ export class AuthService {
   private authInitialized = false;
   private authInitializationPromise: Promise<void> | null = null;
 
-  constructor(private http: HttpClient, private router: Router, httpBackend: HttpBackend) {
+  constructor(
+    private http: HttpClient,
+    private router: Router,
+    httpBackend: HttpBackend,
+    private userService: UserService
+  ) {
     this.rawHttp = new HttpClient(httpBackend);
   }
 
@@ -147,6 +153,7 @@ export class AuthService {
     this.accessTokenExpiration = null;
     localStorage.removeItem(this.accessTokenStorageKey);
     localStorage.removeItem(this.accessTokenExpirationStorageKey);
+    this.userService.clearCurrentUser();
     this.refreshTokenSubject.next(null);
     this.refreshInProgress = false;
     this.logoutTimerSubject.next(0);

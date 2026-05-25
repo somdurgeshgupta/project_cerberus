@@ -3,7 +3,6 @@ import { AuthService } from '../../services/auth.service';
 import { Router } from '@angular/router';
 import { UserService } from '../../services/user.service';
 import { Subscription } from 'rxjs';
-import { ProfileService } from '../../profile.service';
 
 @Component({
   selector: 'app-header',
@@ -15,7 +14,6 @@ import { ProfileService } from '../../profile.service';
 export class HeaderComponent {
   authService = inject(AuthService);
   userService = inject(UserService);
-  profileService = inject(ProfileService);
   router = inject(Router);
   elementRef = inject(ElementRef);
   profileData: any = {};
@@ -23,18 +21,22 @@ export class HeaderComponent {
   formattedCountdown: string = ''; // Formatted string for display
   searchTerm = '';
   isProfileMenuOpen = false;
-  private timerSubscription!: Subscription;
+  private subscriptions = new Subscription();
 
   ngOnInit(): void {
-    this.profileService.currentProfileImage.subscribe(imageUrl => {
-      if (imageUrl) {
-        this.profileData.profileImage = imageUrl;
-      }
-    });
-    this.timerSubscription = this.authService.logoutTimer$.subscribe((timeLeft) => {
-      this.countdown = timeLeft;
-      this.formattedCountdown = this.formatCountdown(this.countdown);
-    });
+    this.subscriptions.add(
+      this.userService.currentUser$.subscribe((user) => {
+        this.profileData = user ? { ...user, profileImage: this.resolveProfileImage(user) } : {};
+      })
+    );
+
+    this.subscriptions.add(
+      this.authService.logoutTimer$.subscribe((timeLeft) => {
+        this.countdown = timeLeft;
+        this.formattedCountdown = this.formatCountdown(this.countdown);
+      })
+    );
+
     this.authService.initializeAuth().then(() => {
       if(this.authService.isLoggedIn()){
         this.checkuserID();
@@ -43,10 +45,7 @@ export class HeaderComponent {
   }
 
   checkuserID() {
-    this.userService.getUserProfile().subscribe((res:any)=>{
-      this.profileData = res;
-      this.profileData.profileImage = this.resolveProfileImage(this.profileData);
-    })
+    this.subscriptions.add(this.userService.getUserProfile().subscribe());
   }
 
   resolveProfileImage(data: any): string {
@@ -80,10 +79,7 @@ export class HeaderComponent {
   }
 
   ngOnDestroy(): void {
-    // Unsubscribe from the timer to avoid memory leaks
-    if (this.timerSubscription) {
-      this.timerSubscription.unsubscribe();
-    }
+    this.subscriptions.unsubscribe();
   }
 
   formatCountdown(seconds: number): string {

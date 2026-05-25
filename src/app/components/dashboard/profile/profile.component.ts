@@ -2,6 +2,7 @@ import { Component } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { UserService } from '../../../services/user.service';
 import { ProfileService } from '../../../profile.service';
+import { Subscription } from 'rxjs';
 
 @Component({
   selector: 'app-profile',
@@ -16,6 +17,7 @@ export class ProfileComponent {
   selectedFile: File | null = null;
   profileImage: string | ArrayBuffer | null = '/basic_user.jpg'; // Default image
   uploadStatus = '';
+  private subscriptions = new Subscription();
 
   constructor(private fb: FormBuilder, private userService : UserService,
     private profileService: ProfileService
@@ -29,18 +31,21 @@ export class ProfileComponent {
   }
 
   checkuserID(): void {
-    this.userService.getUserProfile().subscribe({
-      next: (res: any) => {
+    this.subscriptions.add(
+      this.userService.currentUser$.subscribe((res) => {
         if (res) {
           this.profileData = res;
           this.profileForm.patchValue(res);
           this.profileImage = this.resolveProfileImage(res);
         }
-      },
+      })
+    );
+
+    this.subscriptions.add(this.userService.getUserProfile().subscribe({
       error: (error: any) => {
         console.error('Error fetching user profile:', error);
       }
-    });
+    }));
   }
   
 
@@ -65,6 +70,7 @@ export class ProfileComponent {
       const formData = new FormData();
       formData.append('profileImage', this.selectedFile);
       this.userService.updateProfile(formData).subscribe((res:any)=>{
+        this.userService.updateCurrentUser({ profileImage: res.imageUrl });
         this.profileService.updateProfileImage(res.imageUrl);
         this.selectedFile = null;
         this.uploadStatus = 'Profile image updated successfully.';
@@ -78,5 +84,9 @@ export class ProfileComponent {
 
   onImageError(): void {
     this.profileImage = '/basic_user.jpg';
+  }
+
+  ngOnDestroy(): void {
+    this.subscriptions.unsubscribe();
   }
 }
